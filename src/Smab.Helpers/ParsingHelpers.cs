@@ -1,4 +1,5 @@
-﻿public static class ParsingHelpers {
+﻿namespace Smab.Helpers;
+public static class ParsingHelpers {
 	public static IEnumerable<int> AsDigits(this string input) =>
 		input.Select(x => int.Parse($"{x}"));
 

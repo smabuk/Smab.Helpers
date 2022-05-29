@@ -1,4 +1,5 @@
-﻿public static class HtmlHelper
+﻿namespace Smab.Helpers;
+public static class HtmlHelper
 {
 	public static bool HasClass(this string classString, string className) {
 		string[] classValues = classString.Split(" ");

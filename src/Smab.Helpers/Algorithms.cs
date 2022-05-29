@@ -1,4 +1,5 @@
-﻿public class Algorithms {
+﻿namespace Smab.Helpers;
+public class Algorithms {
 
 	/// <summary>
 	///  Dijkstra's algorithm

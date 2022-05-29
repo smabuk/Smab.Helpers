@@ -1,4 +1,5 @@
-﻿public static class DataInputCleanup {
+﻿namespace Smab.Helpers;
+public static class DataInputCleanup {
 	/// <summary>
 	/// If a blank line is found at the end of the array then remove it.
 	/// Never returns null.

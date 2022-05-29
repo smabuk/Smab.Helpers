@@ -1,4 +1,5 @@
-﻿public static partial class ArrayHelpers {
+﻿namespace Smab.Helpers;
+public static partial class ArrayHelpers {
 
 	/// <summary>
 	/// Finds the mean average and returns it as a double

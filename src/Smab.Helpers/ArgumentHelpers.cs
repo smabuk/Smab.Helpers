@@ -1,4 +1,5 @@
-﻿public static class ArgumentHelpers {
+﻿namespace Smab.Helpers;
+public static class ArgumentHelpers {
 	public static T GetArgument<T>(object[]? args, int argumentNumber, T defaultResult) {
 		if (args is null || args.Length == 0) {
 			return defaultResult;

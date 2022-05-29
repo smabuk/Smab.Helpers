@@ -1,4 +1,5 @@
-﻿public record struct Point3d(int X, int Y, int Z) {
+﻿namespace Smab.Helpers;
+public record struct Point3d(int X, int Y, int Z) {
 
 	public Point3d((int X, int Y, int Z) point) : this(point.X, point.Y, point.Z) { }
 

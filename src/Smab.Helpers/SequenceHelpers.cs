@@ -1,4 +1,5 @@
-﻿public static class SequenceHelpers {
+﻿namespace Smab.Helpers;
+public static class SequenceHelpers {
 	/// <summary>
 	///		Generates a sequence of Triangular Numbers
 	///		1, 3, 6, 10, 15 ...

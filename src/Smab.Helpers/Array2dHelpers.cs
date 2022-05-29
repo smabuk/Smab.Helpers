@@ -1,4 +1,5 @@
-﻿public static partial class ArrayHelpers {
+﻿namespace Smab.Helpers;
+public static partial class ArrayHelpers {
 
 	public static readonly List<(int dX, int dY)> CARDINAL_DIRECTIONS = new()
 		{ (0, -1), (0, 1), (-1, 0), (1, 0) };
