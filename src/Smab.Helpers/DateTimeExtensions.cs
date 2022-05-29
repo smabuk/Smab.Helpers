@@ -1,6 +1,4 @@
-﻿namespace Smab.Helpers;
-
-public static class DateTimeExtensions
+﻿public static class DateTimeExtensions
 {
     internal static readonly string DD_MMM_YYYY = "dd MMM, yyyy";
     internal static readonly string DD_MMMM_YYYY = "dd MMMM, yyyy";
