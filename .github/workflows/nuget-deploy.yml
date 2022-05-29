@@ -1,8 +1,7 @@
 name: NuGet Publish
 
 # workflow_dispatch is used to manually invoke the GH action
-on: 
-  [workflow_dispatch]
+on:
   push:
     branches:
     - main
