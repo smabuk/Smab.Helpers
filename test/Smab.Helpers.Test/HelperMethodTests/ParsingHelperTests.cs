@@ -1,7 +1,33 @@
-﻿namespace Smab.Helpers.Test.HelperMethodTests;
+﻿using System.ComponentModel;
+
+namespace Smab.Helpers.Test.HelperMethodTests;
 
 public class ParsingHelperTests {
-	[Theory]
+    [Theory]
+    [InlineData("1", 1)]
+    [InlineData("23", 23)]
+    [InlineData("-46", -46)]
+    [InlineData("", 0)]
+    [InlineData("xyz", 0)]
+    public void AsInt_ShouldBe(string input, int expected)
+    {
+        int actual = input.AsInt();
+        Assert.Equal(expected, actual);
+    }
+
+    [Theory]
+    [InlineData("1", -99, 1)]
+    [InlineData("23", -99, 23)]
+    [InlineData("-46", -99, -46)]
+    [InlineData("", -99, -99)]
+    [InlineData("xyz", -99, -99)]
+    public void AsInt__WithDefault_ShouldBe(string input, int defaultValue, int expected)
+    {
+        int actual = input.AsInt(defaultValue);
+        Assert.Equal(expected, actual);
+    }
+
+    [Theory]
 	[InlineData(new string[] { "1", "2", "3"}, new int[] { 1, 2, 3, })]
 	public void AsInts_ShouldBe(string[] input, int[] expected) {
 		int[] actual = ParsingHelpers.AsInts(input).ToArray();
@@ -15,7 +41,31 @@ public class ParsingHelperTests {
 		Assert.Equal(expected, actual);
 	}
 
-	[Theory]
+    [Theory]
+    [InlineData("1", 1)]
+    [InlineData("23", 23)]
+    [InlineData("-46", -46)]
+    [InlineData("", 0)]
+    [InlineData("xyz", 0)]
+    public void AsLong_ShouldBe(string input, long expected)
+    {
+        long actual = input.AsInt();
+        Assert.Equal(expected, actual);
+    }
+
+    [Theory]
+    [InlineData("1", -99, 1)]
+    [InlineData("23", -99, 23)]
+    [InlineData("-46", -99, -46)]
+    [InlineData("", -99, -99)]
+    [InlineData("xyz", -99, -99)]
+    public void AsLong__WithDefault_ShouldBe(string input, long defaultValue, long expected)
+    {
+        long actual = input.AsLong(defaultValue);
+        Assert.Equal(expected, actual);
+    }
+
+    [Theory]
 	[InlineData(new string[] { "1", "2", "3"}, new long[] { 1, 2, 3, })]
 	public void AsLongs_ShouldBe(string[] input, long[] expected) {
 		long[] actual = ParsingHelpers.AsLongs(input).ToArray();

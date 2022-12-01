@@ -30,5 +30,15 @@ public static class ParsingHelpers {
 	public static string AsBinaryFromHex(this IEnumerable<string> input) {
 		return String.Join(String.Empty, input.Select(c => AsBinaryFromHex(c)));
 	}
+
+	public static int AsInt(this string input, int defaultIfInvalid = 0) {
+		bool success = int.TryParse(input, out int value);
+		return success switch { true => value, false => defaultIfInvalid };
+	}
+
+	public static long AsLong(this string input, long defaultIfInvalid = 0) {
+		bool success = long.TryParse(input, out long value);
+		return success switch { true => value, false => defaultIfInvalid };
+	}
 }
 
