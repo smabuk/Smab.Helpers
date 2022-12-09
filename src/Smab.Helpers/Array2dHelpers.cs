@@ -36,10 +36,30 @@ public static partial class ArrayHelpers
 
 	public static T[,] To2dArray<T>(this IEnumerable<Point> input, T initial, T value)
 	{
-		int cols = input.Select(i => i.X).Max() + 1;
-		int rows = input.Select(i => i.Y).Max() + 1;
+		int minX = int.MaxValue;
+		int minY = int.MaxValue;
+		int maxX = int.MinValue;
+		int maxY = int.MinValue;
+		foreach (Point point in input)
+		{
+			minX = Math.Min(minX, point.X);
+			maxX = Math.Max(maxX, point.X);
+			minY = Math.Min(minY, point.Y);
+			maxY = Math.Max(maxY, point.Y);
+		}
 
-		T[,] result = new T[cols, (int)rows];
+		if (minX > 0)
+		{
+			minX = 0;
+		}
+		if (minY > 0)
+		{
+			minY = 0;
+		}
+		int cols = maxX - minX + 1;
+		int rows = maxY - minY + 1;
+
+		T[,] result = new T[cols, rows];
 		for (int r = 0; r < rows; r++)
 		{
 			for (int c = 0; c < cols; c++)
@@ -49,7 +69,7 @@ public static partial class ArrayHelpers
 		}
 		foreach (Point p in input)
 		{
-			result[p.X, p.Y] = value;
+			result[p.X - minX, p.Y - minY] = value;
 		}
 
 		return result;
