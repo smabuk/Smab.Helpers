@@ -14,17 +14,17 @@ public record struct Point3d(int X, int Y, int Z) {
 		(point.X, point.Y, point.Z);
 
 	public static Point3d operator +(in Point3d lhs, in Point3d rhs) =>
-		new Point3d(lhs.X + rhs.X, lhs.Y + rhs.Y, lhs.Z + rhs.Z);
+		new(lhs.X + rhs.X, lhs.Y + rhs.Y, lhs.Z + rhs.Z);
 	public static Point3d operator -(in Point3d lhs, in Point3d rhs) =>
-		new Point3d(lhs.X - rhs.X, lhs.Y - rhs.Y, lhs.Z - rhs.Z);
+		new(lhs.X - rhs.X, lhs.Y - rhs.Y, lhs.Z - rhs.Z);
 	public static Point3d operator *(in Point3d lhs, in Point3d rhs) =>
-		new Point3d(lhs.X * rhs.X, lhs.Y * rhs.Y, lhs.Z * rhs.Z);
+		new(lhs.X * rhs.X, lhs.Y * rhs.Y, lhs.Z * rhs.Z);
 	public static Point3d operator *(in Point3d lhs, int rhs) =>
-		new Point3d(lhs.X * rhs, lhs.Y * rhs, lhs.Z * rhs);
+		new(lhs.X * rhs, lhs.Y * rhs, lhs.Z * rhs);
 	public static Point3d operator *(int lhs, in Point3d rhs) =>
-		new Point3d(rhs.X * lhs, rhs.Y * lhs, rhs.Z * lhs);
+		new(rhs.X * lhs, rhs.Y * lhs, rhs.Z * lhs);
 	public static Point3d operator -(in Point3d value) =>
-		new Point3d(-value.X, -value.Y, -value.Z);
+		new(-value.X, -value.Y, -value.Z);
 
 	public static implicit operator Point3d(int v) {
 		throw new NotImplementedException();

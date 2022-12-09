@@ -20,6 +20,8 @@ public class ArrayHelperTests {
 		Assert.Equal(expectedLength, array.Length);
 		Assert.Equal(expectedCols, array.GetUpperBound(0) + 1);
 		Assert.Equal(expectedRows, array.GetUpperBound(1) + 1);
+		Assert.Equal(expectedCols, array.NoOfColumns());
+		Assert.Equal(expectedRows, array.NoOfRows());
 	}
 
 	[Fact]

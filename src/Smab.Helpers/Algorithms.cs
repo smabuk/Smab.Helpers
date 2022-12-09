@@ -35,7 +35,7 @@ public class Algorithms {
 	/// <param name="start"></param>
 	/// <param name="end"></param>
 	/// <returns>costs</returns>
-	private static Dictionary<Point, int> DijkstrasBasedOnCellValue(int[,] grid, Point start, Point end) {
+	public static Dictionary<Point, int> DijkstrasBasedOnCellValue(int[,] grid, Point start, Point end) {
 
 		PriorityQueue<Cell<int>, int> priorityQueue = new();
 		priorityQueue.Enqueue(new(start, 0), 0);
