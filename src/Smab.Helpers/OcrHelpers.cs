@@ -57,22 +57,27 @@ public static class OcrHelpers
 		#....#.#####...####.........######.#.......###.#.#....#.........###...#....#.######........#....#........#.............#....#....................................#....#........######
 		""";
 
-	public static string IdentifyMessage (string input, int whitespace = 1, OcrLetterSize ocrLetterSize = OcrLetterSize.Normal)
+	public static string IdentifyMessage(string input, char off='.', char on = '#', int whitespace = 1, OcrLetterSize ocrLetterSize = OcrLetterSize.Normal)
+		=> IdentifyMessage (input.Split("\r\n"), off, on, whitespace, ocrLetterSize);
+
+	public static string IdentifyMessage (IEnumerable<string> input, char off = '.', char on = '#', int whitespace = 1, OcrLetterSize ocrLetterSize = OcrLetterSize.Normal)
 	{
-		List<string> inputList = input.Split("\r\n").ToList();
+		List<string> inputList = input.ToList();
+		for (int i = 0; i < inputList.Count; i++)
+		{
+			inputList[i] = inputList[i].Replace(off, '.').Replace(on, '#');
+		}
 		int noOfColumns = inputList[0].Length;
 
 		string output = "";
 		int col = 0;
-		List<char> possibleLetters = new List<char>("ABCDEFGHIJKLMNOPQRSTUVWXYZ");
 		while (col < noOfColumns)
 		{
-			char? letter = FindLetter(inputList, col);
-			if (letter is null) {
+			char letter = FindLetter(inputList, col) ?? '!';
+			if (letter  == '!' || !Char.IsLetterOrDigit(letter)) {
 				break;
 			}
-
-			output+= letter;
+			output += letter;
 			col += LetterWidths[(int)(letter - 'A')].Width + whitespace;
 		}
 
@@ -104,9 +109,12 @@ public static class OcrHelpers
 			int i = (int)(item - 'A');
 			int charOffset = i * Alphabet_Normal_Grid_Width;
 			int charWidth = LetterWidths[i].Width;
-			if (inputList[row][col..(col + charWidth)] == Alphabet_Normal[row][charOffset..(charOffset + charWidth)])
+			if (col + charWidth < inputList[row].Length)
 			{
-				yield return (char)(i + (int)'A');
+				if (inputList[row][col..(col + charWidth)] == Alphabet_Normal[row][charOffset..(charOffset + charWidth)])
+				{
+					yield return (char)(i + (int)'A');
+				}
 			}
 		}
 	}

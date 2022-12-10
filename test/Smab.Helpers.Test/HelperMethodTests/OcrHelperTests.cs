@@ -9,10 +9,48 @@ public class OcrHelperTests
 		####.#..#.#....#..#.#....#....#.##.#..#..#.....#.#.#..#....#..#.###..###...##..#..#...#....#...
 		#..#.#..#.#..#.#..#.#....#....#..#.#..#..#..#..#.#.#..#....#..#.#....#.#.....#.#..#...#...#....
 		#..#.###...##..###..####.#.....###.#..#.###..##..#..#.####..##..#....#..#.###...##....#...####.
-		""", OcrHelpers.OcrLetterSize.Normal, "ABCDEFGHIJKLOPRSUYZ")]
-	public void OcrAlphabet(string ocrAlphabet, OcrHelpers.OcrLetterSize letterSize, string expected)
+		""", '.', '#', "ABCDEFGHIJKLOPRSUYZ")]
+	[InlineData("""
+		 ██  ███   ██  ███  ████ ████  ██  █  █ ███   ██ █  █ █     ██  ███  ███   ███ █  █ █   █ ████ 
+		█  █ █  █ █  █ █  █ █    █    █  █ █  █  █     █ █ █  █    █  █ █  █ █  █ █    █  █ █   █    █ 
+		█  █ ███  █    █  █ ███  ███  █    ████  █     █ ██   █    █  █ █  █ █  █ █    █  █  █ █    █  
+		████ █  █ █    █  █ █    █    █ ██ █  █  █     █ █ █  █    █  █ ███  ███   ██  █  █   █    █   
+		█  █ █  █ █  █ █  █ █    █    █  █ █  █  █  █  █ █ █  █    █  █ █    █ █     █ █  █   █   █    
+		█  █ ███   ██  ███  ████ █     ███ █  █ ███  ██  █  █ ████  ██  █    █  █ ███   ██    █   ████ 
+		""", ' ', '█', "ABCDEFGHIJKLOPRSUYZ")]
+	public void OcrAlphabetString(string ocrAlphabet, char off, char on, string expected)
 	{
-		string actual = OcrHelpers.IdentifyMessage(ocrAlphabet, 1, letterSize);
+		string actual = OcrHelpers.IdentifyMessage(ocrAlphabet, off, on, 1);
+		Assert.Equal(expected, actual);
+	}
+
+	[Theory]
+	[InlineData(new string[] {
+		".##..###...##..###..####.####..##..#..#.###...##.#..#.#.....##..###..###...###.#..#.#...#.####.",
+		"#..#.#..#.#..#.#..#.#....#....#..#.#..#..#.....#.#.#..#....#..#.#..#.#..#.#....#..#.#...#....#.",
+		"#..#.###..#....#..#.###..###..#....####..#.....#.##...#....#..#.#..#.#..#.#....#..#..#.#....#..",
+		"####.#..#.#....#..#.#....#....#.##.#..#..#.....#.#.#..#....#..#.###..###...##..#..#...#....#...",
+		"#..#.#..#.#..#.#..#.#....#....#..#.#..#..#..#..#.#.#..#....#..#.#....#.#.....#.#..#...#...#....",
+		"#..#.###...##..###..####.#.....###.#..#.###..##..#..#.####..##..#....#..#.###...##....#...####.",
+	}, OcrHelpers.OcrLetterSize.Normal, "ABCDEFGHIJKLOPRSUYZ")]
+	public void OcrAlphabetArray(string[] ocrAlphabet, OcrHelpers.OcrLetterSize letterSize, string expected)
+	{
+		string actual = OcrHelpers.IdentifyMessage(ocrAlphabet, '.', '#', 1, letterSize);
+		Assert.Equal(expected, actual);
+	}
+
+	[Theory]
+	[InlineData("""
+		.##..###...##..###..####.####..##..#..#.###...##.#..#.#.....##..###..###...###.#..#.#...#.###
+		#..#.#..#.#..#.#..#.#....#....#..#.#..#..#.....#.#.#..#....#..#.#..#.#..#.#....#..#.#...#....
+		#..#.###..#....#..#.###..###..#....####..#.....#.##...#....#..#.#..#.#..#.#....#..#..#.#....#
+		####.#..#.#....#..#.#....#....#.##.#..#..#.....#.#.#..#....#..#.###..###...##..#..#...#....#.
+		#..#.#..#.#..#.#..#.#....#....#..#.#..#..#..#..#.#.#..#....#..#.#....#.#.....#.#..#...#...#..
+		#..#.###...##..###..####.#.....###.#..#.###..##..#..#.####..##..#....#..#.###...##....#...###
+		""", '.', '#', "ABCDEFGHIJKLOPRSUY")]
+	public void OcrAlphabetString_Bad_Length(string ocrAlphabet, char off, char on, string expected)
+	{
+		string actual = OcrHelpers.IdentifyMessage(ocrAlphabet, off, on, 1);
 		Assert.Equal(expected, actual);
 	}
 
