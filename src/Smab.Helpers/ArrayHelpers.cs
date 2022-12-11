@@ -1,4 +1,5 @@
 ﻿namespace Smab.Helpers;
+
 public static partial class ArrayHelpers {
 
 	/// <summary>
@@ -7,8 +8,8 @@ public static partial class ArrayHelpers {
 	/// <typeparam name="T"></typeparam>
 	/// <param name="numbers"></param>
 	/// <returns></returns>
-	public static double Mean<T>(this IEnumerable<T> numbers) where T : struct =>
-		numbers.Select(n => Convert.ToDouble(n)).ToArray().Average();
+	public static double Mean<T>(this IEnumerable<T> numbers) where T : struct
+		=> numbers.Select(n => Convert.ToDouble(n)).Average();
 
 	/// <summary>
 	/// Finds the Median value and returns it as double

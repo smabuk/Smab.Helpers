@@ -1,6 +1,6 @@
 ﻿namespace Smab.Helpers;
-public static class OcrHelpers
-{
+
+public static class OcrHelpers {
 	const char Unlit = '.';
 	const char Lit = '#';
 	const char BadCharacter = '!';
@@ -58,23 +58,20 @@ public static class OcrHelpers
 		""";
 
 	public static string IdentifyMessage(string input, char off = Unlit, char on = Lit, int whitespace = 1, OcrLetterSize ocrLetterSize = OcrLetterSize.Normal)
-		=> IdentifyMessage (input.Split("\r\n"), off, on, whitespace, ocrLetterSize);
+		=> IdentifyMessage(input.Split("\r\n"), off, on, whitespace, ocrLetterSize);
 
-	public static string IdentifyMessage (IEnumerable<string> input, char off = Unlit, char on = Lit, int whitespace = 1, OcrLetterSize ocrLetterSize = OcrLetterSize.Normal)
-	{
+	public static string IdentifyMessage(IEnumerable<string> input, char off = Unlit, char on = Lit, int whitespace = 1, OcrLetterSize ocrLetterSize = OcrLetterSize.Normal) {
 		List<string> inputList = input.ToList();
-		for (int i = 0; i < inputList.Count; i++)
-		{
+		for (int i = 0; i < inputList.Count; i++) {
 			inputList[i] = inputList[i].Replace(off, Unlit).Replace(on, Lit);
 		}
 		int noOfColumns = inputList[0].Length;
 
 		string output = "";
 		int col = 0;
-		while (col < noOfColumns)
-		{
+		while (col < noOfColumns) {
 			char letter = FindLetter(inputList, col) ?? BadCharacter;
-			if (letter  == BadCharacter || !Char.IsLetterOrDigit(letter)) {
+			if (letter == BadCharacter || !Char.IsLetterOrDigit(letter)) {
 				break;
 			}
 			output += letter;
@@ -87,43 +84,38 @@ public static class OcrHelpers
 
 
 
-	private static char? FindLetter(List<string> inputList, int col)
-	{
-		IEnumerable<char> possibleLetters = new List<char>("ABCDEFGHIJKLMNOPQRSTUVWXYZ");
-		for (int i = 0; i < Alphabet_Normal_Grid_Height; i++)
-		{
+	private static char? FindLetter(IEnumerable<string> inputList, int col) {
+		string possibleLetters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+		for (int i = 0; i < Alphabet_Normal_Grid_Height; i++) {
 			possibleLetters = PossibleLetters(inputList, col, i, possibleLetters);
-			if (possibleLetters.ToList().Count <= 1)
-			{
+			if (possibleLetters.ToList().Count <= 1) {
 				return possibleLetters.FirstOrDefault();
 			}
 		}
 		return null;
 	}
 
-	private static IEnumerable<char> PossibleLetters(List<string> inputList, int col, int row, IEnumerable<char> possible = null!)
-	{
+	private static string PossibleLetters(IEnumerable<string> input, int col, int row, string possible = null!) {
+		string[] inputArray = input.ToArray();
 		possible ??= "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-		foreach (var item in possible)
-		{
+		string returnPossible = "";
+		foreach (char item in possible) {
 			int i = (int)(item - 'A');
 			int charOffset = i * Alphabet_Normal_Grid_Width;
 			int charWidth = LetterWidths[i].Width;
 			string alphabetSlice = Alphabet_Normal[row][charOffset..(charOffset + charWidth)];
 			string inputSlice;
-			if (col + charWidth < inputList[row].Length)
-			{
-				inputSlice = inputList[row][col..(col + charWidth)];
-			} else
-			{
-				inputSlice = inputList[row][col..];
+			if (col + charWidth < inputArray[row].Length) {
+				inputSlice = inputArray[row][col..(col + charWidth)];
+			} else {
+				inputSlice = inputArray[row][col..];
 				inputSlice += new string('.', charWidth - inputSlice.Length);
 			}
-			if (inputSlice == alphabetSlice)
-			{
-				yield return (char)(i + (int)'A');
+			if (inputSlice == alphabetSlice) {
+				returnPossible += (char)(i + (int)'A');
 			}
 		}
+		return returnPossible;
 	}
 
 	public enum OcrLetterSize { Normal, Large }

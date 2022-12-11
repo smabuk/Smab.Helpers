@@ -1,5 +1,7 @@
 ﻿namespace Smab.Helpers;
+
 public static class ArgumentHelpers {
+
 	public static T GetArgument<T>(object[]? args, int argumentNumber, T defaultResult) {
 		if (args is null || args.Length == 0) {
 			return defaultResult;
@@ -9,6 +11,7 @@ public static class ArgumentHelpers {
 			throw new ArgumentOutOfRangeException($"{nameof(GetArgument)}: {nameof(argumentNumber)}={argumentNumber}");
 		}
 	}
+
 	public static T GetArgument<T>(object[]? args, int argumentNumber) {
 		if (args is null || args.Length == 0) {
 			throw new ArgumentOutOfRangeException($"{nameof(GetArgument)}: No args object");

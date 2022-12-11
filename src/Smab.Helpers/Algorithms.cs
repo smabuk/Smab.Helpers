@@ -1,4 +1,5 @@
 ﻿namespace Smab.Helpers;
+
 public class Algorithms {
 
 	/// <summary>
@@ -39,8 +40,7 @@ public class Algorithms {
 
 		PriorityQueue<Cell<int>, int> priorityQueue = new();
 		priorityQueue.Enqueue(new(start, 0), 0);
-		Dictionary<Point, int> costs = new();
-		costs.Add(start, 0);
+		Dictionary<Point, int> costs = new() { { start, 0 } };
 
 		while (priorityQueue.Count > 0) {
 			Cell<int> cell = priorityQueue.Dequeue();

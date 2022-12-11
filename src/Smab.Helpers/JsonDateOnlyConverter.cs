@@ -2,8 +2,8 @@
 using System.Text.Json.Serialization;
 
 namespace Smab.Helpers;
-public sealed class JsonDateOnlyConverter : JsonConverter<DateOnly>
-{
+
+public sealed class JsonDateOnlyConverter : JsonConverter<DateOnly> {
 	public override DateOnly Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
 		=> DateOnly.FromDateTime(reader.GetDateTime());
 
@@ -11,8 +11,7 @@ public sealed class JsonDateOnlyConverter : JsonConverter<DateOnly>
 		=> writer.WriteStringValue(value.ToString("yyyy-MM-dd"));
 }
 
-public sealed class JsonTimeOnlyConverter : JsonConverter<TimeOnly>
-{
+public sealed class JsonTimeOnlyConverter : JsonConverter<TimeOnly> {
 	public override TimeOnly Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
 		=> TimeOnly.FromDateTime(reader.GetDateTime());
 

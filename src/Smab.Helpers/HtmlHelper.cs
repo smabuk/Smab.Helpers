@@ -1,10 +1,8 @@
 ﻿namespace Smab.Helpers;
-public static class HtmlHelper
-{
-	public static bool HasClass(this string classString, string className) {
-		string[] classValues = classString.Split(" ");
 
-		return classValues.Contains(className, StringComparer.InvariantCultureIgnoreCase);
-	}
+public static class HtmlHelper {
+
+	public static bool HasClass(this string classString, string className)
+		=> classString.Split(" ").Contains(className, StringComparer.InvariantCultureIgnoreCase);
 
 }

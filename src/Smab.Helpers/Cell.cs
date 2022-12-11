@@ -1,7 +1,8 @@
 ﻿namespace Smab.Helpers;
+
 public record Cell<T>(Point Index, T Value) {
 
-	public Cell(int X, int Y, T Value) : this(new Point(X, Y), Value) { }
+	public Cell( int X, int Y, T Value)       : this(new Point(X, Y), Value) { }
 	public Cell((int X, int Y, T Value) cell) : this(new Point(cell.X, cell.Y), cell.Value) { }
 
 	public int X => Index.X;

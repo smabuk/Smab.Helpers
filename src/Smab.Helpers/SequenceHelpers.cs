@@ -1,5 +1,7 @@
 ﻿namespace Smab.Helpers;
+
 public static class SequenceHelpers {
+
 	/// <summary>
 	///		Generates a sequence of Triangular Numbers
 	///		1, 3, 6, 10, 15 ...
@@ -29,11 +31,11 @@ public static class SequenceHelpers {
 
 
 
-	public static IEnumerable<long> FactorialNumbers(int count) =>
-		Enumerable.Range(1, count).Select(n => Factorial(n));
+	public static IEnumerable<long> FactorialNumbers(int count) 
+		=> Enumerable.Range(1, count).Select(n => Factorial(n));
 
-	public static long Factorial(int n) =>
-		Enumerable.Range(1, n).Aggregate(1, (p, item) => p * item);
+	public static long Factorial(int n)
+		=> Enumerable.Range(1, n).Aggregate(1L, (p, item) => p * item);
 
 
 

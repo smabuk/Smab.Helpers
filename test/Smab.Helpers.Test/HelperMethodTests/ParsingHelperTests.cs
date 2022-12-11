@@ -1,6 +1,4 @@
-﻿using System.ComponentModel;
-
-namespace Smab.Helpers.Test.HelperMethodTests;
+﻿namespace Smab.Helpers.Test.HelperMethodTests;
 
 public class ParsingHelperTests {
     [Theory]

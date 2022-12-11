@@ -1,16 +1,18 @@
 ﻿namespace Smab.Helpers;
+
 public static class ParsingHelpers {
+
 	public static IEnumerable<int> AsDigits(this string input) =>
 		input.Select(x => int.Parse($"{x}"));
 
 	public static IEnumerable<int> AsInts(this IEnumerable<string> input) =>
-		input.Select(x => int.Parse(x));
+		input.Select(int.Parse);
 
 	public static IEnumerable<long> AsLongs(this IEnumerable<string> input) =>
-		input.Select(x => long.Parse(x));
+		input.Select(long.Parse);
 
-	public static IEnumerable<Point> AsPoints(this IEnumerable<string> input) => 
-		input.Select(i => i.Split(",")).Select(x => new Point(int.Parse(x[0]), int.Parse(x[1])));
+	public static IEnumerable<Point> AsPoints(this IEnumerable<string> input) =>
+		input.Select(i => i.Split(",")).Select(x => new Point(x[0].AsInt(), x[1].AsInt()));
 
 	/// <summary>
 	/// Returns Points from an input of (int x,int y) tuples
@@ -21,24 +23,18 @@ public static class ParsingHelpers {
 		input.Select(p => new Point(X: p.x, Y: p.y));
 
 
-	public static string AsBinaryFromHex(this string input) {
-		return String.Join(
+	public static string AsBinaryFromHex(this string input)
+		=> String.Join(
 			String.Empty,
 			input.Select(c => Convert.ToString(Convert.ToInt32(c.ToString(), 16), 2).PadLeft(4, '0')));
-	}
 
-	public static string AsBinaryFromHex(this IEnumerable<string> input) {
-		return String.Join(String.Empty, input.Select(c => AsBinaryFromHex(c)));
-	}
+	public static string AsBinaryFromHex(this IEnumerable<string> input)
+		=> String.Join(String.Empty, input.Select(AsBinaryFromHex));
 
-	public static int AsInt(this string input, int defaultIfInvalid = 0) {
-		bool success = int.TryParse(input, out int value);
-		return success switch { true => value, false => defaultIfInvalid };
-	}
+	public static int AsInt(this string input, int defaultIfInvalid = 0)
+		=>   int.TryParse(input, out int value) switch { true => value, false => defaultIfInvalid };
 
-	public static long AsLong(this string input, long defaultIfInvalid = 0) {
-		bool success = long.TryParse(input, out long value);
-		return success switch { true => value, false => defaultIfInvalid };
-	}
+	public static long AsLong(this string input, long defaultIfInvalid = 0)
+		=> long.TryParse(input, out long value) switch { true => value, false => defaultIfInvalid };
 }
 

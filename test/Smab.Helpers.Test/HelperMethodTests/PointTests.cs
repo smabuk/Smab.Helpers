@@ -1,4 +1,5 @@
 ﻿namespace Smab.Helpers.Test.HelperMethodTests;
+
 public class PointTests
 {
 	[Theory]
