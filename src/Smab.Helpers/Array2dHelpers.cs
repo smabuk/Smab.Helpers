@@ -85,7 +85,7 @@ public static partial class ArrayHelpers {
 
 
 
-	public static IEnumerable<(int x, int y, T value)> GetAdjacentCells<T>(this T[,] array, int x, int y, bool includeDiagonals = false) {
+	public static IEnumerable<Cell<T>> GetAdjacentCells<T>(this T[,] array, int x, int y, bool includeDiagonals = false) {
 		int cols = array.GetUpperBound(0);
 		int rows = array.GetUpperBound(1);
 
@@ -98,12 +98,12 @@ public static partial class ArrayHelpers {
 			int newX = x + dX;
 			int newY = y + dY;
 			if (newX >= 0 && newX <= cols && newY >= 0 && newY <= rows) {
-				yield return (newX, newY, array[newX, newY]);
+				yield return new(newX, newY, array[newX, newY]);
 			}
 		}
 	}
 
-	public static IEnumerable<(int x, int y, T value)> GetAdjacentCells<T>(this T[,] array, (int x, int y) point, bool includeDiagonals = false)
+	public static IEnumerable<Cell<T>> GetAdjacentCells<T>(this T[,] array, (int x, int y) point, bool includeDiagonals = false)
 		=> GetAdjacentCells<T>(array, point.x, point.y, includeDiagonals);
 
 	/// <summary>
