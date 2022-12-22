@@ -77,4 +77,6 @@ public record struct Point(int X, int Y) {
 		(-1, -1),
 	};
 
-};
+	public override string ToString() => $"({X}, {Y})";
+
+}

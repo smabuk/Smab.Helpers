@@ -69,4 +69,7 @@ public record struct Point3d(int X, int Y, int Z) {
 		(-1,  1, -1),
 		(-1, -1,  1),
 	};
+
+	public override string ToString() => $"({X}, {Y}, {Z})";
+
 }
