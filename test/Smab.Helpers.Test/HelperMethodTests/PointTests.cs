@@ -29,7 +29,7 @@ public class PointTests {
 		Assert.Equal((2, 3), point.West());
 		Assert.Equal((4, 3), point.East());
 
-		List<Point> list = point.Adjacent.ToList();
+		List<Point> list = point.Adjacent().ToList();
 		Assert.Equal(4, list.Count);
 		Assert.Collection(list,
 			item => Assert.Equal((3, 2), item),
@@ -38,7 +38,7 @@ public class PointTests {
 			item => Assert.Equal((4, 3), item)
 		);
 
-		list = point.DiagonallyAdjacent.ToList();
+		list = point.DiagonallyAdjacent().ToList();
 		Assert.Equal(4, list.Count);
 		Assert.Collection(list,
 			item => Assert.Equal((4, 2), item),
@@ -47,7 +47,7 @@ public class PointTests {
 			item => Assert.Equal((2, 2), item)
 		);
 
-		list = point.AllAdjacent.ToList();
+		list = point.AllAdjacent().ToList();
 		Assert.Equal(8, list.Count);
 		Assert.Collection(list,
 			item => Assert.Equal((3, 2), item),

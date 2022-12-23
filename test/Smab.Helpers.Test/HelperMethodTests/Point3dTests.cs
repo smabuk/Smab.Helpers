@@ -31,7 +31,7 @@ public class Point3dTests {
 		Assert.Equal((3, 3, 2), Point3d.Front());
 		Assert.Equal((3, 3, 4), Point3d.Back());
 
-		List<Point3d> list = Point3d.Adjacent.ToList();
+		List<Point3d> list = Point3d.Adjacent().ToList();
 		Assert.Equal(6, list.Count);
 		Assert.Collection(list,
 			item => Assert.Equal((3, 2, 3), item),
@@ -42,7 +42,7 @@ public class Point3dTests {
 			item => Assert.Equal((3, 3, 4), item)
 		);
 
-		list = Point3d.AllAdjacent.ToList();
+		list = Point3d.AllAdjacent().ToList();
 		Assert.Equal(26, list.Count);
 		Assert.Collection(list,
 			item => Assert.Equal((2, 2, 2), item),
