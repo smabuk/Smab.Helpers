@@ -22,7 +22,7 @@ jobs:
     steps:
       # This step clones the source code to the CI build machine
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       # This step installs the .NET SDK
       - name: Install .NET
