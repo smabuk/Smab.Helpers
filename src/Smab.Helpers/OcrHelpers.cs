@@ -44,7 +44,11 @@ public static class OcrHelpers {
 		('Y', 5),
 		('Z', 4),
 		};
-	const string ocrAlphabetLarge = """
+
+	const int Alphabet_Large_Letter_Width = 6;
+	const int Alphabet_Large_Grid_Width = 7;
+	const int Alphabet_Large_Grid_Height = 10;
+	const string Alphabet_Large = """
 		..##...#####...####.........######.######..####..#....#...........###.#....#.#.............#....#........#####.........#####.....................................#....#........######
 		.#..#..#....#.#....#........#......#......#....#.#....#............#..#...#..#.............##...#........#....#........#....#....................................#....#.............#
 		#....#.#....#.#.............#......#......#......#....#............#..#..#...#.............##...#........#....#........#....#.....................................#..#..............#
@@ -70,12 +74,17 @@ public static class OcrHelpers {
 		string output = "";
 		int col = 0;
 		while (col < noOfColumns) {
-			char letter = FindLetter(inputList, col) ?? BadCharacter;
+			char letter = FindLetter(inputList, col, ocrLetterSize) ?? BadCharacter;
 			if (letter == BadCharacter || !Char.IsLetterOrDigit(letter)) {
 				break;
 			}
 			output += letter;
-			col += LetterWidths[(int)(letter - 'A')].Width + whitespace;
+			int letterWidth = ocrLetterSize switch {
+				OcrLetterSize.Normal => LetterWidths[(int)(letter - 'A')].Width,
+				OcrLetterSize.Large => Alphabet_Large_Letter_Width,
+				_ => throw new NotImplementedException(),
+			};
+			col += letterWidth + whitespace;
 		}
 
 		return output;
@@ -84,10 +93,15 @@ public static class OcrHelpers {
 
 
 
-	private static char? FindLetter(IEnumerable<string> inputList, int col) {
+	private static char? FindLetter(IEnumerable<string> inputList, int col, OcrLetterSize ocrLetterSize) {
 		string possibleLetters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-		for (int i = 0; i < Alphabet_Normal_Grid_Height; i++) {
-			possibleLetters = PossibleLetters(inputList, col, i, possibleLetters);
+		int gridHeight = ocrLetterSize switch {
+			OcrLetterSize.Normal => Alphabet_Normal_Grid_Height,
+			OcrLetterSize.Large  => Alphabet_Large_Grid_Height,
+			_ => throw new NotImplementedException(),
+		};
+		for (int i = 0; i < gridHeight; i++) {
+			possibleLetters = PossibleLetters(inputList, ocrLetterSize, col, i, possibleLetters);
 			if (possibleLetters.ToList().Count <= 1) {
 				return possibleLetters.FirstOrDefault();
 			}
@@ -95,15 +109,26 @@ public static class OcrHelpers {
 		return null;
 	}
 
-	private static string PossibleLetters(IEnumerable<string> input, int col, int row, string possible = null!) {
+	private static string PossibleLetters(IEnumerable<string> input, OcrLetterSize ocrLetterSize, int col, int row, string possible = null!) {
 		string[] inputArray = input.ToArray();
 		possible ??= "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 		string returnPossible = "";
 		foreach (char item in possible) {
 			int i = (int)(item - 'A');
-			int charOffset = i * Alphabet_Normal_Grid_Width;
-			int charWidth = LetterWidths[i].Width;
-			string alphabetSlice = Alphabet_Normal[row][charOffset..(charOffset + charWidth)];
+			int charOffset = 1;
+			int charWidth = 1;
+			string alphabetSlice = "";
+			if (ocrLetterSize is OcrLetterSize.Normal) {
+				charOffset = i * Alphabet_Normal_Grid_Width;
+				charWidth = LetterWidths[i].Width;
+				alphabetSlice = Alphabet_Normal[row][charOffset..(charOffset + charWidth)];
+			} else if (ocrLetterSize is OcrLetterSize.Large) {
+				charOffset = i * Alphabet_Large_Grid_Width;
+				charWidth = Alphabet_Large_Letter_Width;
+				alphabetSlice = Alphabet_Large.Split(Environment.NewLine)[row][charOffset..(charOffset + charWidth)];
+			} else {
+				throw new NotImplementedException();
+			}
 			string inputSlice;
 			if (col + charWidth < inputArray[row].Length) {
 				inputSlice = inputArray[row][col..(col + charWidth)];
