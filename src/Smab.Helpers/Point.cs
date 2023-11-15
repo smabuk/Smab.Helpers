@@ -10,7 +10,7 @@ public record struct Point(int X, int Y) {
 		return (x, y);
 	}
 
-	public void Deconstruct(out int x, out int y) {
+	public readonly void Deconstruct(out int x, out int y) {
 		x = X;
 		y = Y;
 	}
@@ -48,19 +48,24 @@ public record struct Point(int X, int Y) {
 	public Point North() => this with { Y = Y - 1 };
 	public Point South() => this with { Y = Y + 1 };
 
-	private static readonly List<(int dX, int dY)> CARDINAL_DIRECTIONS = new() {
+	public Point Right() => this with { X = X + 1 };
+	public Point Left()  => this with { X = X - 1 };
+	public Point Up()    => this with { Y = Y - 1 };
+	public Point Down()  => this with { Y = Y + 1 };
+
+	private static readonly List<(int dX, int dY)> CARDINAL_DIRECTIONS = [
 		( 0, -1),
 		( 0,  1),
 		(-1,  0),
 		( 1,  0),
-	};
-	private static readonly List<(int dX, int dY)> ORDINAL_DIRECTIONS = new() {
+	];
+	private static readonly List<(int dX, int dY)> ORDINAL_DIRECTIONS = [
 		( 1, -1),
 		( 1,  1),
 		(-1,  1),
 		(-1, -1),
-	};
-	private static readonly List<(int dX, int dY)> ALL_DIRECTIONS = new() {
+	];
+	private static readonly List<(int dX, int dY)> ALL_DIRECTIONS = [
 		( 0, -1),
 		( 1, -1),
 		( 1,  0),
@@ -69,7 +74,7 @@ public record struct Point(int X, int Y) {
 		(-1,  1),
 		(-1,  0),
 		(-1, -1),
-	};
+	];
 
 	//public override string ToString() => $"({X}, {Y})";
 

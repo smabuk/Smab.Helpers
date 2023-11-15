@@ -22,7 +22,6 @@ public static class ParsingHelpers {
 	public static IEnumerable<Point> AsPoints(this IEnumerable<(int x, int y)> input) =>
 		input.Select(p => new Point(X: p.x, Y: p.y));
 
-
 	public static string AsBinaryFromHex(this string input)
 		=> String.Join(
 			String.Empty,
@@ -36,5 +35,12 @@ public static class ParsingHelpers {
 
 	public static long AsLong(this string input, long defaultIfInvalid = 0)
 		=> long.TryParse(input, out long value) switch { true => value, false => defaultIfInvalid };
+
+	public static int AsIntFromBinary(this string input, char zeroChar = '.', char oneChar = '#')
+		=> Convert.ToInt32(input.Replace(zeroChar, '0').Replace(oneChar, '1'), 2);
+
+	public static long AsLongFromBinary(this string input, char zeroChar = '.', char oneChar = '#')
+		=> Convert.ToInt64(input.Replace(zeroChar, '0').Replace(oneChar, '1'), 2);
+
 }
 

@@ -4,9 +4,9 @@ namespace Smab.Helpers;
 
 public static partial class ArrayHelpers {
 
-	public static readonly List<(int dX, int dY)> CARDINAL_DIRECTIONS = new() { (0, -1), (0, 1), (-1, 0), (1, 0) };
-	public static readonly List<(int dX, int dY)> ORDINAL_DIRECTIONS = new() { (-1, -1), (-1, 1), (1, 1), (1, -1) };
-	public static readonly List<(int dX, int dY)> ALL_DIRECTIONS = CARDINAL_DIRECTIONS.Union(ORDINAL_DIRECTIONS).ToList();
+	public static readonly List<(int dX, int dY)> CARDINAL_DIRECTIONS = [( 0, -1), ( 0, 1), (-1, 0), (1,  0)];
+	public static readonly List<(int dX, int dY)> ORDINAL_DIRECTIONS  = [(-1, -1), (-1, 1), ( 1, 1), (1, -1)];
+	public static readonly List<(int dX, int dY)> ALL_DIRECTIONS = [.. CARDINAL_DIRECTIONS, .. ORDINAL_DIRECTIONS];
 
 	public static int NoOfColumns<T>(this T[,] array) => array.GetLength(0);
 	public static int NoOfRows<T>(this T[,] array) => array.GetLength(1);

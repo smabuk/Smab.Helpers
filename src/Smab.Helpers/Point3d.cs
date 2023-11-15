@@ -21,7 +21,7 @@ public record struct Point3d(int X, int Y, int Z) {
 	public static Point3d operator *(int lhs, in Point3d rhs)        => new(rhs.X * lhs, rhs.Y * lhs, rhs.Z * lhs);
 
 
-	public void Deconstruct(out int x, out int y, out int z) {
+	public readonly void Deconstruct(out int x, out int y, out int z) {
 		x = X;
 		y = Y;
 		z = Z;
@@ -33,6 +33,10 @@ public record struct Point3d(int X, int Y, int Z) {
 	public Point3d South() => this with { Y = Y + 1 };
 	public Point3d Front() => this with { Z = Z - 1 };
 	public Point3d Back()  => this with { Z = Z + 1 };
+	public Point3d Right() => this with { X = X + 1 };
+	public Point3d Left()  => this with { X = X - 1 };
+	public Point3d Up()    => this with { Y = Y - 1 };
+	public Point3d Down()  => this with { Y = Y + 1 };
 
 	public IEnumerable<Point3d> Adjacent() {
 		Point3d p = this;
@@ -44,27 +48,30 @@ public record struct Point3d(int X, int Y, int Z) {
 		for (int z = -1; z <= 1; z++) {
 			for (int y = -1; y <= 1; y++) {
 				for (int x = -1; x <= 1; x++) {
-					if (x == 0 && y == 0 && z == 0) { continue; }
+					if (x == 0 && y == 0 && z == 0)
+					{
+						continue;
+					}
 					yield return p with { X = p.X + x, Y = p.Y + y, Z = p.Z + z };
 				}
 			}
 		}
 	}
 
-	private static readonly List<(int dX, int dY, int dZ)> CARDINAL_DIRECTIONS = new() {
+	private static readonly List<(int dX, int dY, int dZ)> CARDINAL_DIRECTIONS = [
 		( 0, -1,  0),
 		( 0,  1,  0),
 		(-1,  0,  0),
 		( 1,  0,  0),
 		( 0,  0, -1),
 		( 0,  0,  1),
-	};
-	private static readonly List<(int dX, int dY, int dZ)> ORDINAL_DIRECTIONS = new() {
+	];
+	private static readonly List<(int dX, int dY, int dZ)> ORDINAL_DIRECTIONS = [
 		( 1, -1, -1),
 		( 1,  1,  1),
 		(-1,  1, -1),
 		(-1, -1,  1),
-	};
+	];
 
 	//public override string ToString() => $"({X}, {Y}, {Z})";
 
