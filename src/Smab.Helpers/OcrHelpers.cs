@@ -45,6 +45,20 @@ public static class OcrHelpers {
 		('Z', 4),
 		];
 
+	const int Alphabet_Medium_Letter_Width = 5;
+	const int Alphabet_Medium_Grid_Width = 7;
+	const int Alphabet_Medium_Grid_Height = 8;
+	const string Alphabet_Medium = """
+		......|......|......|......|......|......|......|#...#.|.###..|......|......|......|......|......|......|......|......|......|......|......|......|......|......|......|......|......|......|
+		......|......|......|......|......|......|......|#...#.|..#...|......|......|......|......|......|......|......|......|......|......|......|......|......|......|......|......|......|......|
+		......|......|......|......|......|......|......|#...#.|..#...|......|......|......|......|......|......|......|......|......|......|......|......|......|......|......|......|......|......|
+		......|......|......|......|......|......|......|#####.|..#...|......|......|......|......|......|......|......|......|......|......|......|......|......|......|......|......|......|......|
+		......|......|......|......|......|......|......|#...#.|..#...|......|......|......|......|......|......|......|......|......|......|......|......|......|......|......|......|......|......|
+		......|......|......|......|......|......|......|#...#.|..#...|......|......|......|......|......|......|......|......|......|......|......|......|......|......|......|......|......|......|
+		......|......|......|......|......|......|......|#...#.|..#...|......|......|......|......|......|......|......|......|......|......|......|......|......|......|......|......|......|......|
+		......|......|......|......|......|......|......|#...#.|.###..|......|......|......|......|......|......|......|......|......|......|......|......|......|......|......|......|......|......|
+		""";
+
 	const int Alphabet_Large_Letter_Width = 6;
 	const int Alphabet_Large_Grid_Width = 8;
 	const int Alphabet_Large_Grid_Height = 10;
@@ -81,6 +95,7 @@ public static class OcrHelpers {
 			output += letter;
 			int letterWidth = ocrLetterSize switch {
 				OcrLetterSize.Normal => LetterWidths[(int)(letter - 'A')].Width,
+				OcrLetterSize.Medium => Alphabet_Medium_Letter_Width,
 				OcrLetterSize.Large => Alphabet_Large_Letter_Width,
 				_ => throw new NotImplementedException(),
 			};
@@ -97,6 +112,7 @@ public static class OcrHelpers {
 		string possibleLetters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 		int gridHeight = ocrLetterSize switch {
 			OcrLetterSize.Normal => Alphabet_Normal_Grid_Height,
+			OcrLetterSize.Medium => Alphabet_Medium_Grid_Height,
 			OcrLetterSize.Large  => Alphabet_Large_Grid_Height,
 			_ => throw new NotImplementedException(),
 		};
@@ -122,6 +138,10 @@ public static class OcrHelpers {
 				charOffset = i * Alphabet_Normal_Grid_Width;
 				charWidth = LetterWidths[i].Width;
 				alphabetSlice = Alphabet_Normal[row][charOffset..(charOffset + charWidth)];
+			} else if (ocrLetterSize is OcrLetterSize.Medium) {
+				charOffset = i * Alphabet_Medium_Grid_Width;
+				charWidth = Alphabet_Medium_Letter_Width;
+				alphabetSlice = Alphabet_Medium.Split(Environment.NewLine)[row][charOffset..(charOffset + charWidth)];
 			} else if (ocrLetterSize is OcrLetterSize.Large) {
 				charOffset = i * Alphabet_Large_Grid_Width;
 				charWidth = Alphabet_Large_Letter_Width;
@@ -143,5 +163,5 @@ public static class OcrHelpers {
 		return returnPossible;
 	}
 
-	public enum OcrLetterSize { Normal, Large }
+	public enum OcrLetterSize { Normal, Medium, Large }
 }
