@@ -42,6 +42,25 @@ public class OcrHelperTests
 	}
 
 	[Theory]
+	[InlineData("""
+		  ██    █████    ████   █    █     ███  █████   █    █  ██████
+		 █  █   █    █  █    █  █    █      █   █    █  █    █  █
+		█    █  █    █  █        █  █       █   █    █   █  █   █
+		█    █  █    █  █        █  █       █   █    █   █  █   █
+		█    █  █████   █         ██        █   █████     ██    █████
+		██████  █    █  █  ███    ██        █   █    █    ██    █
+		█    █  █    █  █    █   █  █       █   █    █   █  █   █
+		█    █  █    █  █    █   █  █   █   █   █    █   █  █   █
+		█    █  █    █  █   ██  █    █  █   █   █    █  █    █  █
+		█    █  █████    ███ █  █    █   ███    █████   █    █  █
+		""", ' ', '█', "ABGXJBXF")]
+	public void OcrLargeAlphabetString(string ocrAlphabet, char off, char on, string expected)
+	{
+		string actual = OcrHelpers.IdentifyMessage(ocrAlphabet, off, on, 2, OcrHelpers.OcrLetterSize.Large);
+		Assert.Equal(expected, actual);
+	}
+
+	[Theory]
 	[InlineData(new string[] {
 		".##..###...##..###..####.####..##..#..#.###...##.#..#.#.....##..###..###...###.#..#.#...#.####.",
 		"#..#.#..#.#..#.#..#.#....#....#..#.#..#..#.....#.#.#..#....#..#.#..#.#..#.#....#..#.#...#....#.",
