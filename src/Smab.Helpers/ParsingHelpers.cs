@@ -42,5 +42,11 @@ public static class ParsingHelpers {
 	public static long AsLongFromBinary(this string input, char zeroChar = '.', char oneChar = '#')
 		=> Convert.ToInt64(input.Replace(zeroChar, '0').Replace(oneChar, '1'), 2);
 
+	// Regex Parsing Helpers
+	public static int GroupAsInt(this System.Text.RegularExpressions.Match match, string groupName, int defaultIfInvalid = 0)
+		=> int.TryParse(match.Groups[groupName].Value, out int value) switch { true => value, false => defaultIfInvalid };
+
+	public static long GroupAsLong(this System.Text.RegularExpressions.Match match, string groupName, int defaultIfInvalid = 0)
+		=> long.TryParse(match.Groups[groupName].Value, out long value) switch { true => value, false => defaultIfInvalid };
 }
 

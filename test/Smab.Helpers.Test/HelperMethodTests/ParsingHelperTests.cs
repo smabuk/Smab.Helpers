@@ -1,6 +1,8 @@
-﻿namespace Smab.Helpers.Test.HelperMethodTests;
+﻿using System.Text.RegularExpressions;
 
-public class ParsingHelperTests {
+namespace Smab.Helpers.Test.HelperMethodTests;
+
+public partial class ParsingHelperTests {
 	[Theory]
 	[InlineData("1", 1)]
 	[InlineData("23", 23)]
@@ -88,4 +90,18 @@ public class ParsingHelperTests {
 		long[] actual = input.AsLongs().ToArray();
 		Assert.Equal(expected, actual);
 	}
+
+	[Theory]
+	[InlineData("1, 2, 3", new int[] { 1, 2, 3 })]
+	public void GroupAsInts_ShouldBe(string input, int[] expected) {
+
+		Match actual = CommaDelimitedNumberRegex().Match(input);
+
+		Assert.Equal(expected[0], actual.GroupAsInt("number0"));
+		Assert.Equal(expected[1], actual.GroupAsInt("number1"));
+		Assert.Equal(expected[2], actual.GroupAsInt("number2"));
+	}
+
+	[GeneratedRegex(@"(?<number0>\d+), (?<number1>\d+), (?<number2>\d+)")]
+	private static partial Regex CommaDelimitedNumberRegex();
 }
