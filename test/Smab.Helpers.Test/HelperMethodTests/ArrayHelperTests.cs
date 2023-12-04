@@ -25,6 +25,15 @@ public class ArrayHelperTests {
 	}
 
 	[Fact]
+	public void Create2dArray_ShouldBe() {
+		char[,] array = ArrayHelpers.Create2dArray<char>(5, 10, 'x');
+		Assert.Equal(5, array.GetUpperBound(0) + 1);
+		Assert.Equal(10, array.GetUpperBound(1) + 1);
+		Assert.Equal('x', array[0,0]);
+		Assert.Equal('x', array[3,5]);
+	}
+
+	[Fact]
 	public void To2dArray_Points_To_Char() {
 		Point[] input = { new Point(1, 3), new Point(2, 4), new Point(3, 6) };
 		char[,] array = input.To2dArray<char>(initial:' ', value: '#');

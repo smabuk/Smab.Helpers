@@ -11,6 +11,17 @@ public static partial class ArrayHelpers {
 	public static int NoOfColumns<T>(this T[,] array) => array.GetLength(0);
 	public static int NoOfRows<T>(this T[,] array) => array.GetLength(1);
 
+	public static T[,] Create2dArray<T>(int cols, int rows, T value) {
+		T[,] result = new T[cols, rows];
+		for (int row = 0; row < rows; row++) {
+			for (int col = 0; col < cols; col++) {
+				result[col, row] = value;
+			}
+		}
+
+		return result;
+	}
+
 	public static T[,] To2dArray<T>(this IEnumerable<T> input, int cols, int? rows = null) {
 		ReadOnlySpan<T> array = input.ToArray().AsSpan();
 		int arrayLength = array.Length;
@@ -134,11 +145,9 @@ public static partial class ArrayHelpers {
 	}
 
 	public static List<string> PrintAsStringList<T>(this T[,] array, int? width = null, (string, string)[]? replacements = null) where T : struct
-		=> PrintAsStringArray(array, width, replacements).ToList();
+		=> [.. PrintAsStringArray(array, width, replacements)];
 
 
 	public static string PrintAsString<T>(this T[,] array, int? width = null, (string, string)[]? replacements = null) where T : struct
-		=> String.Join(Environment.NewLine, PrintAsStringArray(array, width, replacements));
-
-
+		=> string.Join(Environment.NewLine, PrintAsStringArray(array, width, replacements));
 }
