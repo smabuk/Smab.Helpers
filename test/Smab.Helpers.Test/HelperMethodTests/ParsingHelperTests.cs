@@ -175,20 +175,12 @@ public partial class ParsingHelperTests {
 		Assert.Equal(expected1, actual[1]);
 	}
 
-	private record SomeThing(string ThisIsAString, int ThisIsAnInt) : IParsable<SomeThing> {
+	private record SomeThing(string ThisIsAString, int ThisIsAnInt) : ISimpleParsable<SomeThing> {
 		public static SomeThing Parse(string s, IFormatProvider? provider) {
 			string[] tokens = s.Split(',');
 			return new(tokens[0], int.Parse(tokens[1]));
 		}
 
-		public static bool TryParse([NotNullWhen(true)] string? s, IFormatProvider? provider, [MaybeNullWhen(false)] out SomeThing result) {
-			result = null!;
-			try {
-				result = Parse(s ?? "", null);
-			} catch (Exception) {
-				return false;
-			}
-			return true;
-		}
+		public static bool TryParse([NotNullWhen(true)] string? s, IFormatProvider? provider, [MaybeNullWhen(false)] out SomeThing result) => ISimpleParsable<SomeThing>.TryParse(s, provider, out result);
 	}
 }
