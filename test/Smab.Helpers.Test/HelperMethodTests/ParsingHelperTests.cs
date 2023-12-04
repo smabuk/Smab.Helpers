@@ -1,4 +1,5 @@
-﻿using System.Text.RegularExpressions;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.Text.RegularExpressions;
 
 namespace Smab.Helpers.Test.HelperMethodTests;
 
@@ -42,16 +43,45 @@ public partial class ParsingHelperTests {
 	}
 
 	[Theory]
-	[InlineData(new string[] { "1", "2", "3" }, new int[] { 1, 2, 3, })]
+	[InlineData((string[])["1", "2", "3"], (int[])[1, 2, 3,])]
 	public void AsInts_ShouldBe(string[] input, int[] expected) {
 		int[] actual = ParsingHelpers.AsInts(input).ToArray();
 		Assert.Equal(expected, actual);
 	}
 	[Theory]
-	[InlineData(new string[] { "1", "2", "3" }, new int[] { 1, 2, 3, })]
-	[InlineData(new string[] { "3", "2", "1" }, new int[] { 3, 2, 1, })]
+	[InlineData((string[])["1", "2", "3"], (int[])[1, 2, 3,])]
+	[InlineData((string[])["3", "2", "1"], (int[])[3, 2, 1,])]
 	public void AsInts_ShouldBe_AsExtensionMethod(string[] input, int[] expected) {
 		int[] actual = input.AsInts().ToArray();
+		Assert.Equal(expected, actual);
+	}
+	[Theory]
+	[InlineData("1 2 3", (int[])[1, 2, 3])]
+	[InlineData("3 2 1", (int[])[3, 2, 1])]
+	[InlineData("3   2 1", (int[])[3, 2, 1])]
+	[InlineData("3  2 1", (int[])[3, 2, 1])]
+	[InlineData("", (int[])[])]
+	public void AsInts_FromString_ShouldBe_AsExtensionMethod(string input, int[] expected) {
+		int[] actual = [.. input.AsInts()];
+		Assert.Equal(expected, actual);
+	}
+	[Theory]
+	[InlineData("1, 2, 3", (int[])[1, 2, 3])]
+	[InlineData("3, 2, 1", (int[])[3, 2, 1])]
+	[InlineData("3,   2, 1", (int[])[3, 2, 1])]
+	public void AsInts_FromString_WithSeps_ShouldBe_AsExtensionMethod(string input, int[] expected) {
+		int[] actual = [.. input.AsInts(',')];
+		Assert.Equal(expected, actual);
+
+		actual = [.. input.AsInts(",")];
+		Assert.Equal(expected, actual);
+
+		string[] stringSeps = [","];
+		actual = [.. input.AsInts(stringSeps)];
+		Assert.Equal(expected, actual);
+
+		char[] charSeps = [','];
+		actual = [.. input.AsInts(charSeps)];
 		Assert.Equal(expected, actual);
 	}
 
@@ -78,21 +108,21 @@ public partial class ParsingHelperTests {
 	}
 
 	[Theory]
-	[InlineData(new string[] { "1", "2", "3" }, new long[] { 1, 2, 3, })]
+	[InlineData((string[])["1", "2", "3"], (long[])[1, 2, 3,])]
 	public void AsLongs_ShouldBe(string[] input, long[] expected) {
 		long[] actual = ParsingHelpers.AsLongs(input).ToArray();
 		Assert.Equal(expected, actual);
 	}
 	[Theory]
-	[InlineData(new string[] { "1", "2", "3" }, new long[] { 1, 2, 3, })]
-	[InlineData(new string[] { "3", "2", "1" }, new long[] { 3, 2, 1, })]
+	[InlineData((string[])["1", "2", "3"], (long[])[1, 2, 3,])]
+	[InlineData((string[])["3", "2", "1"], (long[])[3, 2, 1,])]
 	public void AsLongs_ShouldBe_AsExtensionMethod(string[] input, long[] expected) {
 		long[] actual = input.AsLongs().ToArray();
 		Assert.Equal(expected, actual);
 	}
 
 	[Theory]
-	[InlineData("1, 2, 3", new int[] { 1, 2, 3 })]
+	[InlineData("1, 2, 3", (int[])[1, 2, 3])]
 	public void GroupAsInts_ShouldBe(string input, int[] expected) {
 
 		Match actual = CommaDelimitedNumberRegex().Match(input);
@@ -104,4 +134,61 @@ public partial class ParsingHelperTests {
 
 	[GeneratedRegex(@"(?<number0>\d+), (?<number1>\d+), (?<number2>\d+)")]
 	private static partial Regex CommaDelimitedNumberRegex();
+
+	[Theory]
+	[InlineData("1", 1)]
+	[InlineData("2", 2)]
+	[InlineData("3", 3)]
+	[InlineData("4", 4)]
+	[InlineData("4abc", 5)]
+	public void As_Int_ShouldBe(string input, int expected) {
+		int actual = input.As<int>(5);
+		Assert.Equal(expected, actual);
+	}
+
+	[Theory]
+	[InlineData("One, 1", "One", 1)]
+	[InlineData("Two, 2", "Two", 2)]
+	[InlineData("Three, 3", "Three", 3)]
+	[InlineData("Four, 4", "Four", 4)]
+	[InlineData("Four, abc", "Bad", 999)]
+	public void As_T_ShouldBe(string input, string expectedString, int expectedInt) {
+		SomeThing badThing = new("Bad", 999);
+
+		SomeThing actual = input.As<SomeThing>(badThing);
+		SomeThing expected = new(expectedString, expectedInt);
+
+		Assert.Equal(expected, actual);
+	}
+
+	[Theory]
+	[InlineData((string[])["One, 1", "Two, 2"], "One", 1, "Two", 2)]
+	[InlineData((string[])["One, 1", "Two, x"], "One", 1, "Bad", 999)]
+	public void As_EnumerableOfT_ShouldBe(string[] input, string string1, int int1, string string2, int int2) {
+		SomeThing badThing = new("Bad", 999);
+
+		SomeThing expected0 = new(string1, int1);
+		SomeThing expected1 = new(string2, int2);
+
+		SomeThing[] actual = [.. input.As<SomeThing>(badThing)];
+		Assert.Equal(expected0, actual[0]);
+		Assert.Equal(expected1, actual[1]);
+	}
+
+	private record SomeThing(string ThisIsAString, int ThisIsAnInt) : IParsable<SomeThing> {
+		public static SomeThing Parse(string s, IFormatProvider? provider) {
+			string[] tokens = s.Split(',');
+			return new(tokens[0], int.Parse(tokens[1]));
+		}
+
+		public static bool TryParse([NotNullWhen(true)] string? s, IFormatProvider? provider, [MaybeNullWhen(false)] out SomeThing result) {
+			result = null!;
+			try {
+				result = Parse(s ?? "", null);
+			} catch (Exception) {
+				return false;
+			}
+			return true;
+		}
+	}
 }
