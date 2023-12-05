@@ -89,14 +89,23 @@ public static class ParsingHelpers {
 	public static long AsLongFromBinary(this string input, char zeroChar = '.', char oneChar = '#')
 		=> Convert.ToInt64(input.Replace(zeroChar, '0').Replace(oneChar, '1'), 2);
 
-	
-	
-	
+
+
+
 	// Regex Parsing Helpers
+	public static IEnumerable<int> MatchesAsInts(this System.Text.RegularExpressions.MatchCollection matches) =>
+		matches.Select(match => int.TryParse(match.Value, out int value) switch { true => value, false => throw new InvalidCastException() });
+
+	public static int MatchAsInt(this System.Text.RegularExpressions.Match match) =>
+		int.TryParse(match.Value, out int value) switch { true => value, false => throw new InvalidCastException() };
+
+	public static IEnumerable<int> GroupsAsInts(this System.Text.RegularExpressions.GroupCollection groups) =>
+		groups.Values.Select(group => int.TryParse(group.Value, out int value) switch { true => value, false => throw new InvalidCastException() });
+
 	public static int GroupAsInt(this System.Text.RegularExpressions.Match match, string groupName, int defaultIfInvalid = 0)
 		=> int.TryParse(match.Groups[groupName].Value, out int value) switch { true => value, false => defaultIfInvalid };
 
-	public static long GroupAsLong(this System.Text.RegularExpressions.Match match, string groupName, int defaultIfInvalid = 0)
-		=> long.TryParse(match.Groups[groupName].Value, out long value) switch { true => value, false => defaultIfInvalid };
+	public static int GroupAsInt(this System.Text.RegularExpressions.Match match, int index, int defaultIfInvalid = 0)
+		=> int.TryParse(match.Groups[index].Value, out int value) switch { true => value, false => defaultIfInvalid };
 }
 

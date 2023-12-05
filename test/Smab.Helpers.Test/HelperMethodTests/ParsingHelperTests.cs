@@ -121,19 +121,44 @@ public partial class ParsingHelperTests {
 		Assert.Equal(expected, actual);
 	}
 
+
+
+	[GeneratedRegex(@"(?<number1>\d+), (?<number2>\d+), (?<number3>\d+)")]
+	private static partial Regex CommaDelimitedNumberRegex();
+
 	[Theory]
 	[InlineData("1, 2, 3", (int[])[1, 2, 3])]
-	public void GroupAsInts_ShouldBe(string input, int[] expected) {
+	public void GroupAsInts_ByGroupName_ShouldBe(string input, int[] expected) {
 
 		Match actual = CommaDelimitedNumberRegex().Match(input);
 
-		Assert.Equal(expected[0], actual.GroupAsInt("number0"));
-		Assert.Equal(expected[1], actual.GroupAsInt("number1"));
-		Assert.Equal(expected[2], actual.GroupAsInt("number2"));
+		Assert.Equal(expected[0], actual.GroupAsInt("number1"));
+		Assert.Equal(expected[1], actual.GroupAsInt("number2"));
+		Assert.Equal(expected[2], actual.GroupAsInt("number3"));
 	}
 
-	[GeneratedRegex(@"(?<number0>\d+), (?<number1>\d+), (?<number2>\d+)")]
-	private static partial Regex CommaDelimitedNumberRegex();
+	[Theory]
+	[InlineData("1, 2, 3", (int[])[1, 2, 3])]
+	public void GroupAsInts_ByIndex_ShouldBe(string input, int[] expected) {
+
+		Match actual = CommaDelimitedNumberRegex().Match(input);
+
+		Assert.Equal(expected[0], actual.GroupAsInt(1));
+		Assert.Equal(expected[1], actual.GroupAsInt(2));
+		Assert.Equal(expected[2], actual.GroupAsInt(3));
+	}
+
+	[GeneratedRegex(@"(?<number1>\d+)")]
+	private static partial Regex NumberRegex();
+
+	[Theory]
+	[InlineData("1, 2, 3", (int[])[1, 2, 3])]
+	public void MatchesAsInts_ShouldBe(string input, int[] expected) {
+
+		MatchCollection matches = NumberRegex().Matches(input);
+		int[] actual = [.. matches.MatchesAsInts()];
+		Assert.Equal(expected, actual);
+	}
 
 	[Theory]
 	[InlineData("1", 1)]
