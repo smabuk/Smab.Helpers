@@ -40,6 +40,38 @@ public static partial class ArrayHelpers {
 		return result;
 	}
 
+	public static T[,] To2dArray<T>(this IEnumerable<IEnumerable<T>> input, int? cols = null, int? rows = null) {
+		rows ??= input.Count();
+		cols ??= input.First().Count();
+		T[,] result = new T[(int)cols, (int)rows];
+		int r = 0;
+		foreach (List<T> row in input.Cast<List<T>>()) {
+			int c = 0;
+			foreach (T item in row) {
+				result[c, r] = item;
+				c++;
+			}
+			r++;
+		}
+
+		return result;
+	}
+
+	public static char[,] To2dArray(this IEnumerable<string> input, int? cols = null, int? rows = null) {
+		ReadOnlySpan<string> array = input.ToArray().AsSpan();
+		int arrayLength = array.Length;
+		rows ??= array.Length;
+		cols ??= array[0].Length;
+		char[,] result = new char[(int)cols, (int)rows];
+		for (int r = 0; r < rows; r++) {
+			for (int c = 0; c < cols; c++) {
+				result[c, r] = array[r][c];
+			}
+		}
+
+		return result;
+	}
+
 	public static T[,] To2dArray<T>(this IEnumerable<Point> input, T initial, T value) {
 		int minX = int.MaxValue;
 		int minY = int.MaxValue;

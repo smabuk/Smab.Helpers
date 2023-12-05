@@ -34,6 +34,40 @@ public class ArrayHelperTests {
 	}
 
 	[Fact]
+	public void To2dArray_String_To_Char() {
+		string[] input = ["1234567890", "abcdefghij", "0987654321", "zyxwvutsrq"];
+		char[,] array = input.To2dArray();
+		Assert.Equal(40, array.Length);
+		Assert.Equal(10, array.GetUpperBound(0) + 1);
+		Assert.Equal( 4, array.GetUpperBound(1) + 1);
+		Assert.Equal('1', array[0,0]);
+		Assert.Equal('u', array[5,3]);
+		Assert.Equal('d', array[3,1]);
+		Assert.Equal('6', array[4,2]);
+		Assert.Equal('t', array[6,3]);
+	}
+
+	[Fact]
+	public void To2dArray_IEnumerableOf_IEnumerableOfT() {
+		List<List<int>> inputOfT = [];
+		for (int r = 0; r < 50; r+=10) {
+			List<int> expectedRow = [r+1, r+2, r+3, r+4, r+5, r+6, r+7, r+8, r+9, r+10];
+			inputOfT.Add(expectedRow);
+		}
+
+		int[,] array = inputOfT.To2dArray();
+
+		Assert.Equal(50, array.Length);
+		Assert.Equal(10, array.GetUpperBound(0) + 1);
+		Assert.Equal( 5, array.GetUpperBound(1) + 1);
+		Assert.Equal( 1, array[0,0]);
+		Assert.Equal(34, array[3,3]);
+		Assert.Equal(14, array[3,1]);
+		Assert.Equal(25, array[4,2]);
+		Assert.Equal(37, array[6,3]);
+	}
+
+	[Fact]
 	public void To2dArray_Points_To_Char() {
 		Point[] input = { new Point(1, 3), new Point(2, 4), new Point(3, 6) };
 		char[,] array = input.To2dArray<char>(initial:' ', value: '#');
