@@ -7,9 +7,16 @@ public static class ParsingHelpers {
 
 
 
+	public static IEnumerable<string> SplitBy(this string input, string[]? separator = null, StringSplitOptions options = StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries) =>
+		input.Split(separator, options);
+
+
 
 	public static IEnumerable<T> As<T>(this IEnumerable<string> input, T defaultIfInvalid = default!, IFormatProvider? provider = null) where T : IParsable<T> =>
 		input.Select(i => i.As(defaultIfInvalid, provider));
+
+
+
 
 	public static IEnumerable<int> AsInts(this IEnumerable<string> input) =>
 	input.Select(int.Parse);
@@ -32,8 +39,8 @@ public static class ParsingHelpers {
 	public static IEnumerable<long> AsLongs(this IEnumerable<string> input) =>
 	input.Select(long.Parse);
 
-	public static IEnumerable<long> AsLongs(this string input, string[]? splitByArray = null) =>
-		input.Split(splitByArray, StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries).Select(long.Parse);
+	public static IEnumerable<long> AsLongs(this string input, string[]? separator = null) =>
+		input.Split(separator, StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries).Select(long.Parse);
 
 	
 	
