@@ -1,32 +1,15 @@
 ﻿namespace Smab.Helpers;
-/// <summary>
-/// Ranges are inclusive
-/// </summary>
-/// <param name="Start"></param>
-/// <param name="End"></param>
-public record Range(int Start, int End) {
 
-	public int Length { get; } = End - Start + 1;
+public static class RangeHelpers {
 
-	public int Lower { get; } = Math.Min(Start, End);
-	public int Upper { get; } = Math.Max(Start, End);
-
-	public IEnumerable<int> Values => Enumerable.Range(Lower, Length);
-
-	public bool TryGetOverlap(Range range, out Range overlap)
-		=> TryGetOverlap(this, range, out overlap);
-
-	public bool TryGetOverlap(int start, int end, out Range overlap)
-		=> TryGetOverlap(this, new(start, end), out overlap);
-
-	public static bool TryGetOverlap(Range range1, Range range2, out Range overlap) {
-		overlap = default!;
-		int range1Start = Math.Min(range1.Start, range1.End);
-		int range1End   = Math.Max(range1.Start, range1.End);
-		int range2Start = Math.Min(range2.Start, range2.End);
-		int range2End   = Math.Max(range2.Start, range2.End);
+	public static bool TryGetOverlap(this Range thisRange, Range range, out Range overlap) {
+		overlap = default!; 
+		int range1Start = Math.Min(thisRange.Start.Value, thisRange.End.Value);
+		int range1End   = Math.Max(thisRange.Start.Value, thisRange.End.Value);
+		int range2Start = Math.Min(range.Start.Value, range.End.Value);
+		int range2End   = Math.Max(range.Start.Value, range.End.Value);
 		int max = Math.Max(range1Start, range2Start);
-		int min = Math.Min(range1End,   range2End);
+		int min = Math.Min(range1End, range2End);
 		if (max <= min) {
 			overlap = new(max, min);
 			return true;
@@ -35,22 +18,22 @@ public record Range(int Start, int End) {
 		}
 	}
 
-
-
-	public Range((int Start, int End) range) : this(range.Start, range.End) { }
-
-	public static implicit operator (int start, int end)(Range range) {
-		range.Deconstruct(out int start, out int end);
-		return (start, end);
-	}
-
-	public void Deconstruct(out int start, out int end) {
-		start = Start;
-		end = End;
+	public static Range GetOverlap(this Range thisRange, Range range) {
+		int range1Start = Math.Min(thisRange.Start.Value, thisRange.End.Value);
+		int range1End   = Math.Max(thisRange.Start.Value, thisRange.End.Value);
+		int range2Start = Math.Min(range.Start.Value, range.End.Value);
+		int range2End   = Math.Max(range.Start.Value, range.End.Value);
+		int max = Math.Max(range1Start, range2Start);
+		int min = Math.Min(range1End, range2End);
+		if (max <= min) {
+			return new(max, min);
+		} else {
+			throw new ArgumentOutOfRangeException(nameof(range), "Ranges do not overlap.");
+		}
 	}
 }
 
-public record LongRange(long Start, long End) {
+public record struct LongRange(long Start, long End) {
 
 	public long Length { get; } = End - Start + 1;
 

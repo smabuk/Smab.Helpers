@@ -8,22 +8,31 @@ public class RangeTests {
 	[InlineData(39, 12, 4, 18, true, 12, 18)]
 	public void Range_DoesItOverlap(int r1Start, int r1End, int r2Start, int r2End, bool expectedResult, int expectedStart, int expectedEnd) {
 
-		bool result = Range.TryGetOverlap(new Range(r1Start, r1End), new Range(r2Start, r2End), out Range actual);
+		Range expected = new(expectedStart, expectedEnd);
+		Range range1 = new(r1Start, r1End);
+		Range range2 = new(r2Start, r2End);
+
+		bool result = range1.TryGetOverlap(range2, out Range actual);
 		result.ShouldBe(expectedResult);
 		if (result) {
-			actual.ShouldBe(new Range(expectedStart, expectedEnd));
+			actual.ShouldBe(expected);
+			range1.GetOverlap(range2).ShouldBe(expected);
+		} else {
+			Should.Throw<ArgumentOutOfRangeException>(() => range1.GetOverlap(range2))
+				.Message
+				.ShouldEndWith("Ranges do not overlap. (Parameter 'range')");
 		}
 	}
 
 	[Theory]
-	[InlineData(0,   0)]
-	[InlineData(1,  15)]
-	[InlineData(12, 39)]
-	[InlineData(39, 12)]
-	public void Range_FromTuple(int start, int end) {
+	[InlineData( 0L,   0L)]
+	[InlineData( 1L,  15L)]
+	[InlineData(12L,  39L)]
+	[InlineData(39L,  12L)]
+	public void LongRange_FromTuple(long start, long end) {
 
-		(int Start, int End) rangeTuple = (start, end);
-		Range actual = new(rangeTuple);
+		(long Start, long End) rangeTuple = (start, end);
+		LongRange actual = new(rangeTuple);
 
 		actual.Start.ShouldBe(start);
 		actual.End.ShouldBe(end);
@@ -34,9 +43,9 @@ public class RangeTests {
 	[InlineData(1,  15)]
 	[InlineData(12, 39)]
 	[InlineData(39, 12)]
-	public void Tuple_FromRange(int start, int end) {
+	public void Tuple_FromLongRange(long start, long end) {
 
-		(int actualStart, int actualEnd) = new Range(start, end);
+		(long actualStart, long actualEnd) = new LongRange(start, end);
 
 		actualStart.ShouldBe(start);
 		actualEnd.ShouldBe(end);
