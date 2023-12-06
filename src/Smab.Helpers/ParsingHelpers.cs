@@ -7,7 +7,7 @@ public static class ParsingHelpers {
 
 
 
-	public static IEnumerable<string> SplitBy(this string input, string[]? separator = null, StringSplitOptions options = StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries) =>
+	public static string[] SplitBy(this string input, string[]? separator = null, StringSplitOptions options = StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries) =>
 		input.Split(separator, options);
 
 
