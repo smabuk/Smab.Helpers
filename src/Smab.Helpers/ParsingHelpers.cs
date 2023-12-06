@@ -7,8 +7,30 @@ public static class ParsingHelpers {
 
 
 
-	public static string[] SplitBy(this string input, string[]? separator = null, StringSplitOptions options = StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries) =>
-		input.Split(separator, options);
+
+	public static string[] TrimmedSplit(this string input, string? separator = null) =>
+		input.Split(separator, StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
+
+	public static string[] TrimmedSplit(this string input, char[]? separator) =>
+		input.Split(separator, StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
+
+	public static string[] TrimmedSplit(this string input, char separator) =>
+		input.Split(separator, StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
+
+	public static string[] TrimmedSplit(this string input, char separator, int count) =>
+		input.Split(separator, count, StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
+
+	public static string[] TrimmedSplit(this string input, char[]? separator, int count) =>
+	input.Split(separator, count, StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
+
+	public static string[] TrimmedSplit(this string input, string[]? separator) =>
+	input.Split(separator, StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
+
+	public static string[] TrimmedSplit(this string input, string? separator, int count) =>
+	input.Split(separator, count, StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
+
+	public static string[] TrimmedSplit(this string input, string[]? separator, int count) =>
+	input.Split(separator, count, StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
 
 
 
