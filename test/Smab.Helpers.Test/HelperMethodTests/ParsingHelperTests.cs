@@ -27,7 +27,7 @@ public partial class ParsingHelperTests {
 	[InlineData("", 0)]
 	[InlineData("xyz", 0)]
 	public void AsInt_ShouldBe(string input, int expected) {
-		int actual = input.AsInt();
+		int actual = input.As<int>();
 		Assert.Equal(expected, actual);
 	}
 
@@ -35,7 +35,7 @@ public partial class ParsingHelperTests {
 	[InlineData("#", 1)]
 	[InlineData("#..#", 9)]
 	public void AsIntFromBinary_ShouldBe(string input, int expected) {
-		int actual = input.AsIntFromBinary();
+		int actual = input.FromBinary<int>();
 		Assert.Equal(expected, actual);
 	}
 
@@ -43,7 +43,7 @@ public partial class ParsingHelperTests {
 	[InlineData("█", 1)]
 	[InlineData("█  █", 9)]
 	public void AsIntFromBinary_WithReplacements_ShouldBe(string input, int expected) {
-		int actual = input.AsIntFromBinary(' ', '█');
+		int actual = input.FromBinary<int>(' ', '█');
 		Assert.Equal(expected, actual);
 	}
 
@@ -54,21 +54,21 @@ public partial class ParsingHelperTests {
 	[InlineData("", -99, -99)]
 	[InlineData("xyz", -99, -99)]
 	public void AsInt__WithDefault_ShouldBe(string input, int defaultValue, int expected) {
-		int actual = input.AsInt(defaultValue);
+		int actual = input.As(defaultValue);
 		Assert.Equal(expected, actual);
 	}
 
 	[Theory]
 	[InlineData((string[])["1", "2", "3"], (int[])[1, 2, 3,])]
 	public void AsInts_ShouldBe(string[] input, int[] expected) {
-		int[] actual = ParsingHelpers.AsInts(input).ToArray();
+		int[] actual = ParsingHelpers.As<int>(input).ToArray();
 		Assert.Equal(expected, actual);
 	}
 	[Theory]
 	[InlineData((string[])["1", "2", "3"], (int[])[1, 2, 3,])]
 	[InlineData((string[])["3", "2", "1"], (int[])[3, 2, 1,])]
 	public void AsInts_ShouldBe_AsExtensionMethod(string[] input, int[] expected) {
-		int[] actual = input.AsInts().ToArray();
+		int[] actual = input.As<int>().ToArray();
 		Assert.Equal(expected, actual);
 	}
 	[Theory]
@@ -78,7 +78,7 @@ public partial class ParsingHelperTests {
 	[InlineData("3  2 1", (int[])[3, 2, 1])]
 	[InlineData("", (int[])[])]
 	public void AsInts_FromString_ShouldBe_AsExtensionMethod(string input, int[] expected) {
-		int[] actual = [.. input.AsInts()];
+		int[] actual = [.. input.As<int>((char[]?)null)];
 		Assert.Equal(expected, actual);
 	}
 	[Theory]
@@ -86,18 +86,18 @@ public partial class ParsingHelperTests {
 	[InlineData("3, 2, 1", (int[])[3, 2, 1])]
 	[InlineData("3,   2, 1", (int[])[3, 2, 1])]
 	public void AsInts_FromString_WithSeps_ShouldBe_AsExtensionMethod(string input, int[] expected) {
-		int[] actual = [.. input.AsInts(',')];
+		int[] actual = [.. input.As<int>(',')];
 		Assert.Equal(expected, actual);
 
-		actual = [.. input.AsInts(",")];
+		actual = [.. input.As<int>([","])];
 		Assert.Equal(expected, actual);
 
 		string[] stringSeps = [","];
-		actual = [.. input.AsInts(stringSeps)];
+		actual = [.. input.As<int>(stringSeps)];
 		Assert.Equal(expected, actual);
 
 		char[] charSeps = [','];
-		actual = [.. input.AsInts(charSeps)];
+		actual = [.. input.As<int>(charSeps)];
 		Assert.Equal(expected, actual);
 	}
 
@@ -108,7 +108,7 @@ public partial class ParsingHelperTests {
 	[InlineData("", 0)]
 	[InlineData("xyz", 0)]
 	public void AsLong_ShouldBe(string input, long expected) {
-		long actual = input.AsInt();
+		long actual = input.As<long>();
 		Assert.Equal(expected, actual);
 	}
 
@@ -119,21 +119,21 @@ public partial class ParsingHelperTests {
 	[InlineData("", -99, -99)]
 	[InlineData("xyz", -99, -99)]
 	public void AsLong__WithDefault_ShouldBe(string input, long defaultValue, long expected) {
-		long actual = input.AsLong(defaultValue);
+		long actual = input.As(defaultValue);
 		Assert.Equal(expected, actual);
 	}
 
 	[Theory]
 	[InlineData((string[])["1", "2", "3"], (long[])[1, 2, 3,])]
 	public void AsLongs_ShouldBe(string[] input, long[] expected) {
-		long[] actual = ParsingHelpers.AsLongs(input).ToArray();
+		long[] actual = ParsingHelpers.As<long>(input).ToArray();
 		Assert.Equal(expected, actual);
 	}
 	[Theory]
 	[InlineData((string[])["1", "2", "3"], (long[])[1, 2, 3,])]
 	[InlineData((string[])["3", "2", "1"], (long[])[3, 2, 1,])]
 	public void AsLongs_ShouldBe_AsExtensionMethod(string[] input, long[] expected) {
-		long[] actual = input.AsLongs().ToArray();
+		long[] actual = input.As<long>().ToArray();
 		Assert.Equal(expected, actual);
 	}
 
@@ -148,9 +148,9 @@ public partial class ParsingHelperTests {
 
 		Match actual = CommaDelimitedNumberRegex().Match(input);
 
-		Assert.Equal(expected[0], actual.GroupAsInt("number1"));
-		Assert.Equal(expected[1], actual.GroupAsInt("number2"));
-		Assert.Equal(expected[2], actual.GroupAsInt("number3"));
+		Assert.Equal(expected[0], actual.As<int>("number1"));
+		Assert.Equal(expected[1], actual.As<int>("number2"));
+		Assert.Equal(expected[2], actual.As<int>("number3"));
 	}
 
 	[Theory]
@@ -159,9 +159,9 @@ public partial class ParsingHelperTests {
 
 		Match actual = CommaDelimitedNumberRegex().Match(input);
 
-		Assert.Equal(expected[0], actual.GroupAsInt(1));
-		Assert.Equal(expected[1], actual.GroupAsInt(2));
-		Assert.Equal(expected[2], actual.GroupAsInt(3));
+		Assert.Equal(expected[0], actual.As<int>(1));
+		Assert.Equal(expected[1], actual.As<int>(2));
+		Assert.Equal(expected[2], actual.As<int>(3));
 	}
 
 	[GeneratedRegex(@"(?<number1>\d+)")]
@@ -172,7 +172,7 @@ public partial class ParsingHelperTests {
 	public void MatchesAsInts_ShouldBe(string input, int[] expected) {
 
 		MatchCollection matches = NumberRegex().Matches(input);
-		int[] actual = [.. matches.MatchesAsInts()];
+		int[] actual = [.. matches.As<int>()];
 		Assert.Equal(expected, actual);
 	}
 

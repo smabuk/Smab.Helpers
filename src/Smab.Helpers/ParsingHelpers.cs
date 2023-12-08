@@ -47,47 +47,15 @@ public static class ParsingHelpers {
 	public static IEnumerable<T> As<T>(this string s, char[]? separator, IFormatProvider? provider = null) where T : INumber<T>
 		=> s.TrimmedSplit(separator).Select(s => T.Parse(s, provider));
 	public static IEnumerable<T> As<T>(this string s, char separator) where T : INumber<T> =>
-		s.As<T>([separator]);
+		s.As<T>((char[])[separator]);
 	public static IEnumerable<T> As<T>(this string s, string[]? separator, IFormatProvider? provider = null) where T : INumber<T>
 		=> s.TrimmedSplit(separator).Select(s => T.Parse(s, provider));
-	public static IEnumerable<T> AsNumbers<T>(this string s, string separator) where T : INumber<T> =>
-		s.As<T>(new string[] { separator });
+	public static IEnumerable<T> As<T>(this string s, string separator) where T : INumber<T> =>
+		s.As<T>((string[])[separator]);
 
-
-
-	[Obsolete("AsInts is deprecated, please use As instead.")]
-	public static IEnumerable<int> AsInts(this IEnumerable<string> input) =>
-	input.Select(int.Parse);
-
-	[Obsolete("AsInts is deprecated, please use As instead.")]
-	public static IEnumerable<int> AsInts(this string input, char[]? separator = null) =>
-		input.Split(separator, StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries).Select(int.Parse);
-
-	[Obsolete("AsInts is deprecated, please use As instead.")]
-	public static IEnumerable<int> AsInts(this string input, string[]? separator) =>
-	input.Split(separator, StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries).Select(int.Parse);
-
-	[Obsolete("AsInts is deprecated, please use As instead.")]
-	public static IEnumerable<int> AsInts(this string input, char separator) =>
-		input.AsInts(new char[] { separator });
-
-	[Obsolete("AsInts is deprecated, please use As instead.")]
-	public static IEnumerable<int> AsInts(this string input, string separator) =>
-		input.AsInts(new string[] { separator });
-
-
-
-
-	[Obsolete("AsLongs is deprecated, please use As instead.")]
-	public static IEnumerable<long> AsLongs(this IEnumerable<string> input) =>
-	input.Select(long.Parse);
-
-	[Obsolete("AsLongs is deprecated, please use As instead.")]
-	public static IEnumerable<long> AsLongs(this string input, string[]? separator = null) =>
-		input.Split(separator, StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries).Select(long.Parse);
 
 	
-	
+
 	
 	public static IEnumerable<Point> AsPoints(this IEnumerable<string> input) =>
 		input.Select(i => i.Split(",")).Select(x => new Point(x[0].As<int>(), x[1].As<int>()));
@@ -115,46 +83,30 @@ public static class ParsingHelpers {
 
 
 
-	[Obsolete("AsInt is deprecated, please use As instead.")]
-	public static int AsInt(this string input, int defaultIfInvalid = 0)
-		=>   int.TryParse(input, out int value) switch { true => value, false => defaultIfInvalid };
-
-
-
-
-	[Obsolete("AsLong is deprecated, please use As instead.")]
-	public static long AsLong(this string input, long defaultIfInvalid = 0)
-		=> long.TryParse(input, out long value) switch { true => value, false => defaultIfInvalid };
-
-	
-	
-	
-	public static int AsIntFromBinary(this string input, char zeroChar = '.', char oneChar = '#')
-		=> Convert.ToInt32(input.Replace(zeroChar, '0').Replace(oneChar, '1'), 2);
-
-	
-	
-	
-	public static long AsLongFromBinary(this string input, char zeroChar = '.', char oneChar = '#')
-		=> Convert.ToInt64(input.Replace(zeroChar, '0').Replace(oneChar, '1'), 2);
-
+	public static T FromBinary<T>(this string input, char zeroChar = '.', char oneChar = '#') where T : INumber<T> {
+		if (typeof(T) == typeof(int)) {
+			return T.CreateChecked(Convert.ToInt32(input.Replace(zeroChar, '0').Replace(oneChar, '1'), 2));
+		} else {
+			return T.CreateChecked(Convert.ToInt64(input.Replace(zeroChar, '0').Replace(oneChar, '1'), 2));
+		}
+	}
 
 
 
 	// Regex Parsing Helpers
-	public static IEnumerable<int> MatchesAsInts(this System.Text.RegularExpressions.MatchCollection matches) =>
-		matches.Select(match => int.TryParse(match.Value, out int value) switch { true => value, false => throw new InvalidCastException() });
+	public static IEnumerable<T> As<T>(this System.Text.RegularExpressions.MatchCollection matches) where T : INumber<T>
+		=> matches.Select(match => T.TryParse(match.Value, null, out T? value) switch { true => value, false => throw new InvalidCastException() });
 
-	public static int MatchAsInt(this System.Text.RegularExpressions.Match match) =>
-		int.TryParse(match.Value, out int value) switch { true => value, false => throw new InvalidCastException() };
+	public static T As<T>(this System.Text.RegularExpressions.Match match) where T : INumber<T>
+		=> T.TryParse(match.Value, null, out T? value) switch { true => value, false => throw new InvalidCastException() };
 
-	public static IEnumerable<int> GroupsAsInts(this System.Text.RegularExpressions.GroupCollection groups) =>
-		groups.Values.Select(group => int.TryParse(group.Value, out int value) switch { true => value, false => throw new InvalidCastException() });
+	public static IEnumerable<T> As<T>(this System.Text.RegularExpressions.GroupCollection groups) where T : INumber<T>
+		=> groups.Values.Select(group => T.TryParse(group.Value, null, out T? value) switch { true => value, false => throw new InvalidCastException() });
 
-	public static int GroupAsInt(this System.Text.RegularExpressions.Match match, string groupName, int defaultIfInvalid = 0)
-		=> int.TryParse(match.Groups[groupName].Value, out int value) switch { true => value, false => defaultIfInvalid };
+	public static T As<T>(this System.Text.RegularExpressions.Match match, string groupName, T? defaultIfInvalid = default) where T : INumber<T>
+		=> T.TryParse(match.Groups[groupName].Value, null, out T? value) switch { true => value, false => defaultIfInvalid ?? T.Zero };
 
-	public static int GroupAsInt(this System.Text.RegularExpressions.Match match, int index, int defaultIfInvalid = 0)
-		=> int.TryParse(match.Groups[index].Value, out int value) switch { true => value, false => defaultIfInvalid };
+	public static T As<T>(this System.Text.RegularExpressions.Match match, int index, T? defaultIfInvalid = default) where T : INumber<T>
+		=> T.TryParse(match.Groups[index].Value, null, out T? value) switch { true => value, false => defaultIfInvalid ?? T.Zero };
 }
 
