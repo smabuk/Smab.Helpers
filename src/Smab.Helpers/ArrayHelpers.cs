@@ -1,4 +1,6 @@
-﻿namespace Smab.Helpers;
+﻿using System.Numerics;
+
+namespace Smab.Helpers;
 
 public static partial class ArrayHelpers {
 
@@ -8,7 +10,7 @@ public static partial class ArrayHelpers {
 	/// <typeparam name="T"></typeparam>
 	/// <param name="numbers"></param>
 	/// <returns></returns>
-	public static double Mean<T>(this IEnumerable<T> numbers) where T : struct
+	public static double Mean<T>(this IEnumerable<T> numbers) where T : INumber<T>
 		=> numbers.Select(n => Convert.ToDouble(n)).Average();
 
 	/// <summary>
@@ -17,7 +19,7 @@ public static partial class ArrayHelpers {
 	/// <typeparam name="T"></typeparam>
 	/// <param name="numbers"></param>
 	/// <returns></returns>
-	public static double MedianAsDouble<T>(this T[] numbers) where T : struct {
+	public static double MedianAsDouble<T>(this T[] numbers) where T : INumber<T> {
 		IOrderedEnumerable<T> sortedNumbers = numbers.OrderBy(n => n);
 		int midPoint = numbers.Length / 2;
 		return (numbers.Length % 2) switch {
@@ -34,7 +36,7 @@ public static partial class ArrayHelpers {
 	/// <typeparam name="T"></typeparam>
 	/// <param name="numbers"></param>
 	/// <returns></returns>
-	public static double Median<T>(this IEnumerable<T> numbers) where T : struct {
+	public static double Median<T>(this IEnumerable<T> numbers) where T : INumber<T> {
 		return numbers.ToArray().MedianAsDouble();
 	}
 

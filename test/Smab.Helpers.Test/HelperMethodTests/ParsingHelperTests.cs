@@ -183,7 +183,7 @@ public partial class ParsingHelperTests {
 	[InlineData("4", 4)]
 	[InlineData("4abc", 5)]
 	public void As_Int_ShouldBe(string input, int expected) {
-		int actual = input.As<int>(5);
+		int actual = input.As(5);
 		Assert.Equal(expected, actual);
 	}
 

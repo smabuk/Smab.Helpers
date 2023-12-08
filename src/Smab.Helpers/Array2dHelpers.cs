@@ -59,7 +59,6 @@ public static partial class ArrayHelpers {
 
 	public static char[,] To2dArray(this IEnumerable<string> input, int? cols = null, int? rows = null) {
 		ReadOnlySpan<string> array = input.ToArray().AsSpan();
-		int arrayLength = array.Length;
 		rows ??= array.Length;
 		cols ??= array[0].Length;
 		char[,] result = new char[(int)cols, (int)rows];

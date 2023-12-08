@@ -76,10 +76,10 @@ public static class OcrHelpers {
 		""";
 
 	public static string IdentifyMessage(string input, char off = Unlit, char on = Lit, int whitespace = 1, OcrLetterSize ocrLetterSize = OcrLetterSize.Normal)
-		=> IdentifyMessage(input.Split("\r\n"), off, on, whitespace, ocrLetterSize);
+		=> IdentifyMessage(input.ReplaceLineEndings().Split(Environment.NewLine), off, on, whitespace, ocrLetterSize);
 
 	public static string IdentifyMessage(IEnumerable<string> input, char off = Unlit, char on = Lit, int whitespace = 1, OcrLetterSize ocrLetterSize = OcrLetterSize.Normal) {
-		List<string> inputList = input.ToList();
+		List<string> inputList = [.. input];
 		for (int i = 0; i < inputList.Count; i++) {
 			inputList[i] = inputList[i].Replace(off, Unlit).Replace(on, Lit);
 		}
@@ -89,12 +89,12 @@ public static class OcrHelpers {
 		int col = 0;
 		while (col < noOfColumns) {
 			char letter = FindLetter(inputList, col, ocrLetterSize) ?? BadCharacter;
-			if (letter == BadCharacter || !Char.IsLetterOrDigit(letter)) {
+			if (letter == BadCharacter || !char.IsLetterOrDigit(letter)) {
 				break;
 			}
 			output += letter;
 			int letterWidth = ocrLetterSize switch {
-				OcrLetterSize.Normal => LetterWidths[(int)(letter - 'A')].Width,
+				OcrLetterSize.Normal => LetterWidths[letter - 'A'].Width,
 				OcrLetterSize.Medium => Alphabet_Medium_Letter_Width,
 				OcrLetterSize.Large => Alphabet_Large_Letter_Width,
 				_ => throw new NotImplementedException(),
@@ -126,11 +126,11 @@ public static class OcrHelpers {
 	}
 
 	private static string PossibleLetters(IEnumerable<string> input, OcrLetterSize ocrLetterSize, int col, int row, string possible = null!) {
-		string[] inputArray = input.ToArray();
+		string[] inputArray = [.. input];
 		possible ??= "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 		string returnPossible = "";
 		foreach (char item in possible) {
-			int i = (int)(item - 'A');
+			int i = item - 'A';
 			int charOffset = 1;
 			int charWidth = 1;
 			string alphabetSlice = "";
@@ -157,7 +157,7 @@ public static class OcrHelpers {
 				inputSlice += new string('.', charWidth - inputSlice.Length);
 			}
 			if (inputSlice == alphabetSlice) {
-				returnPossible += (char)(i + (int)'A');
+				returnPossible += (char)(i + 'A');
 			}
 		}
 		return returnPossible;
