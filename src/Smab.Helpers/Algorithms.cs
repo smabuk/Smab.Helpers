@@ -1,6 +1,6 @@
 ﻿namespace Smab.Helpers;
 
-public class Algorithms {
+public static class Algorithms {
 
 	/// <summary>
 	///  Dijkstra's algorithm
@@ -60,4 +60,26 @@ public class Algorithms {
 
 		return costs;
 	}
+
+
+	public static long LowestCommonMultiple(this int[] numbers) => numbers.Select(number => (long)number).Aggregate(LowestCommonMultipleOf2Numbers);
+	public static long LowestCommonMultiple(this long[] numbers) => numbers.Aggregate(LowestCommonMultipleOf2Numbers);
+
+	/// <summary>
+	///  Uses the Euclidean algorithm
+	///  https://en.wikipedia.org/wiki/Euclidean_algorithm
+	/// </summary>
+	/// <param name="a"></param>
+	/// <param name="b"></param>
+	/// <returns></returns>
+	public static long LowestCommonMultipleOf2Numbers(this long a, long b) => Math.Abs(a * b) / GreatestCommonDenominator(a, b);
+
+	/// <summary>
+	/// lcm calculation uses Abs(a*b)/gcd(a,b) , refer to Reduction by the greatest common divisor.
+	/// http://en.wikipedia.org/wiki/Least_common_multiple
+	/// </summary>
+	/// <param name="a"></param>
+	/// <param name="b"></param>
+	/// <returns></returns>
+	public static long GreatestCommonDenominator(this long a, long b) => b == 0 ? a : GreatestCommonDenominator(b, a % b);
 }
