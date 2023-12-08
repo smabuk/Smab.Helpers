@@ -7,6 +7,7 @@ public class AlgorithmHelperTests {
 		long actual = numbers.LowestCommonMultiple();
 		actual.ShouldBe(expected);
 	}
+
 	[Theory]
 	[InlineData((long[])[2, 3], 6)]
 	[InlineData((long[])[2, 3, 4, 5, 6, 7, 8], 840)]

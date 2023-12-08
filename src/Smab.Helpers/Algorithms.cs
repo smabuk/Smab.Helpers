@@ -62,8 +62,8 @@ public static class Algorithms {
 	}
 
 
-	public static long LowestCommonMultiple(this int[] numbers) => numbers.Select(number => (long)number).Aggregate(LowestCommonMultipleOf2Numbers);
-	public static long LowestCommonMultiple(this long[] numbers) => numbers.Aggregate(LowestCommonMultipleOf2Numbers);
+	public static long LowestCommonMultiple(this IEnumerable<int> numbers) => numbers.Select(number => (long)number).Aggregate(LowestCommonMultipleOf2Numbers);
+	public static long LowestCommonMultiple(this IEnumerable<long> numbers) => numbers.Aggregate(LowestCommonMultipleOf2Numbers);
 
 	/// <summary>
 	///  Uses the Euclidean algorithm
