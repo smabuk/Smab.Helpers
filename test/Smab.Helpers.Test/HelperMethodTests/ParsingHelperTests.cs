@@ -35,7 +35,7 @@ public partial class ParsingHelperTests {
 	[InlineData("#", 1)]
 	[InlineData("#..#", 9)]
 	public void AsIntFromBinary_ShouldBe(string input, int expected) {
-		int actual = input.FromBinary<int>();
+		int actual = input.FromBinaryAs<int>();
 		Assert.Equal(expected, actual);
 	}
 
@@ -43,7 +43,7 @@ public partial class ParsingHelperTests {
 	[InlineData("█", 1)]
 	[InlineData("█  █", 9)]
 	public void AsIntFromBinary_WithReplacements_ShouldBe(string input, int expected) {
-		int actual = input.FromBinary<int>(' ', '█');
+		int actual = input.FromBinaryAs<int>(' ', '█');
 		Assert.Equal(expected, actual);
 	}
 
@@ -144,13 +144,14 @@ public partial class ParsingHelperTests {
 
 	[Theory]
 	[InlineData("1, 2, 3", (int[])[1, 2, 3])]
-	public void GroupAsInts_ByGroupName_ShouldBe(string input, int[] expected) {
+	public void Group_As_Ints_ByGroupName_ShouldBe(string input, int[] expected) {
 
 		Match actual = CommaDelimitedNumberRegex().Match(input);
 
 		Assert.Equal(expected[0], actual.As<int>("number1"));
 		Assert.Equal(expected[1], actual.As<int>("number2"));
 		Assert.Equal(expected[2], actual.As<int>("number3"));
+		Assert.Equal($"{expected[2]}", actual.As("number3"));
 	}
 
 	[Theory]
@@ -162,6 +163,7 @@ public partial class ParsingHelperTests {
 		Assert.Equal(expected[0], actual.As<int>(1));
 		Assert.Equal(expected[1], actual.As<int>(2));
 		Assert.Equal(expected[2], actual.As<int>(3));
+		Assert.Equal($"{expected[2]}", actual.As(3));
 	}
 
 	[GeneratedRegex(@"(?<number1>\d+)")]
