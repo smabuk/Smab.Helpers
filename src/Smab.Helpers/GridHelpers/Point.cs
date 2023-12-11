@@ -27,7 +27,6 @@ public record struct Point(int X, int Y) {
 	public static Point operator *(in Point lhs, int rhs) => new(lhs.X * rhs, lhs.Y * rhs);
 	public static Point operator *(int lhs, in Point rhs) => new(rhs.X * lhs, rhs.Y * lhs);
 
-
 	public IEnumerable<Point> Adjacent() {
 		Point p = this;
 		return CARDINAL_DIRECTIONS.Select(d => p with { X = p.X + d.dX, Y = p.Y + d.dY });

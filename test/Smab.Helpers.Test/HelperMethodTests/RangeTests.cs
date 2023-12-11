@@ -23,6 +23,7 @@ public class RangeTests {
 				.ShouldEndWith("Ranges do not overlap. (Parameter 'range')");
 		}
 	}
+
 	[Theory]
 	[InlineData(0,   0, 1,  1, false, 0,  0)]
 	[InlineData(1,  15, 4,  9, true,  4,  9)]
