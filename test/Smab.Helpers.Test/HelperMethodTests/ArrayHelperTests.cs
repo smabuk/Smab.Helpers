@@ -244,4 +244,33 @@ public class ArrayHelperTests {
 	}
 
 
+	[Fact]
+	public void ColAsString() {
+		char[,] input = """
+			#.#
+			##.
+			"""
+			.Split(Environment.NewLine)
+			.To2dArray();
+
+		input.ColAsString(0).ShouldBe("##");
+		input.ColAsString(1).ShouldBe(".#");
+		input.ColAsString(2).ShouldBe("#.");
+	}
+
+
+	[Fact]
+	public void RowAsString() {
+		char[,] input = """
+			#.#
+			##.
+			"""
+			.Split(Environment.NewLine)
+			.To2dArray();
+
+		input.RowAsString(0).ShouldBe("#.#");
+		input.RowAsString(1).ShouldBe("##.");
+	}
+
+
 }

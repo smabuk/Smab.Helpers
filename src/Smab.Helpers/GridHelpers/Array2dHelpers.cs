@@ -11,6 +11,28 @@ public static partial class ArrayHelpers {
 	public static int NoOfColumns<T>(this T[,] array) => array.GetLength(0);
 	public static int NoOfRows<T>(this T[,] array) => array.GetLength(1);
 
+	public static string RowAsString<T>(this T[,] array, int rowNo, char? separator = null) {
+		StringBuilder stringBuilder = new();
+		for (int col = 0; col < array.NoOfColumns(); col++) {
+			if (separator is not null && col != 0) {
+				_ = stringBuilder.Append(separator);
+			}
+			_ = stringBuilder.Append(array[col, rowNo]);
+		}
+		return stringBuilder.ToString();
+	}
+
+	public static string ColAsString<T>(this T[,] array, int colNo, char? separator = null) {
+		StringBuilder stringBuilder = new();
+		for (int row = 0; row < array.NoOfRows(); row++) {
+			if (separator is not null && row != 0) {
+				_ = stringBuilder.Append(separator);
+			}
+			_ = stringBuilder.Append(array[colNo, row]);
+		}
+		return stringBuilder.ToString();
+	}
+
 	public static T[,] Create2dArray<T>(int cols, int rows, T value) {
 		T[,] result = new T[cols, rows];
 		for (int row = 0; row < rows; row++) {
