@@ -42,6 +42,8 @@ public record struct Point(int X, int Y) {
 		return ALL_DIRECTIONS.Select(d => p with { X = p.X + d.dX, Y = p.Y + d.dY });
 	}
 
+	public static Point Transpose(Point point) => new(point.Y, point.X);
+
 	public Point East()  => this with { X = X + 1 };
 	public Point West()  => this with { X = X - 1 };
 	public Point North() => this with { Y = Y - 1 };
