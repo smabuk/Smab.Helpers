@@ -256,6 +256,10 @@ public class ArrayHelperTests {
 		input.ColAsString(0).ShouldBe("##");
 		input.ColAsString(1).ShouldBe(".#");
 		input.ColAsString(2).ShouldBe("#.");
+
+		input.ColsAsStrings().ToList()[0].ShouldBe("##");
+		input.ColsAsStrings().ToList()[1].ShouldBe(".#");
+		input.ColsAsStrings().ToList()[2].ShouldBe("#.");
 	}
 
 
@@ -270,7 +274,8 @@ public class ArrayHelperTests {
 
 		input.RowAsString(0).ShouldBe("#.#");
 		input.RowAsString(1).ShouldBe("##.");
+
+		input.RowsAsStrings().ToList()[0].ShouldBe("#.#");
+		input.RowsAsStrings().ToList()[1].ShouldBe("##.");
 	}
-
-
 }

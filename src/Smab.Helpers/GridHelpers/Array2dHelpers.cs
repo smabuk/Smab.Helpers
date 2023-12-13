@@ -22,6 +22,20 @@ public static partial class ArrayHelpers {
 		return stringBuilder.ToString();
 	}
 
+	public static IEnumerable<string> RowsAsStrings<T>(this T[,] array, char? separator = null) {
+		StringBuilder stringBuilder = new();
+		for (int row = 0; row < array.NoOfRows(); row++) {
+			for (int col = 0; col < array.NoOfColumns(); col++) {
+				if (separator is not null && row != 0) {
+					_ = stringBuilder.Append(separator);
+				}
+				_ = stringBuilder.Append(array[col, row]);
+			}
+			yield return stringBuilder.ToString();
+			stringBuilder.Clear();
+		}
+	}
+
 	public static string ColAsString<T>(this T[,] array, int colNo, char? separator = null) {
 		StringBuilder stringBuilder = new();
 		for (int row = 0; row < array.NoOfRows(); row++) {
@@ -31,6 +45,20 @@ public static partial class ArrayHelpers {
 			_ = stringBuilder.Append(array[colNo, row]);
 		}
 		return stringBuilder.ToString();
+	}
+
+	public static IEnumerable<string> ColsAsStrings<T>(this T[,] array, char? separator = null) {
+		StringBuilder stringBuilder = new();
+		for (int col = 0; col < array.NoOfColumns(); col++) {
+			for (int row = 0; row < array.NoOfRows(); row++) {
+				if (separator is not null && row != 0) {
+					_ = stringBuilder.Append(separator);
+				}
+				_ = stringBuilder.Append(array[col, row]);
+			}
+			yield return stringBuilder.ToString();
+			stringBuilder.Clear();
+		}
 	}
 
 	public static T[,] Create2dArray<T>(int cols, int rows, T value) {
