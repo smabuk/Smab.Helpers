@@ -1,6 +1,8 @@
-﻿namespace Smab.Helpers.Test.HelperMethodTests;
+﻿using Xunit.Abstractions;
 
-public class ArrayHelperTests {
+namespace Smab.Helpers.Test.HelperMethodTests;
+
+public class ArrayHelperTests(ITestOutputHelper testOutputHelper) {
 	[Theory]
 	[InlineData(new int[] { 1, 2, 3, 4, 5, 6 }
 		, 2, 3
@@ -245,6 +247,144 @@ public class ArrayHelperTests {
 
 
 	[Fact]
+	public void Transpose_Strings() {
+		List<string> actual = [.."""
+			#.#
+			##.
+			"""
+			.Split(Environment.NewLine)
+			.Transpose()];
+
+		actual[0].Length.ShouldBe(2);
+		actual.Count.ShouldBe(3);
+		actual[0].ShouldBe("##");
+		actual[1].ShouldBe(".#");
+		actual[2].ShouldBe("#.");
+	}
+
+	[Fact]
+	public void Rotate_String() {
+		string input = """
+			A.B.1
+			CD..2
+			E.FG.
+			HIJ.3
+			""";
+
+		testOutputHelper.WriteLine("Rotate 0   - testing");
+		string actual = input.Rotate(0);
+		actual.ShouldBe(input);
+		testOutputHelper.WriteLine("Rotate 0   - passed");
+
+		testOutputHelper.WriteLine("Rotate 90  - testing");
+		actual = input.Rotate(90);
+		actual.ShouldBe("""
+				HECA
+				I.D.
+				JF.B
+				.G..
+				3.21
+				""");
+		testOutputHelper.WriteLine("Rotate 90  - passed");
+
+		testOutputHelper.WriteLine("Rotate 180 - testing");
+		actual = input.Rotate(180);
+		actual.ShouldBe("""
+				3.JIH
+				.GF.E
+				2..DC
+				1.B.A
+				""");
+		testOutputHelper.WriteLine("Rotate 180 - passed");
+
+		testOutputHelper.WriteLine("Rotate 270 - testing");
+		actual = input.Rotate(270);
+		actual.ShouldBe("""
+				12.3
+				..G.
+				B.FJ
+				.D.I
+				ACEH
+				""");
+		testOutputHelper.WriteLine("Rotate 270 - passed");
+
+		testOutputHelper.WriteLine("Rotate -90 - testing");
+		actual = input.Rotate(-90);
+		actual.ShouldBe("""
+				12.3
+				..G.
+				B.FJ
+				.D.I
+				ACEH
+				""");
+		testOutputHelper.WriteLine("Rotate -90 - passed");
+	}
+
+
+	[Fact]
+	public void Rotate_2dArray() {
+		string input = """
+			A.B.1
+			CD..2
+			E.FG.
+			HIJ.3
+			""";
+
+		testOutputHelper.WriteLine("Rotate 0   - testing");
+		char[,] actual = input.Split(Environment.NewLine).To2dArray().Rotate(0);
+		actual.PrintAsString(0).ShouldBe(input);
+		testOutputHelper.WriteLine("Rotate 0   - passed");
+
+		testOutputHelper.WriteLine("Rotate 90  - testing");
+		actual = input.Split(Environment.NewLine).To2dArray().Rotate(90);
+		actual.PrintAsString(0)
+			.ShouldBe("""
+				HECA
+				I.D.
+				JF.B
+				.G..
+				3.21
+				""");
+		testOutputHelper.WriteLine("Rotate 90  - passed");
+
+		testOutputHelper.WriteLine("Rotate 180 - testing");
+		actual = input.Split(Environment.NewLine).To2dArray().Rotate(180);
+		actual.PrintAsString(0)
+			.ShouldBe("""
+				3.JIH
+				.GF.E
+				2..DC
+				1.B.A
+				""");
+		testOutputHelper.WriteLine("Rotate 180 - passed");
+
+		testOutputHelper.WriteLine("Rotate 270 - testing");
+		actual = input.Split(Environment.NewLine).To2dArray().Rotate(270);
+		actual.PrintAsString(0)
+			.ShouldBe("""
+				12.3
+				..G.
+				B.FJ
+				.D.I
+				ACEH
+				""");
+		testOutputHelper.WriteLine("Rotate 270 - passed");
+
+		testOutputHelper.WriteLine("Rotate -90 - testing");
+		actual = input.Split(Environment.NewLine).To2dArray().Rotate(-90);
+		actual.PrintAsString(0)
+			.ShouldBe("""
+				12.3
+				..G.
+				B.FJ
+				.D.I
+				ACEH
+				""");
+		testOutputHelper.WriteLine("Rotate -90 - passed");
+	}
+
+
+	[Fact]
 	public void ColAsString() {
 		char[,] input = """
 			#.#
@@ -277,5 +417,45 @@ public class ArrayHelperTests {
 
 		input.RowsAsStrings().ToList()[0].ShouldBe("#.#");
 		input.RowsAsStrings().ToList()[1].ShouldBe("##.");
+	}
+
+	[Theory]
+	[InlineData(0,    0, true)]
+	[InlineData(11,  12, true)]
+	[InlineData(99, 199, true)]
+	[InlineData(100, 12, false)]
+	[InlineData(12, 200, false)]
+	[InlineData(-1,   0, false)]
+	public void InBounds_ShouldBe(int x, int y, bool expected) {
+		char[,] array = new char[100, 200]; // 0-99, 0-199
+
+		array.InBounds(x, y).ShouldBe(expected);
+		if (array.InBounds(x, y)) {
+			Should.NotThrow(() => _ = array[x, y]);
+		} else {
+			Should.Throw<IndexOutOfRangeException>(() => _ = array[x, y])
+			.Message
+				.ShouldEndWith("Index was outside the bounds of the array.");
+		}
+	}
+
+	[Theory]
+	[InlineData(0,    0, false)]
+	[InlineData(11,  12, false)]
+	[InlineData(99, 199, false)]
+	[InlineData(100, 12, true)]
+	[InlineData(12, 200, true)]
+	[InlineData(-1,   0, true)]
+	public void OutOfBounds_ShouldBe(int x, int y, bool expected) {
+		char[,] array = new char[100, 200]; // 0-99, 0-199
+
+		array.OutOfBounds(x, y).ShouldBe(expected);
+		if (array.OutOfBounds(x, y)) {
+			Should.Throw<IndexOutOfRangeException>(() => _ = array[x, y])
+			.Message
+				.ShouldEndWith("Index was outside the bounds of the array.");
+		} else {
+			Should.NotThrow(() => _ = array[x, y]);
+		}
 	}
 }
