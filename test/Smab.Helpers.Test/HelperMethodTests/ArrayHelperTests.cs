@@ -1,6 +1,4 @@
-﻿using Xunit.Abstractions;
-
-namespace Smab.Helpers.Test.HelperMethodTests;
+﻿namespace Smab.Helpers.Test.HelperMethodTests;
 
 public class ArrayHelperTests(ITestOutputHelper testOutputHelper) {
 	[Theory]
@@ -22,8 +20,8 @@ public class ArrayHelperTests(ITestOutputHelper testOutputHelper) {
 		Assert.Equal(expectedLength, array.Length);
 		Assert.Equal(expectedCols, array.GetUpperBound(0) + 1);
 		Assert.Equal(expectedRows, array.GetUpperBound(1) + 1);
-		Assert.Equal(expectedCols, array.NoOfColumns());
-		Assert.Equal(expectedRows, array.NoOfRows());
+		Assert.Equal(expectedCols, array.ColsCount());
+		Assert.Equal(expectedRows, array.RowsCount());
 	}
 
 	[Fact]
@@ -405,18 +403,21 @@ public class ArrayHelperTests(ITestOutputHelper testOutputHelper) {
 
 	[Fact]
 	public void RowAsString() {
-		char[,] input = """
+		string[] input = [.."""
 			#.#
 			##.
 			"""
-			.Split(Environment.NewLine)
-			.To2dArray();
+			.Split(Environment.NewLine)];
+	
+		char[,] array = input.To2dArray();
+		array.RowAsString(0).ShouldBe("#.#");
+		array.RowAsString(1).ShouldBe("##.");
 
 		input.RowAsString(0).ShouldBe("#.#");
 		input.RowAsString(1).ShouldBe("##.");
 
-		input.RowsAsStrings().ToList()[0].ShouldBe("#.#");
-		input.RowsAsStrings().ToList()[1].ShouldBe("##.");
+		array.RowsAsStrings().ToList()[0].ShouldBe("#.#");
+		array.RowsAsStrings().ToList()[1].ShouldBe("##.");
 	}
 
 	[Theory]

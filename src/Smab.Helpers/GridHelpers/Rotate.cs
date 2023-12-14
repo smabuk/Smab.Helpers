@@ -9,8 +9,8 @@ public static partial class ArrayHelpers {
 		const int DEG_270 = 3;
 
 		int rotationType = rotation >= 0 ? (rotation / 90) % 360 : ((360 + rotation) / 90) % 360;
-		int cols = array.NoOfColumns();
-		int rows = array.NoOfRows();
+		int cols = array.ColsCount();
+		int rows = array.RowsCount();
 
 		T[,] result = rotationType switch {
 			DEG_0  or DEG_180 => new T[cols, rows],
@@ -18,11 +18,11 @@ public static partial class ArrayHelpers {
 			_ => throw new ArgumentOutOfRangeException(nameof(rotation), "Rotation must be a multiple of 90 and be between -360 and 360"),
 		};
 
-		int maxCol = result.NoOfColumns() - 1;
-		int maxRow = result.NoOfRows() - 1;
+		int maxCol = result.ColsCount() - 1;
+		int maxRow = result.RowsCount() - 1;
 
-		for (int r = 0; r < result.NoOfRows(); r++) {
-			for (int c = 0; c < result.NoOfColumns(); c++) {
+		for (int r = 0; r < result.RowsCount(); r++) {
+			for (int c = 0; c < result.ColsCount(); c++) {
 				result[c, r] = rotationType switch {
 					DEG_0   => array[c, r],
 					DEG_90  => array[r, maxCol - c],

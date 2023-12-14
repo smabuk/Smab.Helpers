@@ -8,6 +8,9 @@ public record Cell<T>(Point Index, T Value) {
 	public int X => Index.X;
 	public int Y => Index.Y;
 
+	public int Col => Index.X;
+	public int Row => Index.Y;
+
 	public static implicit operator (int x, int y, T Value)(Cell<T> c) {
 		c.Deconstruct(out Point point, out T value);
 		return (point.X, point.Y, value);

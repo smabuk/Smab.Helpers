@@ -3,14 +3,13 @@
 public static partial class ArrayHelpers {
 
 	public static T[,] Transpose<T>(this T[,] array) {
-		int cols = array.NoOfColumns();
-		int rows = array.NoOfRows();
+		int cols = array.ColsCount();
+		int rows = array.RowsCount();
 		T[,] result = new T[rows, cols];
 		for (int r = 0; r < rows; r++) {
-			for (int c = 0; c < cols; c++) {
-				result[r, c] = array[c, r];
-			}
-		}
+		for (int c = 0; c < cols; c++) {
+			result[r, c] = array[c, r];
+		}}
 		return result;
 	}
 
