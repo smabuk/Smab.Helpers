@@ -9,7 +9,7 @@ public static partial class ArrayHelpers {
 	/// <param name="array"></param>
 	/// <param name="width">If -1 then no spaces. If 0 then 1 padded space, otherwise the width of columns required</param>
 	/// <returns></returns>
-	public static IEnumerable<string> PrintAsStringArray<T>(this T[,] array, int? width = null, (string, string)[]? replacements = null) where T : struct {
+	public static IEnumerable<string> PrintAsStringArray<T>(this T[,] array, int width = 0, (string, string)[]? replacements = null) where T : struct {
 		StringBuilder line = new();
 		for (int r = 0; r <= array.GetUpperBound(ROW_DIMENSION); r++) {
 			line.Clear();
@@ -17,7 +17,7 @@ public static partial class ArrayHelpers {
 				string cell = array[c, r].ToString() ?? "";
 				line.Append(width switch {
 					0 => cell,
-					_ => $"{new string(' ', (width - cell.Length) ?? 1)}{cell}",
+					_ => $"{new string(' ', (width - cell.Length))}{cell}",
 				});
 			}
 			if (replacements is not null) {
@@ -29,10 +29,10 @@ public static partial class ArrayHelpers {
 		}
 	}
 
-	public static List<string> PrintAsStringList<T>(this T[,] array, int? width = null, (string, string)[]? replacements = null) where T : struct
+	public static List<string> PrintAsStringList<T>(this T[,] array, int width = 0, (string, string)[]? replacements = null) where T : struct
 		=> [.. PrintAsStringArray(array, width, replacements)];
 
 
-	public static string PrintAsString<T>(this T[,] array, int? width = null, (string, string)[]? replacements = null) where T : struct
+	public static string PrintAsString<T>(this T[,] array, int width = 0, (string, string)[]? replacements = null) where T : struct
 		=> string.Join(Environment.NewLine, PrintAsStringArray(array, width, replacements));
 }
