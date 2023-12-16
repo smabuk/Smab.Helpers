@@ -438,6 +438,7 @@ public class ArrayHelperTests(ITestOutputHelper testOutputHelper) {
 			.Message
 				.ShouldEndWith("Index was outside the bounds of the array.");
 		}
+		array.InBounds(new Point(x, y)).ShouldBe(expected);
 	}
 
 	[Theory]
@@ -458,5 +459,6 @@ public class ArrayHelperTests(ITestOutputHelper testOutputHelper) {
 		} else {
 			Should.NotThrow(() => _ = array[x, y]);
 		}
+		array.OutOfBounds(new Point(x, y)).ShouldBe(expected);
 	}
 }

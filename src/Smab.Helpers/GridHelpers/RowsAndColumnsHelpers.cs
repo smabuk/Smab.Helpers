@@ -23,8 +23,16 @@ public static partial class ArrayHelpers {
 		=> (col >= array.GetLowerBound(COL_DIMENSION) && col <= array.GetUpperBound(COL_DIMENSION))
 		&& (row >= array.GetLowerBound(ROW_DIMENSION) && row <= array.GetUpperBound(ROW_DIMENSION));
 
+	public static bool InBounds<T>(this T[,] array, (int col, int row) point)
+		=> (point.col >= array.GetLowerBound(COL_DIMENSION) && point.col <= array.GetUpperBound(COL_DIMENSION))
+		&& (point.row >= array.GetLowerBound(ROW_DIMENSION) && point.row <= array.GetUpperBound(ROW_DIMENSION));
+
+
 	public static bool OutOfBounds<T>(this T[,] array, int col, int row)
 		=> !array.InBounds(col, row);
+
+	public static bool OutOfBounds<T>(this T[,] array, (int col, int row) point)
+		=> !array.InBounds(point);
 
 
 
