@@ -20,6 +20,15 @@ public class PointTests {
 	}
 
 	[Theory]
+	[InlineData( 0, 0, 0,  0)]
+	[InlineData( 8, 9, 9,  8)]
+	[InlineData(-5, 6, 6, -5)]
+	public void PointTranspose(int p1x, int p1y, int expectedX, int expectedY) {
+		Point actual = new Point(p1x, p1y).Transpose();
+		Assert.Equal(new Point(expectedX, expectedY), actual);
+	}
+
+	[Theory]
 	[InlineData(0, 0, 1, 1, 1, 1)]
 	[InlineData(8, 9, 12, 4, 20, 13)]
 	[InlineData(8, 9, -12, -4, -4, 5)]

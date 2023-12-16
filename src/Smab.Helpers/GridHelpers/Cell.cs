@@ -16,6 +16,10 @@ public record Cell<T>(Point Index, T Value) {
 		return (point.X, point.Y, value);
 	}
 
+	public static implicit operator Point(Cell<T> c) => c.Index;
+	public static implicit operator     T(Cell<T> c) => c.Value;
+
+
 	public void Deconstruct(out int x, out int y, out T value) {
 		x = Index.X;
 		y = Index.Y;
