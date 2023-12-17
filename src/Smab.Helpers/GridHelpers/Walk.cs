@@ -1,4 +1,6 @@
-﻿namespace Smab.Helpers;
+﻿using System.Data;
+
+namespace Smab.Helpers;
 
 public static partial class ArrayHelpers {
 	/// <summary>
@@ -24,7 +26,7 @@ public static partial class ArrayHelpers {
 
 
 
-	public static IEnumerable<Cell<T>> GetAdjacentCells<T>(this T[,] array, int x, int y, bool includeDiagonals = false) {
+	public static IEnumerable<Cell<T>> GetAdjacentCells<T>(this T[,] array, int x, int y, bool includeDiagonals = false, IEnumerable<(int dX, int dY)>? exclude = null) {
 		int cols = array.GetUpperBound(0);
 		int rows = array.GetUpperBound(1);
 
@@ -34,14 +36,16 @@ public static partial class ArrayHelpers {
 		};
 
 		foreach ((int dX, int dY) in DIRECTIONS) {
-			int newX = x + dX;
-			int newY = y + dY;
-			if (newX >= 0 && newX <= cols && newY >= 0 && newY <= rows) {
-				yield return new(newX, newY, array[newX, newY]);
+			if (exclude is null || !exclude.Contains((dX, dY))) {
+				int newX = x + dX;
+				int newY = y + dY;
+				if (array.InBounds(newX, newY)) {
+					yield return new(newX, newY, array[newX, newY]);
+				}
 			}
 		}
 	}
 
-	public static IEnumerable<Cell<T>> GetAdjacentCells<T>(this T[,] array, (int x, int y) point, bool includeDiagonals = false)
-		=> GetAdjacentCells<T>(array, point.x, point.y, includeDiagonals);
+	public static IEnumerable<Cell<T>> GetAdjacentCells<T>(this T[,] array, (int x, int y) point, bool includeDiagonals = false, IEnumerable<(int dX, int dY)>? exclude = null)
+		=> GetAdjacentCells<T>(array, point.x, point.y, includeDiagonals, exclude);
 }
