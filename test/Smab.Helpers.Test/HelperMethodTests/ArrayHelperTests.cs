@@ -444,15 +444,15 @@ public class ArrayHelperTests(ITestOutputHelper testOutputHelper) {
 	public void InBounds_ShouldBe(int x, int y, bool expected) {
 		char[,] array = new char[100, 200]; // 0-99, 0-199
 
-		array.InBounds(x, y).ShouldBe(expected);
-		if (array.InBounds(x, y)) {
+		array.IsInBounds(x, y).ShouldBe(expected);
+		if (array.IsInBounds(x, y)) {
 			Should.NotThrow(() => _ = array[x, y]);
 		} else {
 			Should.Throw<IndexOutOfRangeException>(() => _ = array[x, y])
 			.Message
 				.ShouldEndWith("Index was outside the bounds of the array.");
 		}
-		array.InBounds(new Point(x, y)).ShouldBe(expected);
+		array.IsInBounds(new Point(x, y)).ShouldBe(expected);
 	}
 
 	[Theory]
@@ -465,14 +465,14 @@ public class ArrayHelperTests(ITestOutputHelper testOutputHelper) {
 	public void OutOfBounds_ShouldBe(int x, int y, bool expected) {
 		char[,] array = new char[100, 200]; // 0-99, 0-199
 
-		array.OutOfBounds(x, y).ShouldBe(expected);
-		if (array.OutOfBounds(x, y)) {
+		array.IsOutOfBounds(x, y).ShouldBe(expected);
+		if (array.IsOutOfBounds(x, y)) {
 			Should.Throw<IndexOutOfRangeException>(() => _ = array[x, y])
 			.Message
 				.ShouldEndWith("Index was outside the bounds of the array.");
 		} else {
 			Should.NotThrow(() => _ = array[x, y]);
 		}
-		array.OutOfBounds(new Point(x, y)).ShouldBe(expected);
+		array.IsOutOfBounds(new Point(x, y)).ShouldBe(expected);
 	}
 }

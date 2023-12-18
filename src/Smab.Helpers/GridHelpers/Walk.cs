@@ -39,7 +39,7 @@ public static partial class ArrayHelpers {
 			if (exclude is null || !exclude.Contains((dX, dY))) {
 				int newX = x + dX;
 				int newY = y + dY;
-				if (array.InBounds(newX, newY)) {
+				if (array.IsInBounds(newX, newY)) {
 					yield return new(newX, newY, array[newX, newY]);
 				}
 			}
