@@ -475,4 +475,23 @@ public class ArrayHelperTests(ITestOutputHelper testOutputHelper) {
 		}
 		array.IsOutOfBounds(new Point(x, y)).ShouldBe(expected);
 	}
+
+
+	[Theory]
+	[InlineData(0,  false)]
+	[InlineData(11, false)]
+	[InlineData(99, true)]
+	[InlineData(100, true)]
+	[InlineData(12, true)]
+	[InlineData(-1, true)]
+	public void DoesNotContain_ShouldBe(int number, bool expected) {
+		IEnumerable<int> array = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
+
+		array.DoesNotContain(number).ShouldBe(expected);
+		array.ToList().DoesNotContain(number).ShouldBe(expected);
+		array.ToHashSet().DoesNotContain(number).ShouldBe(expected);
+	}
+
+
+
 }
