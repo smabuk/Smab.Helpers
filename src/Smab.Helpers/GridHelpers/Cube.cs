@@ -1,5 +1,6 @@
 ﻿namespace Smab.Helpers;
 
+[DebuggerDisplay("{DebugDisplay,nq}")]
 public record Cube<T>(Point3d Position, T Value) {
 
 	public Cube( int X, int Y, int Z, T Value)       : this(new Point3d(X, Y, Z), Value) { }
@@ -20,4 +21,6 @@ public record Cube<T>(Point3d Position, T Value) {
 		z = Position.Z;
 		value = Value;
 	}
+
+	private string DebugDisplay => $$"""{{nameof(Cube<T>)}} ({{X}}, {{Y}} {{Z}}) = {{Value}}""";
 }

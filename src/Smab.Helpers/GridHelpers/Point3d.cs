@@ -1,7 +1,6 @@
-﻿using System.Diagnostics.CodeAnalysis;
+﻿namespace Smab.Helpers;
 
-namespace Smab.Helpers;
-
+[DebuggerDisplay("{DebugDisplay,nq}")]
 public record struct Point3d(int X, int Y, int Z) : IParsable<Point3d> {
 
 	public Point3d((int X, int Y, int Z) point) : this(point.X, point.Y, point.Z) { }
@@ -87,4 +86,5 @@ public record struct Point3d(int X, int Y, int Z) : IParsable<Point3d> {
 	public static bool TryParse([NotNullWhen(true)] string? s, IFormatProvider? provider, [MaybeNullWhen(false)] out Point3d result)
 		=> ISimpleParsable<Point3d>.TryParse(s, provider, out result);
 
+	private string DebugDisplay => $$"""{{nameof(Point3d)}} ({{X}}, {{Y}}, {{Z}})""";
 }

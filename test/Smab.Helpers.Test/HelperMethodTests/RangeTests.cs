@@ -2,6 +2,7 @@
 public class RangeTests {
 	[Theory]
 	[InlineData(0,   0, 1,  1, false, 0,  0)]
+	[InlineData(1,   3, 3,  4, true,  3,  3)]
 	[InlineData(1,  15, 4,  9, true,  4,  9)]
 	[InlineData(1,  15, 4, 39, true,  4, 15)]
 	[InlineData(12, 39, 4, 18, true, 12, 18)]

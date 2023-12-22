@@ -1,5 +1,6 @@
 ﻿namespace Smab.Helpers;
 
+[DebuggerDisplay("{DebugDisplay,nq}")]
 public record Cell<T>(Point Index, T Value) {
 
 	public Cell( int X, int Y, T Value)       : this(new Point(X, Y), Value) { }
@@ -26,4 +27,6 @@ public record Cell<T>(Point Index, T Value) {
 		y = Index.Y;
 		value = Value;
 	}
+
+	private string DebugDisplay => $$"""{{nameof(Cell<T>)}} ({{Index.X}}, {{Index.Y}}) = {{Value}}""";
 }

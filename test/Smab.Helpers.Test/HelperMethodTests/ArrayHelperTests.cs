@@ -130,9 +130,9 @@ public class ArrayHelperTests(ITestOutputHelper testOutputHelper) {
 			input[i] = new((char)(65 + i), i + 1);
 		}
 		(char, int)[,] array = input.To2dArray<(char, int)>(5);
-		expectedPoint = array.Walk2dArray().Select(p => new Point(p.X, p.Y)).Skip(7).First();
+		expectedPoint = array.Walk().Select(p => new Point(p.X, p.Y)).Skip(7).First();
 		Assert.Equal((2, 1), expectedPoint);
-		(int x, int y, (char, int) value) = array.Walk2dArrayWithValues().Skip(7).First();
+		(int x, int y, (char, int) value) = array.WalkWithValues().Skip(7).First();
 		Assert.Equal(2, x);
 		Assert.Equal(1, y);
 		Assert.Equal('H', value.Item1);
