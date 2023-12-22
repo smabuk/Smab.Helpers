@@ -2,6 +2,17 @@
 
 public class Point3dTests {
 	[Theory]
+	[InlineData("0,0,0",    0, 0, 0)]
+	[InlineData("(8,9,10)",   8, 9, 10)]
+	[InlineData("  8 , -6, 3  ", 8, -6, 3)]
+	public void Point3d_Parses(string parseString, int p1x, int p1y, int p1z) {
+		Point3d actual = Point3d.Parse(parseString);
+		actual.X.ShouldBe(p1x);
+		actual.Y.ShouldBe(p1y);
+		actual.Z.ShouldBe(p1z);
+	}
+
+	[Theory]
 	[InlineData(0, 0, 0, 1, 1, 1, 1, 1, 1)]
 	[InlineData(8, 9, 3, 12, 4, 7, 20, 13, 10)]
 	[InlineData(8, 9, 3, -12, -4, -7, -4, 5, -4)]

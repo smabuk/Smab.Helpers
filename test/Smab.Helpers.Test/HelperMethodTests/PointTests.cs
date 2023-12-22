@@ -2,6 +2,16 @@
 
 public class PointTests {
 	[Theory]
+	[InlineData("0,0", 0, 0)]
+	[InlineData("(8,9)", 8, 9)]
+	[InlineData("  8 , -6  ", 8, -6)]
+	public void Point_Parses(string parseString, int p1x, int p1y) {
+		Point actual = Point.Parse(parseString);
+		actual.X.ShouldBe(p1x);
+		actual.Y.ShouldBe(p1y);
+	}
+
+	[Theory]
 	[InlineData(0, 0, 1, 1, 1, 1)]
 	[InlineData(8, 9, 12, 4, 20, 13)]
 	[InlineData(8, 9, -12, -4, -4, 5)]

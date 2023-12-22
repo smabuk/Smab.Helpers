@@ -1,6 +1,8 @@
-﻿namespace Smab.Helpers;
+﻿using System.Diagnostics.CodeAnalysis;
 
-public record struct Point(int X, int Y) {
+namespace Smab.Helpers;
+
+public record struct Point(int X, int Y) : IParsable<Point> {
 
 	public Point((int X, int Y) point) : this(point.X, point.Y) { }
 
@@ -78,5 +80,14 @@ public record struct Point(int X, int Y) {
 	];
 
 	//public override string ToString() => $"({X}, {Y})";
+	public static Point Parse(string s, IFormatProvider? provider) {
+		char[] splitBy = [',', '(', ')'];
+		string[] tokens = s.TrimmedSplit(splitBy);
+		return new(tokens[0].As<int>(), tokens[1].As<int>());
+	}
+
+	public static Point Parse(string s) => Parse(s, null);
+	public static bool TryParse([NotNullWhen(true)] string? s, IFormatProvider? provider, [MaybeNullWhen(false)] out Point result)
+		=> ISimpleParsable<Point>.TryParse(s, provider, out result);
 
 }

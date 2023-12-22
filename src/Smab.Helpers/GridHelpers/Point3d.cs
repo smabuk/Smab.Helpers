@@ -1,6 +1,8 @@
-﻿namespace Smab.Helpers;
+﻿using System.Diagnostics.CodeAnalysis;
 
-public record struct Point3d(int X, int Y, int Z) {
+namespace Smab.Helpers;
+
+public record struct Point3d(int X, int Y, int Z) : IParsable<Point3d> {
 
 	public Point3d((int X, int Y, int Z) point) : this(point.X, point.Y, point.Z) { }
 
@@ -74,5 +76,15 @@ public record struct Point3d(int X, int Y, int Z) {
 	];
 
 	//public override string ToString() => $"({X}, {Y}, {Z})";
+
+	public static Point3d Parse(string s, IFormatProvider? provider) {
+		char[] splitBy = [',', '(', ')'];
+		string[] tokens = s.TrimmedSplit(splitBy);
+		return new(tokens[0].As<int>(), tokens[1].As<int>(), tokens[2].As<int>());
+	}
+
+	public static Point3d Parse(string s) => Parse(s, null);
+	public static bool TryParse([NotNullWhen(true)] string? s, IFormatProvider? provider, [MaybeNullWhen(false)] out Point3d result)
+		=> ISimpleParsable<Point3d>.TryParse(s, provider, out result);
 
 }
