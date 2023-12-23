@@ -86,5 +86,5 @@ public record struct Point3d(int X, int Y, int Z) : IParsable<Point3d> {
 	public static bool TryParse([NotNullWhen(true)] string? s, IFormatProvider? provider, [MaybeNullWhen(false)] out Point3d result)
 		=> ISimpleParsable<Point3d>.TryParse(s, provider, out result);
 
-	private string DebugDisplay => $$"""{{nameof(Point3d)}} ({{X}}, {{Y}}, {{Z}})""";
+	private readonly string DebugDisplay => $$"""{{nameof(Point3d)}} ({{X}}, {{Y}}, {{Z}})""";
 }

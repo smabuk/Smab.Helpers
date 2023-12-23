@@ -97,7 +97,7 @@ public record struct LongRange(long Start, long End) {
 		return (start, end);
 	}
 
-	public void Deconstruct(out long start, out long end) {
+	public readonly void Deconstruct(out long start, out long end) {
 		start = Start;
 		end = End;
 	}

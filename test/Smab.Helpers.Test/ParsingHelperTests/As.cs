@@ -1,25 +1,8 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using System.Text.RegularExpressions;
 
-namespace Smab.Helpers.Test.HelperMethodTests;
-
-public partial class ParsingHelperTests {
-	[Fact]
-	public void TrimmedSplit_ShouldBe() {
-
-		const string INPUT = """
-			  123, 4, 5 L : 123 , 
-			aaa, 4, ;  x : 123 , 
-			""";
-
-		INPUT.TrimmedSplit().Length.ShouldBe(1);
-		INPUT.TrimmedSplit(Environment.NewLine).Length.ShouldBe(2);
-		INPUT.TrimmedSplit(',').Length.ShouldBe(6);
-		INPUT.TrimmedSplit([";"]).Length.ShouldBe(2);
-		INPUT.TrimmedSplit([";"]).Last().ShouldBe("x : 123 ,");
-		INPUT.TrimmedSplit(",", 5)[^2].ShouldBe("aaa");
-	}
-
+namespace Smab.Helpers.Test.ParsingHelperTests;
+public partial class As {
 	[Theory]
 	[InlineData("1", 1)]
 	[InlineData("23", 23)]
@@ -28,22 +11,6 @@ public partial class ParsingHelperTests {
 	[InlineData("xyz", 0)]
 	public void AsInt_ShouldBe(string input, int expected) {
 		int actual = input.As<int>();
-		Assert.Equal(expected, actual);
-	}
-
-	[Theory]
-	[InlineData("#", 1)]
-	[InlineData("#..#", 9)]
-	public void AsIntFromBinary_ShouldBe(string input, int expected) {
-		int actual = input.FromBinaryAs<int>();
-		Assert.Equal(expected, actual);
-	}
-
-	[Theory]
-	[InlineData("█", 1)]
-	[InlineData("█  █", 9)]
-	public void AsIntFromBinary_WithReplacements_ShouldBe(string input, int expected) {
-		int actual = input.FromBinaryAs<int>(' ', '█');
 		Assert.Equal(expected, actual);
 	}
 
@@ -64,6 +31,7 @@ public partial class ParsingHelperTests {
 		int[] actual = ParsingHelpers.As<int>(input).ToArray();
 		Assert.Equal(expected, actual);
 	}
+
 	[Theory]
 	[InlineData((string[])["1", "2", "3"], (int[])[1, 2, 3,])]
 	[InlineData((string[])["3", "2", "1"], (int[])[3, 2, 1,])]
@@ -81,6 +49,7 @@ public partial class ParsingHelperTests {
 		int[] actual = [.. input.As<int>((char[]?)null)];
 		Assert.Equal(expected, actual);
 	}
+
 	[Theory]
 	[InlineData("1, 2, 3", (int[])[1, 2, 3])]
 	[InlineData("3, 2, 1", (int[])[3, 2, 1])]
@@ -129,6 +98,7 @@ public partial class ParsingHelperTests {
 		long[] actual = ParsingHelpers.As<long>(input).ToArray();
 		Assert.Equal(expected, actual);
 	}
+
 	[Theory]
 	[InlineData((string[])["1", "2", "3"], (long[])[1, 2, 3,])]
 	[InlineData((string[])["3", "2", "1"], (long[])[3, 2, 1,])]
@@ -226,4 +196,5 @@ public partial class ParsingHelperTests {
 
 		public static bool TryParse([NotNullWhen(true)] string? s, IFormatProvider? provider, [MaybeNullWhen(false)] out SomeThing result) => ISimpleParsable<SomeThing>.TryParse(s, provider, out result);
 	}
+
 }

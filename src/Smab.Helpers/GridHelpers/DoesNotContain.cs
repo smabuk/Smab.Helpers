@@ -1,5 +1,7 @@
 ﻿namespace Smab.Helpers;
-
+//
+// Modified from https://source.dot.net/#System.Linq/System/Linq/Contains.cs
+//
 public static partial class ArrayHelpers {
 
 	public static bool DoesNotContain<TSource>(this IEnumerable<TSource> source, TSource value) =>

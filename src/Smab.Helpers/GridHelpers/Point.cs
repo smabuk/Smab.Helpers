@@ -90,5 +90,5 @@ public record struct Point(int X, int Y) : IParsable<Point> {
 	public static bool TryParse([NotNullWhen(true)] string? s, IFormatProvider? provider, [MaybeNullWhen(false)] out Point result)
 		=> ISimpleParsable<Point>.TryParse(s, provider, out result);
 
-	private string DebugDisplay => $$"""{{nameof(Point)}} ({{X}}, {{Y}})""";
+	private readonly string DebugDisplay => $$"""{{nameof(Point)}} ({{X}}, {{Y}})""";
 }
