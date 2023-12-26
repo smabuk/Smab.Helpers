@@ -46,7 +46,7 @@ public static partial class ArrayHelpers {
 		return stringBuilder.ToString();
 	}
 
-	public static string RowAsString(this IEnumerable<string> array, int rowNo, char? separator = null) {
+	public static string RowAsString(this IEnumerable<string> array, int rowNo) {
 		return array.Skip(rowNo).Take(1).Single();
 	}
 

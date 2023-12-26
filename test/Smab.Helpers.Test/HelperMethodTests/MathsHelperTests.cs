@@ -19,7 +19,7 @@ public class MathsHelperTests {
 
 	[Fact]
 	public void MinMax_Of_Points() {
-		Point point = new Point(1, 23);
+		Point point = new(1, 23);
 		point.MinMax().ShouldBe((1, 23));
 
 		Point[] points = [new Point(2, 3), new Point(3, 4), new Point(5, 6), new Point(7, 8)];

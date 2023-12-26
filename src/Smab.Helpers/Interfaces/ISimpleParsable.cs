@@ -44,6 +44,7 @@ public interface ISimpleParsable<TSelf> : IParsable<TSelf> where TSelf: IParsabl
 	//
 	// Returns:
 	//     true if s was successfully parsed; otherwise, false.
+	[SuppressMessage("Style", "IDE0060:Remove unused parameter", Justification = "Overriding for simplicity")]
 	static new bool TryParse([NotNullWhen(true)] string? s, IFormatProvider? provider, [MaybeNullWhen(false)] out TSelf result) {
 		result = default!;
 		try {

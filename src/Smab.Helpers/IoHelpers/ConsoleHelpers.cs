@@ -1,5 +1,6 @@
 ﻿namespace Smab.Helpers;
 
+[Obsolete("Moved to the ConsoleX class.")]
 public class ConsoleHelpers {
 
 	public static class KeyReader {
