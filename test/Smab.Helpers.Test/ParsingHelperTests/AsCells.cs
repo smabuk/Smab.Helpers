@@ -10,7 +10,7 @@ public class AsCells {
 			.....*....
 			""";
 
-		IEnumerable<Cell<char>> expected = [new(2, 0, '#'), new(6, 0, '*'), new(3, 1, '*'), new(7, 1, '#'), new(0, 2, '#'), new(5, 3, '*')];
+		IEnumerable<Cell<char>> expected = [new(2, 0, '#'), new(6, 0, '*'), new(new Point(3, 1), '*'), new(7, 1, '#'), new(0, 2, '#'), new(5, 3, '*')];
 
 		List<Cell<char>> cells = [.. input.AsCells(['#', '*'])];
 		cells.ShouldBe(expected);

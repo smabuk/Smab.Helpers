@@ -17,6 +17,4 @@ public static partial class ParsingHelpers {
 
 	public static IEnumerable<Cell<char>> AsCells(this string input, char[]? matches = null, int? cols = null, int? rows = null)
 		=> input.Split(Environment.NewLine).AsCells(matches, cols, rows);
-
-
 }
