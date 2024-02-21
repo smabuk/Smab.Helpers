@@ -1,6 +1,5 @@
 name: NuGet Publish
 
-# workflow_dispatch is used to manually invoke the GH action
 on:
   push:
     # branches:
@@ -9,13 +8,16 @@ on:
       - 'v*'
   # release:
   #   types: [created]
+
+  # workflow_dispatch is used to manually invoke the GH action
   workflow_dispatch:
 
 env:
   # Setting the required env flags
   package_name: Smab.Helpers
-  dotnet_core_version: 8.0.x
+  csproj: src/Smab.Helpers/Smab.Helpers.csproj
   config: Release
+  dotnet_core_version: 8.0.x
   DOTNET_CLI_TELEMETRY_OPTOUT: 1
   DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
 
@@ -35,9 +37,23 @@ jobs:
         with:
           dotnet-version: ${{ env.dotnet_core_version }}
 
+      # Run dotnet format style 
+      - name: dotnet Format Style
+        run: dotnet format style --verify-no-changes --verbosity diagnostic
+
+      # Run dotnet build 
+      - name: dotnet Build
+        run: dotnet build --configuration ${{ env.config }}
+        shell: bash
+
+      # Run dotnet publish 
+      - name: dotnet Publish
+        run: dotnet publish ${{ env.csproj }} --configuration ${{ env.config }}
+        shell: bash
+
       # Run dotnet pack to create the nupkg file for the project and store in artifacts folder
       - name: Run Pack
-        run: dotnet pack src/${{ env.package_name }}/${{ env.package_name }}.csproj -o ./artifacts --configuration ${{ env.config }}
+        run: dotnet pack ${{ env.csproj }} -o ./artifacts --configuration ${{ env.config }}
         shell: bash
 
       # Find all the created nupkg files and publish it to NuGet,
