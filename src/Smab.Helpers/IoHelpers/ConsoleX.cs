@@ -38,6 +38,15 @@ public static partial class ConsoleX {
 		}
 	}
 
+	public static async Task KeyboardListener(CancellationToken token, IProgress<ConsoleKey> progress, int millisecondsDelay = 20) {
+		while (!token.IsCancellationRequested) {
+			if (Console.KeyAvailable) {
+				progress.Report(Console.ReadKey(true).Key);
+			} else {
+				await Task.Delay(millisecondsDelay);
+			}
+		}
+	}
 
 	public static void WriteRow(string message, int? col = null, int? row = null, bool clearToEndOfRow = true, ConsoleColor? colour = null) {
 		(int currentCol, int currentRow) = Console.GetCursorPosition();
