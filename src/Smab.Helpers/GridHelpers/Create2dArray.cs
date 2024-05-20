@@ -2,14 +2,9 @@
 
 public static partial class ArrayHelpers {
 
-	public static T[,] Create2dArray<T>(int cols, int rows, T value) {
-		T[,] result = new T[cols, rows];
+	public static T[,] Create2dArray<T>(int cols, int rows, T value)
+		=> (new T[cols, rows]).Fill(value);
 
-		for (int row = 0; row < rows; row++) {
-		for (int col = 0; col < cols; col++) {
-			result[col, row] = value;
-		}}
-
-		return result;
-	}
+	public static T[,] Create2dArray<T>(int cols, int rows, int colLowerBound, int rowLowerBound, T value)
+		=> ((T[,])Array.CreateInstance(typeof(T), [cols, rows], [colLowerBound, rowLowerBound])).Fill(value);
 }
