@@ -2,24 +2,25 @@
 
 public static class ArgumentHelpers {
 
-	public static T GetArgument<T>(object[]? args, int argumentNumber, T defaultResult) {
-		if (args is null || args.Length == 0) {
-			return defaultResult;
-		} else if (args.Length >= argumentNumber && args[argumentNumber - 1] is T x) {
-			return x;
-		} else {
-			throw new ArgumentOutOfRangeException($"{nameof(GetArgument)}: {nameof(argumentNumber)}={argumentNumber}");
-		}
+	public static T GetArgument<T>(object[] args, int argumentNumber, T defaultResult) {
+		int i = argumentNumber - 1;
+		// Learnt this Bounds Check micro-optimisation from Stephen Toub's deep dives into Linq
+		//   (uint)i < (uint)length
+		// Removes the need to check for < 0 and means the compiler doesn't need to recheck when calculating args[i]
+		return args is not null && (uint)i < (uint)args.Length && args[i] is T resultT
+			? resultT
+			: defaultResult;
 	}
 
-	public static T GetArgument<T>(object[]? args, int argumentNumber) {
-		if (args is null || args.Length == 0) {
-			throw new ArgumentOutOfRangeException($"{nameof(GetArgument)}: No args object");
-		} else if (args.Length >= argumentNumber && args[argumentNumber - 1] is T x) {
-			return x;
-		} else {
-			throw new ArgumentOutOfRangeException($"{nameof(GetArgument)}: {nameof(argumentNumber)}={argumentNumber}");
-		}
-	}
+	public static T GetArgument<T>(object[] args, int argumentNumber) {
+		ArgumentNullException.ThrowIfNull(args);
 
+		int i = argumentNumber - 1;
+		// Learnt this Bounds Check micro-optimisation from Stephen Toub's deep dives into Linq
+		//   (uint)i < (uint)length
+		// Removes the need to check for < 0 and means the compiler doesn't need to recheck when calculating args[i]
+		return (uint)i < (uint)args.Length && args[i] is T resultT
+			? resultT
+			: throw new ArgumentOutOfRangeException($"{nameof(GetArgument)}: Requested argument {argumentNumber} from {args.Length} arguments.");
+	}
 }

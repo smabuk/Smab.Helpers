@@ -5,13 +5,13 @@ public static partial class ParsingHelpers {
 		rows ??= array.Length;
 		cols ??= array[0].Length;
 
-		for (int r = 0; r < rows; r++) {
-			for (int c = 0; c < cols; c++) {
-				if ((   matches is     null && array[r][c] != ' ') 
-					|| (matches is not null && matches.Contains(array[r][c]))) {
-					yield return new Cell<char>(c, r, array[r][c]);
-				}
+		for (int row = 0; row < rows; row++) {
+		for (int col = 0; col < cols; col++) {
+			if ((   matches is     null && array[row][col] != ' ') 
+				|| (matches is not null && matches.Contains(array[row][col]))) {
+				yield return new Cell<char>(col, row, array[row][col]);
 			}
+		}
 		}
 	}
 

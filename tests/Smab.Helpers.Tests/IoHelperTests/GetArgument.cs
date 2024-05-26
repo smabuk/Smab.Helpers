@@ -9,6 +9,7 @@ public class GetArgument {
 	[InlineData(4, "0", "four", typeof(string))]
 	[InlineData(5, '0',    '5', typeof(char))]
 	[InlineData(6, 0.0,    6.0, typeof(double))]
+	[InlineData(7, 7.7,    7.7, typeof(double))]
 	public void GetArgument_WithDefaults_Should_Return(int index, object defaultValue, object expectedValue, Type expectedType) {
 		ArgumentHelpers.GetArgument(arguments, index, defaultValue).ShouldBeOfType(expectedType);
 		ArgumentHelpers.GetArgument(arguments, index, defaultValue).ShouldBe(expectedValue);
@@ -33,5 +34,20 @@ public class GetArgument {
 
 		actual.ShouldBeOfType(expectedType);
 		actual.ShouldBe(expectedValue);
+	}
+
+	[Theory]
+	[InlineData(int.MinValue)]
+	[InlineData(int.MaxValue)]
+	[InlineData(-1)]
+	[InlineData(0)]
+	[InlineData(7)]
+	public void GetArgument_Should_Throw_ArgumentOutOfRangeException_When_InvalidIndex(int index) {
+		Should.Throw<ArgumentOutOfRangeException>(() => ArgumentHelpers.GetArgument<object>(arguments, index));
+	}
+
+	[Fact]
+	public void GetArgument_Should_Throw_ArgumentOutOfRangeException_When_EmptyArgs() {
+		Should.Throw<ArgumentNullException>(() => ArgumentHelpers.GetArgument<object>(null!, 1));
 	}
 }

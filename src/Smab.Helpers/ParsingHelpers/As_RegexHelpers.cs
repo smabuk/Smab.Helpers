@@ -4,6 +4,7 @@ using System.Text.RegularExpressions;
 namespace Smab.Helpers;
 
 public static partial class ParsingHelpers {
+
 	public static string As(this Match match, string groupName)
 		=> match.Groups[groupName].Value;
 

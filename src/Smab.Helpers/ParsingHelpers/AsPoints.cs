@@ -1,5 +1,6 @@
 ﻿namespace Smab.Helpers;
 public static partial class ParsingHelpers {
+
 	public static IEnumerable<Point> AsPoints(this IEnumerable<string> input) =>
 		input.Select(i => i.Split(",")).Select(x => new Point(x[0].As<int>(), x[1].As<int>()));
 
@@ -16,12 +17,12 @@ public static partial class ParsingHelpers {
 		rows ??= array.Length;
 		cols ??= array[0].Length;
 
-		for (int r = 0; r < rows; r++) {
-			for (int c = 0; c < cols; c++) {
-				if (array[r][c] == match) {
-					yield return new Point(c, r);
-				}
+		for (int row = 0; row < rows; row++) {
+		for (int col = 0; col < cols; col++) {
+			if (array[row][col] == match) {
+				yield return new Point(col, row);
 			}
+		}
 		}
 	}
 
