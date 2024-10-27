@@ -10,9 +10,9 @@ public static partial class AlgorithmicHelpers {
 	/// <param name="elements"></param>
 	/// <returns></returns>
 	public static IEnumerable<T[]> Permute<T>(this IEnumerable<T> elements) {
-		return permute(elements.ToArray(), Enumerable.Empty<T>());
+		return permute(elements.ToArray(), []);
 		IEnumerable<T[]> permute(IEnumerable<T> remainder, IEnumerable<T> prefix) =>
-			!remainder.Any() ? new[] { prefix.ToArray() } :
+			!remainder.Any() ? [prefix.ToArray()] :
 			remainder.SelectMany((c, i) => permute(
 				remainder.Take(i).Concat(remainder.Skip(i + 1)).ToArray(),
 				prefix.Append(c)));

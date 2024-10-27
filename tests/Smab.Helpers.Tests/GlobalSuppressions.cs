@@ -5,4 +5,4 @@
 
 using System.Diagnostics.CodeAnalysis;
 
-[assembly: SuppressMessage("Performance", "CA1861:Avoid constant arrays as arguments", Justification = "<Pending>", Scope = "member", Target = "~M:Smab.Helpers.Tests.HelperMethodTests.ArrayHelperTests.Should_Find_Mode(System.Int32[],System.Int32[])")]
+//[assembly: SuppressMessage("Performance", "CA1861:Avoid constant arrays as arguments", Justification = "<Pending>", Scope = "member", Target = "~M:Smab.Helpers.Tests.HelperMethodTests.ArrayHelperTests.Should_Find_Mode(System.Int32[],System.Int32[])")]

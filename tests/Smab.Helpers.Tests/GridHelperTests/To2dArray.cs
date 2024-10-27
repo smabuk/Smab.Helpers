@@ -60,7 +60,7 @@ public class To2dArray {
 
 	[Fact]
 	public void To2dArray_Points_To_Char() {
-		Point[] input = { new Point(1, 3), new Point(2, 4), new Point(3, 6) };
+		Point[] input = [new(1, 3), new(2, 4), new(3, 6)];
 		char[,] array = input.To2dArray(initial: ' ', value: '#');
 		Assert.Equal(28, array.Length);
 		Assert.Equal(4, array.GetUpperBound(0) + 1);
@@ -74,7 +74,7 @@ public class To2dArray {
 
 	[Fact]
 	public void To2dArray_Points_With_Negatives_To_Char() {
-		Point[] input = { new Point(1, -3), new Point(2, 4), new Point(3, 6) };
+		Point[] input = [new(1, -3), new(2, 4), new(3, 6)];
 		char[,] array = input.To2dArray(initial: ' ', value: '#');
 		Assert.Equal(40, array.Length);
 		Assert.Equal(4, array.GetUpperBound(0) + 1);
