@@ -2,7 +2,7 @@
 
 public static class ArgumentHelpers {
 
-	public static T GetArgument<T>(object[] args, int argumentNumber, T defaultResult) {
+	public static T GetArgument<T>(object[]? args, int argumentNumber, T defaultResult) {
 		int i = argumentNumber - 1;
 		// Learnt this Bounds Check micro-optimisation from Stephen Toub's deep dives into Linq
 		//   (uint)i < (uint)length
@@ -12,7 +12,7 @@ public static class ArgumentHelpers {
 			: defaultResult;
 	}
 
-	public static T GetArgument<T>(object[] args, int argumentNumber) {
+	public static T GetArgument<T>(object[]? args, int argumentNumber) {
 		ArgumentNullException.ThrowIfNull(args);
 
 		int i = argumentNumber - 1;
