@@ -28,16 +28,16 @@ public record struct Point3d(int X, int Y, int Z) : IParsable<Point3d> {
 		z = Z;
 	}
 
-	public Point3d East()  => this with { X = X + 1 };
-	public Point3d West()  => this with { X = X - 1 };
-	public Point3d North() => this with { Y = Y - 1 };
-	public Point3d South() => this with { Y = Y + 1 };
-	public Point3d Front() => this with { Z = Z - 1 };
-	public Point3d Back()  => this with { Z = Z + 1 };
-	public Point3d Right() => this with { X = X + 1 };
-	public Point3d Left()  => this with { X = X - 1 };
-	public Point3d Up()    => this with { Y = Y - 1 };
-	public Point3d Down()  => this with { Y = Y + 1 };
+	public Point3d East(int distance = 1)  => this with { X = X + distance };
+	public Point3d West(int distance = 1)  => this with { X = X - distance };
+	public Point3d North(int distance = 1) => this with { Y = Y - distance };
+	public Point3d South(int distance = 1) => this with { Y = Y + distance };
+	public Point3d Front(int distance = 1) => this with { Z = Z - distance };
+	public Point3d Back(int distance = 1)  => this with { Z = Z + distance };
+	public Point3d Right(int distance = 1) => this with { X = X + distance };
+	public Point3d Left(int distance = 1)  => this with { X = X - distance };
+	public Point3d Up(int distance = 1)    => this with { Y = Y - distance };
+	public Point3d Down(int distance = 1)  => this with { Y = Y + distance };
 
 	public IEnumerable<Point3d> Adjacent() {
 		Point3d p = this;
@@ -58,6 +58,8 @@ public record struct Point3d(int X, int Y, int Z) : IParsable<Point3d> {
 			}
 		}
 	}
+
+	public static readonly Point3d Zero = new(0, 0, 0);
 
 	private static readonly List<(int dX, int dY, int dZ)> CARDINAL_DIRECTIONS = [
 		( 0, -1,  0),

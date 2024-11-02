@@ -41,6 +41,8 @@ public class Point3dTests {
 		Assert.Equal((4, 3, 3), Point3d.East());
 		Assert.Equal((3, 3, 2), Point3d.Front());
 		Assert.Equal((3, 3, 4), Point3d.Back());
+		Assert.Equal((3, 3, 8), Point3d.Back(5));
+		Assert.Equal((3, 3, 2), Point3d.Back(-1));
 
 		List<Point3d> list = Point3d.Adjacent().ToList();
 		Assert.Equal(6, list.Count);

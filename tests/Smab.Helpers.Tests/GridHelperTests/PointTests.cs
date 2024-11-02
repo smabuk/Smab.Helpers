@@ -56,6 +56,7 @@ public class PointTests {
 		Assert.Equal((3, 4), point.South());
 		Assert.Equal((2, 3), point.West());
 		Assert.Equal((4, 3), point.East());
+		Assert.Equal((8, 3), point.East(5));
 
 		List<Point> list = point.Adjacent().ToList();
 		Assert.Equal(4, list.Count);

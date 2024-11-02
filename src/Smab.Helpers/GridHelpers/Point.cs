@@ -45,15 +45,17 @@ public record struct Point(int X, int Y) : IParsable<Point> {
 
 	public readonly Point Transpose() => new(Y, X);
 
-	public Point East()  => this with { X = X + 1 };
-	public Point West()  => this with { X = X - 1 };
-	public Point North() => this with { Y = Y - 1 };
-	public Point South() => this with { Y = Y + 1 };
+	public Point East(int distance = 1)  => this with { X = X + distance };
+	public Point West(int distance = 1)  => this with { X = X - distance };
+	public Point North(int distance = 1) => this with { Y = Y - distance };
+	public Point South(int distance = 1) => this with { Y = Y + distance };
 
-	public Point Right() => this with { X = X + 1 };
-	public Point Left()  => this with { X = X - 1 };
-	public Point Up()    => this with { Y = Y - 1 };
-	public Point Down()  => this with { Y = Y + 1 };
+	public Point Right(int distance = 1) => this with { X = X + distance };
+	public Point Left(int distance = 1)  => this with { X = X - distance };
+	public Point Up(int distance = 1)    => this with { Y = Y - distance };
+	public Point Down(int distance = 1)  => this with { Y = Y + distance };
+
+	public static readonly Point Zero = new(0, 0);
 
 	private static readonly List<(int dX, int dY)> CARDINAL_DIRECTIONS = [
 		( 0, -1),
