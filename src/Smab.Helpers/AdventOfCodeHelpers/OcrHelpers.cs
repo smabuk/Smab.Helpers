@@ -75,6 +75,9 @@ public static class OcrHelpers {
 		#....#.|#####..|.####..|.......|######.|#......|.###.#.|#....#.|.......|.###...|#....#.|######.|.......|#....#.|.......|#......|.......|#....#.|.......|.......|.......|.......|.......|#....#.|.......|######.|.......|
 		""";
 
+	public static string IdentifyMessage(this char[,] input, char off = Unlit, char on = Lit, int whitespace = 1, OcrLetterSize ocrLetterSize = OcrLetterSize.Normal)
+		=> IdentifyMessage(input.AsStrings(), off, on, whitespace, ocrLetterSize);
+
 	public static string IdentifyMessage(this string input, char off = Unlit, char on = Lit, int whitespace = 1, OcrLetterSize ocrLetterSize = OcrLetterSize.Normal)
 		=> IdentifyMessage(input.ReplaceLineEndings().Split(Environment.NewLine), off, on, whitespace, ocrLetterSize);
 
