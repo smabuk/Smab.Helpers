@@ -75,10 +75,10 @@ public static class OcrHelpers {
 		#....#.|#####..|.####..|.......|######.|#......|.###.#.|#....#.|.......|.###...|#....#.|######.|.......|#....#.|.......|#......|.......|#....#.|.......|.......|.......|.......|.......|#....#.|.......|######.|.......|
 		""";
 
-	public static string IdentifyMessage(string input, char off = Unlit, char on = Lit, int whitespace = 1, OcrLetterSize ocrLetterSize = OcrLetterSize.Normal)
+	public static string IdentifyMessage(this string input, char off = Unlit, char on = Lit, int whitespace = 1, OcrLetterSize ocrLetterSize = OcrLetterSize.Normal)
 		=> IdentifyMessage(input.ReplaceLineEndings().Split(Environment.NewLine), off, on, whitespace, ocrLetterSize);
 
-	public static string IdentifyMessage(IEnumerable<string> input, char off = Unlit, char on = Lit, int whitespace = 1, OcrLetterSize ocrLetterSize = OcrLetterSize.Normal) {
+	public static string IdentifyMessage(this IEnumerable<string> input, char off = Unlit, char on = Lit, int whitespace = 1, OcrLetterSize ocrLetterSize = OcrLetterSize.Normal) {
 		List<string> inputList = [.. input];
 		for (int i = 0; i < inputList.Count; i++) {
 			inputList[i] = inputList[i].Replace(off, Unlit).Replace(on, Lit);
@@ -88,7 +88,7 @@ public static class OcrHelpers {
 		string output = "";
 		int col = 0;
 		while (col < noOfColumns) {
-			char letter = FindLetter(inputList, col, ocrLetterSize) ?? BadCharacter;
+			char letter = inputList.FindLetter(col, ocrLetterSize) ?? BadCharacter;
 			if (letter == BadCharacter || !char.IsLetterOrDigit(letter)) {
 				break;
 			}
@@ -108,7 +108,7 @@ public static class OcrHelpers {
 
 
 
-	private static char? FindLetter(IEnumerable<string> inputList, int col, OcrLetterSize ocrLetterSize) {
+	private static char? FindLetter(this IEnumerable<string> inputList, int col, OcrLetterSize ocrLetterSize) {
 		string possibleLetters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 		int gridHeight = ocrLetterSize switch {
 			OcrLetterSize.Normal => Alphabet_Normal_Grid_Height,
@@ -117,7 +117,7 @@ public static class OcrHelpers {
 			_ => throw new NotImplementedException(),
 		};
 		for (int i = 0; i < gridHeight; i++) {
-			possibleLetters = PossibleLetters(inputList, ocrLetterSize, col, i, possibleLetters);
+			possibleLetters = inputList.PossibleLetters(ocrLetterSize, col, i, possibleLetters);
 			if (possibleLetters.ToList().Count <= 1) {
 				return possibleLetters.FirstOrDefault();
 			}
@@ -125,7 +125,7 @@ public static class OcrHelpers {
 		return null;
 	}
 
-	private static string PossibleLetters(IEnumerable<string> input, OcrLetterSize ocrLetterSize, int col, int row, string possible = null!) {
+	private static string PossibleLetters(this IEnumerable<string> input, OcrLetterSize ocrLetterSize, int col, int row, string possible = null!) {
 		string[] inputArray = [.. input];
 		possible ??= "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 		string returnPossible = "";
