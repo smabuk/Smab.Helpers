@@ -17,7 +17,7 @@ env:
   package_name: Smab.Helpers
   csproj: src/Smab.Helpers/Smab.Helpers.csproj
   config: Release
-  dotnet_core_version: 9.0.100-rc.2.24474.11
+  dotnet_core_version: 9.0.*
   DOTNET_CLI_TELEMETRY_OPTOUT: 1
   DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
 
