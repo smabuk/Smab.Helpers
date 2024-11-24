@@ -36,7 +36,7 @@ public static partial class ArrayHelpers {
 	}
 
 	public static IEnumerable<string> Rotate(this IEnumerable<string> array, int rotation)
-		=> array.To2dArray().Rotate(rotation).PrintAsStringArray(0);
+		=> array.To2dArray().Rotate(rotation).AsStrings();
 
 	public static string Rotate(this string array, int rotation)
 		=> array.Split(Environment.NewLine).To2dArray().Rotate(rotation).PrintAsString(0);
