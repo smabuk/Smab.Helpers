@@ -88,4 +88,15 @@ public class Point3dTests {
 
 	}
 
+
+	[Fact]
+	public void Point3d_Constants() {
+		(Point3d.Zero  is (0, 0, 0)).ShouldBeTrue();
+		(Point3d.One   is (1, 1, 1)).ShouldBeTrue();
+		(Point3d.UnitX is (1, 0, 0)).ShouldBeTrue();
+		(Point3d.UnitY is (0, 1, 0)).ShouldBeTrue();
+		(Point3d.UnitZ is (0, 0, 1)).ShouldBeTrue();
+	}
+
+
 }

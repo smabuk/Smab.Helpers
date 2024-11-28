@@ -91,4 +91,12 @@ public class PointTests {
 
 	}
 
+	[Fact]
+	public void Point_Constants() {
+		(Point.Zero  is (0, 0)).ShouldBeTrue();
+		(Point.One   is (1, 1)).ShouldBeTrue();
+		(Point.UnitX is (1, 0)).ShouldBeTrue();
+		(Point.UnitY is (0, 1)).ShouldBeTrue();
+	}
+
 }

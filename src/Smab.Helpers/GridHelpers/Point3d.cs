@@ -5,6 +5,32 @@ public record struct Point3d(int X, int Y, int Z) : IParsable<Point3d> {
 
 	public Point3d((int X, int Y, int Z) point) : this(point.X, point.Y, point.Z) { }
 
+
+	/// <summary>Creates a new <see cref="Point3d" /> object whose two elements have the same value.</summary>
+	/// <param name="value">The value to assign to both elements.</param>
+	public Point3d(int value) : this(value, value, value) { }
+
+	/// <summary>Returns a <see cref="Point3d" /> whose 3 elements are equal to zero.</summary>
+	/// <value>A <see cref="Point3d" /> whose three elements are equal to zero (that is, it returns the Point3d <c>(0,0,0)</c>.</value>
+	public static Point3d Zero => default;
+
+	/// <summary>Returns a <see cref="Point3d" /> whose 3 elements are equal to one.</summary>
+	/// <value>A <see cref="Point3d" /> whose three elements are equal to one (that is, it returns the Point3d <c>(1,1,1)</c>.</value>
+	public static Point3d One => new(1);
+
+	/// <summary>Gets the point (1,0,0).</summary>
+	/// <value>The point <c>(1,0,0)</c>.</value>
+	public static Point3d UnitX => new(1, 0, 0);
+
+	/// <summary>Gets the point (0,1,0).</summary>
+	/// <value>The point <c>(0,1,0)</c>.</value>
+	public static Point3d UnitY => new(0, 1, 0);
+
+	/// <summary>Gets the point (0,0,1).</summary>
+	/// <value>The point <c>(0,0,1)</c>.</value>
+	public static Point3d UnitZ => new(0, 0, 1);
+
+
 	public static implicit operator (int x, int y, int z)(Point3d point) => (point.X, point.Y, point.Z);
 
 	public static Point3d operator +(in Point3d lhs, in Point3d rhs)               => new(lhs.X + rhs.X, lhs.Y + rhs.Y, lhs.Z + rhs.Z);
@@ -58,8 +84,6 @@ public record struct Point3d(int X, int Y, int Z) : IParsable<Point3d> {
 			}
 		}
 	}
-
-	public static readonly Point3d Zero = new(0, 0, 0);
 
 	private static readonly List<(int dX, int dY, int dZ)> CARDINAL_DIRECTIONS = [
 		( 0, -1,  0),
