@@ -15,6 +15,10 @@ public record Cube<T>(Point3d Position, T Value) {
 		return (point.X, point.Y, point.Z, value);
 	}
 
+	public static implicit operator T(Cube<T> c) => c.Value;
+	public static implicit operator Point3d(Cube<T> c) => c.Position;
+	public static implicit operator (int X, int Y, int Z)(Cube<T> c) => c.Position;
+
 	public void Deconstruct(out int x, out int y, out int z, out T value) {
 		x = Position.X;
 		y = Position.Y;

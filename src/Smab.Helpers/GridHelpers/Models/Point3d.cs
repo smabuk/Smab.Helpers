@@ -3,6 +3,7 @@
 [DebuggerDisplay("{DebugDisplay,nq}")]
 public record struct Point3d(int X, int Y, int Z) : IParsable<Point3d> {
 
+	public Point3d(Point3d point) : this(point.X, point.Y, point.Z) { }
 	public Point3d((int X, int Y, int Z) point) : this(point.X, point.Y, point.Z) { }
 
 

@@ -1,5 +1,5 @@
 ﻿namespace Smab.Helpers.Tests.GridHelperTests;
-public class SubArray(ITestOutputHelper testOutputHelper) {
+public class SubArray {
 
 	private static readonly char[,] INPUT_ARRAY = """
 		A.B.1

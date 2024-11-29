@@ -97,6 +97,8 @@ public class PointTests {
 		(Point.One   is (1, 1)).ShouldBeTrue();
 		(Point.UnitX is (1, 0)).ShouldBeTrue();
 		(Point.UnitY is (0, 1)).ShouldBeTrue();
+		Point point = new(Point.One);
+		point.ShouldBe(Point.One);
 	}
 
 }

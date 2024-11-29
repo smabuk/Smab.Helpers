@@ -3,6 +3,8 @@
 [DebuggerDisplay("{DebugDisplay,nq}")]
 public record struct Point(int X, int Y) : IParsable<Point> {
 
+	public Point(Point point) : this(point.X, point.Y) { }
+
 	public Point((int X, int Y) point) : this(point.X, point.Y) { }
 
 	/// <summary>Creates a new <see cref="Point" /> object whose two elements have the same value.</summary>

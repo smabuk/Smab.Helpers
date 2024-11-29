@@ -1,5 +1,5 @@
 ﻿namespace Smab.Helpers.Tests.GridHelperTests;
-public class Flip(ITestOutputHelper testOutputHelper) {
+public class Flip {
 
 	private static readonly char[,] INPUT_ARRAY = """
 		A.B.1

@@ -35,6 +35,23 @@ public static partial class ArrayHelpers {
 		return !array.IsInBounds(point);
 	}
 
+	public static bool IsInBounds<T>(this T[,,] array, int x, int y, int z)
+		=> (x >= array.GetLowerBound(0) && x <= array.GetUpperBound(0))
+		&& (y >= array.GetLowerBound(1) && y <= array.GetUpperBound(1))
+		&& (z >= array.GetLowerBound(1) && z <= array.GetUpperBound(2));
+
+	public static bool IsInBounds<T>(this T[,,] array, (int x, int y, int z) point)
+		=> (point.x >= array.GetLowerBound(0) && point.x <= array.GetUpperBound(0))
+		&& (point.y >= array.GetLowerBound(1) && point.y <= array.GetUpperBound(1))
+		&& (point.z >= array.GetLowerBound(2) && point.y <= array.GetUpperBound(2));
+
+	public static bool IsOutOfBounds<T>(this T[,,] array, int x, int y, int z)
+		=> !array.IsInBounds(x, y, z);
+
+	public static bool IsOutOfBounds<T>(this T[,,] array, (int x, int y,int z) point) {
+		return !array.IsInBounds(point);
+	}
+
 	public static string RowAsString<T>(this T[,] array, int rowNo, char? separator = null) {
 		StringBuilder stringBuilder = new();
 		for (int col = 0; col < array.ColsCount(); col++) {
