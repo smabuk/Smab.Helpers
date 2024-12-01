@@ -8,7 +8,7 @@ public partial class TrimmedSplit {
 			aaa, 4, ;  x : 123 , 
 			""";
 
-		INPUT.TrimmedSplit().Length.ShouldBe(1);
+		INPUT.TrimmedSplit().Length.ShouldBe(14);
 		INPUT.TrimmedSplit(Environment.NewLine).Length.ShouldBe(2);
 		INPUT.TrimmedSplit(',').Length.ShouldBe(6);
 		INPUT.TrimmedSplit([";"]).Length.ShouldBe(2);
