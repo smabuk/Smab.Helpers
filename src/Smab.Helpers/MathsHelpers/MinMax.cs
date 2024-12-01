@@ -25,6 +25,7 @@ public static partial class MathsHelpers {
 		}
 		return (min, max);
 	}
+
 	public static (T Min, T Max) MinMax<T>(this IEnumerable<(T number1, T number2)> tuples) where T : INumber<T>
 		=> tuples.SelectMany(((T, T) number) => (T[])[number.Item1, number.Item2]).MinMax<T>();
 

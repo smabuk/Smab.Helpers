@@ -29,6 +29,6 @@ public static partial class ArrayHelpers {
 	public static string AsStringWithNewLines<T>(this T[,] array, params IEnumerable<(string, string)> replacements) where T : struct
 		=> string.Join(Environment.NewLine, AsStrings(array, replacements));
 
-	public static string AsString<T>(this T[,] array, string? separator = null, params IEnumerable<(string, string)> replacements) where T : struct
-		=> string.Join("", AsStrings(array, replacements));
+	public static string AsString<T>(this T[,] array, string? separator = "", params IEnumerable<(string, string)> replacements) where T : struct
+		=> string.Join(separator, AsStrings(array, replacements));
 }

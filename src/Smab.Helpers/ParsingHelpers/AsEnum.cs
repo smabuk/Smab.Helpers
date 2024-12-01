@@ -6,11 +6,11 @@ public static partial class ParsingHelpers {
 	
 	public static T AsEnumOrDefault<T>(this ReadOnlySpan<char> s, T TDefault = default) where T : struct => 
 		Enum.TryParse<T>(s, true, out T result)
-		? (T)result
+		? result
 		: TDefault;
 
 	public static T AsEnumOrDefault<T>(this string s, T TDefault = default) where T : struct => 
 		Enum.TryParse<T>(s, true, out T result)
-		? (T)result
+		? result
 		: TDefault;
 }

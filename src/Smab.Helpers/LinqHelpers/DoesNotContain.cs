@@ -1,6 +1,6 @@
 ﻿namespace Smab.Helpers;
 //
-// Modified from https://source.dot.net/#System.Linq/System/Linq/Contains.cs
+// Modified from https://source.dot.net/#System.Linq/System/Linq/Contains.cs in .NET 8.0
 //
 public static partial class LinqHelpers {
 
