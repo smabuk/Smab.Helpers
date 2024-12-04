@@ -30,4 +30,18 @@ public partial class GetAdjacent {
 		points.Count().ShouldBe(expected);
 	}
 
+	[Theory]
+	[InlineData(0, 0, 2)]
+	[InlineData(1, 1, 4)]
+	public void GetCornerCells_Should_Have(int X, int Y, int expected) {
+		(char, int)[] input = new (char, int)[26];
+		for (int i = 0; i < input.GetUpperBound(0); i++) {
+			input[i] = new((char)(65 + i), i + 1);
+		}
+		(char, int)[,] array = input.To2dArray(5);
+		var points = array.GetCornerCells((X, Y));
+		points.Count().ShouldBe(expected);
+	}
+
 }
+

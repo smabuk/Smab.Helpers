@@ -8,7 +8,7 @@ public class ForEach {
 			input[i] = new((char)(65 + i), i + 1);
 		}
 		(char, int)[,] array = input.To2dArray(5);
-		expectedPoint = array.ForEach().Select(p => new Point(p.X, p.Y)).Skip(7).First();
+		expectedPoint = array.Indexes().Select(p => new Point(p.X, p.Y)).Skip(7).First();
 		Assert.Equal((2, 1), expectedPoint);
 		(int x, int y, (char, int) value) = array.ForEachCell().Skip(7).First();
 		Assert.Equal(2, x);

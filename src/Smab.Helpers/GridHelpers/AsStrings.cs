@@ -11,9 +11,9 @@ public static partial class ArrayHelpers {
 	/// <returns></returns>
 	public static IEnumerable<string> AsStrings<T>(this T[,] array, params IEnumerable<(string, string)> replacements) where T : struct {
 		StringBuilder line = new();
-		for (int r = 0; r <= array.GetUpperBound(ROW_DIMENSION); r++) {
+		foreach (int r in array.RowIndexes()) {
 			line.Clear();
-			for (int c = 0; c <= array.GetUpperBound(COL_DIMENSION); c++) {
+			foreach (int c in array.ColIndexes()) {
 				string cell = array[c, r].ToString() ?? "";
 				line.Append(cell);
 			}
@@ -34,28 +34,19 @@ public static partial class ArrayHelpers {
 
 
 
-	public static string RowAsString<T>(this T[,] array, int rowNo, char? separator = null) {
-		StringBuilder stringBuilder = new();
-		for (int col = 0; col < array.ColsCount(); col++) {
-			if (separator is not null && col != 0) {
-				_ = stringBuilder.Append(separator);
-			}
-			_ = stringBuilder.Append(array[col, rowNo]);
-		}
-		return stringBuilder.ToString();
-	}
+	public static string RowAsString<T>(this T[,] array, int rowNo, char? separator = null)
+		=> string.Join(separator is null ? "" : $"{separator}", array.Row(rowNo).Select(v => $"{v}"));
+
 
 	public static string RowAsString(this IEnumerable<string> array, int rowNo) {
 		return array.Skip(rowNo).Take(1).Single();
 	}
 
 
-
-
 	public static IEnumerable<string> RowsAsStrings<T>(this T[,] array, char? separator = null) {
 		StringBuilder stringBuilder = new();
-		for (int row = 0; row < array.RowsCount(); row++) {
-			for (int col = 0; col < array.ColsCount(); col++) {
+		foreach (int row in array.RowIndexes()) {
+			foreach (int col in array.ColIndexes()) {
 				if (separator is not null && row != 0) {
 					_ = stringBuilder.Append(separator);
 				}
@@ -67,17 +58,9 @@ public static partial class ArrayHelpers {
 	}
 
 
+	public static string ColAsString<T>(this T[,] array, int colNo, char? separator = null)
+		=> string.Join(separator is null ? "" : $"{separator}", array.Col(colNo).Select(v => $"{v}"));
 
-	public static string ColAsString<T>(this T[,] array, int colNo, char? separator = null) {
-		StringBuilder stringBuilder = new();
-		for (int row = 0; row < array.RowsCount(); row++) {
-			if (separator is not null && row != 0) {
-				_ = stringBuilder.Append(separator);
-			}
-			_ = stringBuilder.Append(array[colNo, row]);
-		}
-		return stringBuilder.ToString();
-	}
 	public static string ColAsString<T>(this IEnumerable<string> array, int colNo, char? separator = null) {
 		List<string> stringArray = [.. array];
 		int rows = stringArray.Count;
@@ -97,8 +80,8 @@ public static partial class ArrayHelpers {
 
 	public static IEnumerable<string> ColsAsStrings<T>(this T[,] array, char? separator = null) {
 		StringBuilder stringBuilder = new();
-		for (int col = 0; col < array.ColsCount(); col++) {
-			for (int row = 0; row < array.RowsCount(); row++) {
+		foreach (int col in array.ColIndexes()) {
+			foreach (int row in array.RowIndexes()) {
 				if (separator is not null && row != 0) {
 					_ = stringBuilder.Append(separator);
 				}
@@ -126,42 +109,11 @@ public static partial class ArrayHelpers {
 		}
 	}
 
-	public static IEnumerable<string> DiagonalsSouthEastAsStrings(this char[,] array) {
-		StringBuilder stringBuilder = new();
+	public static IEnumerable<string> DiagonalsSouthEastAsStrings(this char[,] array)
+		=> array.DiagonalsSouthEast().Select(row => string.Join("", row));
 
-		for (int col = array.ColsMax(); col > -array.ColsMax(); col--) {
-			bool stop = false;
-			for (int row = 0; row < array.RowsCount(); row++) {
-				if (array.TryGetValue(col + row, row, out char c)) {
-					stop = true;
-					_ = stringBuilder.Append(c);
-				} else if (stop) {
-					break;
-				}
-			}
 
-			yield return stringBuilder.ToString();
-			_ = stringBuilder.Clear();
-		}
-	}
-
-	public static IEnumerable<string> DiagonalsSouthWestAsStrings(this char[,] array) {
-		StringBuilder stringBuilder = new();
-
-		for (int col = 0; col < array.ColsCount() * 2; col++) {
-			bool stop = false;
-			for (int row = 0; row < array.RowsCount(); row++) {
-				if (array.TryGetValue(col - row, row, out char c)) {
-					stop = true;
-					_ = stringBuilder.Append(c);
-				} else if (stop) {
-					break;
-				}
-			}
-
-			yield return stringBuilder.ToString();
-			_ = stringBuilder.Clear();
-		}
-	}
+	public static IEnumerable<string> DiagonalsSouthWestAsStrings(this char[,] array)
+		=> array.DiagonalsSouthWest().Select(row => string.Join("", row));
 
 }

@@ -18,7 +18,28 @@ public static partial class ArrayHelpers {
 	public static int YMax<T>(this T[,] array) => array.GetUpperBound(ROW_DIMENSION);
 
 
+	public static IEnumerable<int> ColIndexes<T>(this T[,] array) {
+		int min = array.GetLowerBound(COL_DIMENSION);
+		int max = array.GetUpperBound(COL_DIMENSION);
 
+		for (int col = min; col <= max; col++) {
+			yield return col;
+		}
+	}
+	public static IEnumerable<int> RowIndexes<T>(this T[,] array) {
+		int min = array.GetLowerBound(ROW_DIMENSION);
+		int max = array.GetUpperBound(ROW_DIMENSION);
+
+		for (int col = min; col <= max; col++) {
+			yield return col;
+		}
+	}
+
+	public static IEnumerable<int> XValues<T>(this T[,] array) => array.ColIndexes();
+	public static IEnumerable<int> YValues<T>(this T[,] array) => array.RowIndexes();
+	
+	
+	
 	public static bool IsInBounds<T>(this T[,] array, int col, int row)
 		=> (col >= array.GetLowerBound(COL_DIMENSION) && col <= array.GetUpperBound(COL_DIMENSION))
 		&& (row >= array.GetLowerBound(ROW_DIMENSION) && row <= array.GetUpperBound(ROW_DIMENSION));

@@ -5,13 +5,11 @@ public static partial class ArrayHelpers {
 	public static T[,] SubArray<T>(this T[,] array, int topLeftCol, int topLeftRow, int noOfCols, int noOfRows, T init = default!) {
 		T[,] result = new T[noOfCols, noOfRows];
 
-		for (int row = 0; row < noOfRows; row++) {
-			for (int col = 0; col < noOfCols; col++) {
-				if (array.TryGetValue(topLeftCol + col, topLeftRow + row, out T value)) {
-					result[col, row] = value;
-				} else {
-					result[col, row] = init;
-				}
+		foreach ((int col, int row) in result.Indexes()) {
+			if (array.TryGetValue(topLeftCol + col, topLeftRow + row, out T value)) {
+				result[col, row] = value;
+			} else {
+				result[col, row] = init;
 			}
 		}
 

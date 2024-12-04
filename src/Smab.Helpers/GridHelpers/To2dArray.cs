@@ -1,4 +1,6 @@
-﻿namespace Smab.Helpers;
+﻿using System;
+
+namespace Smab.Helpers;
 
 public static partial class ArrayHelpers {
 
@@ -9,12 +11,10 @@ public static partial class ArrayHelpers {
 		rows ??= arrayLength % cols == 0 ? arrayLength / cols : (arrayLength / cols) + 1;
 		T[,] result = new T[cols, (int)rows];
 		int i = 0;
-		for (int r = 0; r < rows; r++) {
-			for (int c = 0; c < cols; c++) {
-				result[c, r] = array[i++];
-				if (i >= arrayLength) {
-					return result;
-				}
+		foreach ((int col, int row) in result.Indexes()) {
+			result[col, row] = array[i++];
+			if (i >= arrayLength) {
+				return result;
 			}
 		}
 
@@ -43,10 +43,8 @@ public static partial class ArrayHelpers {
 		rows ??= array.Length;
 		cols ??= array[0].Length;
 		char[,] result = new char[(int)cols, (int)rows];
-		for (int r = 0; r < rows; r++) {
-			for (int c = 0; c < cols; c++) {
-				result[c, r] = array[r][c];
-			}
+		foreach ((int col, int row) in result.Indexes()) {
+			result[col, row] = array[row][col];
 		}
 
 		return result;
@@ -71,10 +69,8 @@ public static partial class ArrayHelpers {
 		int rows = maxY - minY + 1;
 
 		T[,] result = new T[cols, rows];
-		for (int r = 0; r < rows; r++) {
-			for (int c = 0; c < cols; c++) {
-				result[c, r] = initial;
-			}
+		foreach ((int col, int row) in result.Indexes()) {
+			result[col, row] = initial;
 		}
 
 		foreach (Point p in input) {

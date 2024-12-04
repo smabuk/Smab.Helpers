@@ -8,10 +8,9 @@ public static partial class ArrayHelpers {
 
 		T[,] result = new T[rows, cols];
 
-		for (int r = 0; r < rows; r++) {
-		for (int c = 0; c < cols; c++) {
-			result[r, c] = array[c, r];
-		}}
+		foreach ((int col, int row) in array.Indexes()) {
+			result[row, col] = array[col, row];
+		}
 
 		return result;
 	}

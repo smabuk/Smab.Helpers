@@ -21,16 +21,14 @@ public static partial class ArrayHelpers {
 		int maxCol = result.ColsCount() - 1;
 		int maxRow = result.RowsCount() - 1;
 
-		for (int r = 0; r < result.RowsCount(); r++) {
-			for (int c = 0; c < result.ColsCount(); c++) {
-				result[c, r] = rotationType switch {
-					DEG_0   => array[c, r],
-					DEG_90  => array[r, maxCol - c],
-					DEG_180 => array[maxCol - c, maxRow - r],
-					DEG_270 => array[maxRow - r, c],
-					_ => throw new ArgumentOutOfRangeException(nameof(rotation), "Rotation must be a multiple of 90 and be between -360 and 360"),
-				};
-			}
+		foreach ((int col, int row) in result.Indexes()) {
+			result[col, row] = rotationType switch {
+				DEG_0   => array[col, row],
+				DEG_90  => array[row, maxCol - col],
+				DEG_180 => array[maxCol - col, maxRow - row],
+				DEG_270 => array[maxRow - row, col],
+				_ => throw new ArgumentOutOfRangeException(nameof(rotation), "Rotation must be a multiple of 90 and be between -360 and 360"),
+			};
 		}
 		return result;
 	}
