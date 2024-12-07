@@ -46,79 +46,12 @@ public record struct Point(int X, int Y) : IParsable<Point> {
 	public static Point operator *(in Point lhs, int rhs) => new(lhs.X * rhs, lhs.Y * rhs);
 	public static Point operator *(int lhs, in Point rhs) => new(rhs.X * lhs, rhs.Y * lhs);
 
-	public static Point Abs(Point point) => 
-		new(
-			int.Abs(point.X),
-			int.Abs(point.Y)
-		);
-
-	public static Point Max(Point point1, Point point2) => 
-		new(
-			point1.X > point2.X ? point1.X : point2.X ,
-			point1.Y > point2.Y ? point1.Y : point2.Y
-		);
-
-	public static Point Min(Point point1, Point point2) => 
-		new(
-			point1.X < point2.X ? point1.X : point2.X ,
-			point1.Y < point2.Y ? point1.Y : point2.Y
-		);
-
-
 	public readonly void Deconstruct(out int x, out int y) {
 		x = X;
 		y = Y;
 	}
 
-	public IEnumerable<Point> Adjacent() {
-		Point p = this;
-		return CARDINAL_DIRECTIONS.Select(d => p with { X = p.X + d.dX, Y = p.Y + d.dY });
-	}
-
-	public IEnumerable<Point> DiagonallyAdjacent() {
-		Point p = this;
-		return ORDINAL_DIRECTIONS.Select(d => p with { X = p.X + d.dX, Y = p.Y + d.dY });
-	}
-
-	public IEnumerable<Point> AllAdjacent() {
-		Point p = this;
-		return ALL_DIRECTIONS.Select(d => p with { X = p.X + d.dX, Y = p.Y + d.dY });
-	}
-
 	public readonly Point Transpose() => new(Y, X);
-
-	public Point East(int distance = 1)  => this with { X = X + distance };
-	public Point West(int distance = 1)  => this with { X = X - distance };
-	public Point North(int distance = 1) => this with { Y = Y - distance };
-	public Point South(int distance = 1) => this with { Y = Y + distance };
-
-	public Point Right(int distance = 1) => this with { X = X + distance };
-	public Point Left(int distance = 1)  => this with { X = X - distance };
-	public Point Up(int distance = 1)    => this with { Y = Y - distance };
-	public Point Down(int distance = 1)  => this with { Y = Y + distance };
-
-	private static readonly List<(int dX, int dY)> CARDINAL_DIRECTIONS = [
-		( 0, -1),
-		( 0,  1),
-		(-1,  0),
-		( 1,  0),
-	];
-	private static readonly List<(int dX, int dY)> ORDINAL_DIRECTIONS = [
-		( 1, -1),
-		( 1,  1),
-		(-1,  1),
-		(-1, -1),
-	];
-	private static readonly List<(int dX, int dY)> ALL_DIRECTIONS = [
-		( 0, -1),
-		( 1, -1),
-		( 1,  0),
-		( 1,  1),
-		( 0,  1),
-		(-1,  1),
-		(-1,  0),
-		(-1, -1),
-	];
 
 	//public override string ToString() => $"({X}, {Y})";
 

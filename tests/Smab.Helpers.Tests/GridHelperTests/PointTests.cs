@@ -52,41 +52,41 @@ public class PointTests {
 	[Fact]
 	public void PointDirections() {
 		Point point = new(3, 3);
-		Assert.Equal((3, 2), point.North());
-		Assert.Equal((3, 4), point.South());
-		Assert.Equal((2, 3), point.West());
-		Assert.Equal((4, 3), point.East());
-		Assert.Equal((8, 3), point.East(5));
+		Assert.Equal((3, 2), point.MoveNorth());
+		Assert.Equal((3, 4), point.MoveSouth());
+		Assert.Equal((2, 3), point.MoveWest());
+		Assert.Equal((4, 3), point.MoveEast());
+		Assert.Equal((8, 3), point.MoveEast(5));
 
 		List<Point> list = point.Adjacent().ToList();
 		Assert.Equal(4, list.Count);
 		Assert.Collection(list,
 			item => Assert.Equal((3, 2), item),
 			item => Assert.Equal((3, 4), item),
-			item => Assert.Equal((2, 3), item),
-			item => Assert.Equal((4, 3), item)
+			item => Assert.Equal((4, 3), item),
+			item => Assert.Equal((2, 3), item)
 		);
 
 		list = point.DiagonallyAdjacent().ToList();
 		Assert.Equal(4, list.Count);
 		Assert.Collection(list,
+			item => Assert.Equal((2, 2), item),
 			item => Assert.Equal((4, 2), item),
-			item => Assert.Equal((4, 4), item),
 			item => Assert.Equal((2, 4), item),
-			item => Assert.Equal((2, 2), item)
+			item => Assert.Equal((4, 4), item)
 		);
 
 		list = point.AllAdjacent().ToList();
 		Assert.Equal(8, list.Count);
 		Assert.Collection(list,
 			item => Assert.Equal((3, 2), item),
-			item => Assert.Equal((4, 2), item),
-			item => Assert.Equal((4, 3), item),
-			item => Assert.Equal((4, 4), item),
 			item => Assert.Equal((3, 4), item),
-			item => Assert.Equal((2, 4), item),
+			item => Assert.Equal((4, 3), item),
 			item => Assert.Equal((2, 3), item),
-			item => Assert.Equal((2, 2), item)
+			item => Assert.Equal((2, 2), item),
+			item => Assert.Equal((4, 2), item),
+			item => Assert.Equal((2, 4), item),
+			item => Assert.Equal((4, 4), item)
 		);
 
 	}
