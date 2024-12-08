@@ -17,6 +17,8 @@ public static partial class Directions {
 	public static IEnumerable<Point> DiagonallyAdjacent(this Point point) => ORDINAL_DIRECTIONS.Select(d => point + d);
 	public static IEnumerable<Point> AllAdjacent(this Point point) => ALL_DIRECTIONS.Select(d => point + d);
 
+	public static Point Transpose(this Point point) => new(point.Y, point.X);
+
 	public static Point Abs(this Point point) => new(int.Abs(point.X), int.Abs(point.Y));
 
 	public static Point Max(this Point point1, Point point2)

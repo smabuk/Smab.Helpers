@@ -51,8 +51,6 @@ public record struct Point(int X, int Y) : IParsable<Point> {
 		y = Y;
 	}
 
-	public readonly Point Transpose() => new(Y, X);
-
 	//public override string ToString() => $"({X}, {Y})";
 
 	public static Point Parse(string s, IFormatProvider? provider) {
