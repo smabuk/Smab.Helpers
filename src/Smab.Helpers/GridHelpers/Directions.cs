@@ -1,5 +1,5 @@
-﻿using static Smab.Helpers.Direction;
-using static Smab.Helpers.ArrayHelpers;
+﻿using static Smab.Helpers.ArrayHelpers;
+using static Smab.Helpers.Direction;
 
 namespace Smab.Helpers;
 

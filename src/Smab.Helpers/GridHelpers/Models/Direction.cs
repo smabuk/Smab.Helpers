@@ -27,5 +27,10 @@ public enum Direction {
 	Right = East,
 	Down  = South,
 	Left  = West,
+
+	U = North,
+	R = East,
+	D = South,
+	L = West,
 }
 
