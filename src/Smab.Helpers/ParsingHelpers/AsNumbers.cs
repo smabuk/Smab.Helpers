@@ -17,4 +17,9 @@ public static partial class ParsingHelpers {
 
 	public static IEnumerable<T> AsNumbers<T>(this string s, string[] separator) where T : INumber<T> =>
 		s.TrimmedSplit(separator).Select(s => s.As<T>());
+
+
+	public static IEnumerable<IEnumerable<T>> AsNumbers<T>(this IEnumerable<string> s) where T : INumber<T> =>
+		s.Select(x => x.AsNumbers<T>());
+
 }
