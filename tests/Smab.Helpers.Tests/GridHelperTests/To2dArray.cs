@@ -40,13 +40,8 @@ public class To2dArray {
 
 	[Fact]
 	public void To2dArray_IEnumerableOf_IEnumerableOfT() {
-		List<List<int>> inputOfT = [];
-		for (int r = 0; r < 50; r += 10) {
-			List<int> expectedRow = [r + 1, r + 2, r + 3, r + 4, r + 5, r + 6, r + 7, r + 8, r + 9, r + 10];
-			inputOfT.Add(expectedRow);
-		}
 
-		int[,] array = inputOfT.To2dArray();
+		int[,] array = TestData.GetIEnumerableTestData().To2dArray();
 
 		Assert.Equal(50, array.Length);
 		Assert.Equal(10, array.GetUpperBound(0) + 1);
@@ -112,4 +107,14 @@ public class To2dArray {
 		Assert.Equal(3, array.GetUpperBound(1) + 1);
 		Assert.Equal(('G', 7), array[0, 2]);
 	}
+
+	public static class TestData
+	{
+		public static IEnumerable<IEnumerable<int>> GetIEnumerableTestData() {
+			for (int r = 0; r < 50; r += 10) {
+				yield return [r + 1, r + 2, r + 3, r + 4, r + 5, r + 6, r + 7, r + 8, r + 9, r + 10];
+			}
+		}
+	}
 }
+

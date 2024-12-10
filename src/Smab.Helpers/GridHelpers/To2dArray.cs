@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Smab.Helpers;
+﻿namespace Smab.Helpers;
 
 public static partial class ArrayHelpers {
 
@@ -26,10 +24,11 @@ public static partial class ArrayHelpers {
 		cols ??= input.First().Count();
 		T[,] result = new T[(int)cols, (int)rows];
 		int r = 0;
-		foreach (List<T> row in input.Cast<List<T>>()) {
+		foreach (IEnumerable<T> row in input) {
+			ReadOnlySpan<T> array = row.ToArray().AsSpan();
 			int c = 0;
-			foreach (T item in row) {
-				result[c, r] = item;
+			for (int i = 0; i < array.Length; i++) {
+				result[c, r] = array[i];
 				c++;
 			}
 			r++;
@@ -69,12 +68,12 @@ public static partial class ArrayHelpers {
 		int rows = maxY - minY + 1;
 
 		T[,] result = new T[cols, rows];
-		foreach ((int col, int row) in result.Indexes()) {
-			result[col, row] = initial;
-		}
+		result.Fill(initial);
 
-		foreach (Point p in input) {
-			result[p.X - minX, p.Y - minY] = value;
+		ReadOnlySpan<Point> points = input.ToArray().AsSpan();
+
+		for (int i = 0; i < points.Length; i++) {
+			result[points[i].X - minX, points[i].Y - minY] = value;
 		}
 
 		return result;
