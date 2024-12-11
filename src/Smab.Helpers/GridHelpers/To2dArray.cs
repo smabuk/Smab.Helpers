@@ -68,7 +68,7 @@ public static partial class ArrayHelpers {
 		int rows = maxY - minY + 1;
 
 		T[,] result = new T[cols, rows];
-		result.Fill(initial);
+		result.FillInPlace(initial);
 
 		ReadOnlySpan<Point> points = input.ToArray().AsSpan();
 
