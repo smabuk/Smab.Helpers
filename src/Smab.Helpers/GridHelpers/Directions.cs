@@ -11,6 +11,19 @@ public static partial class Directions {
 	public static readonly IEnumerable<Direction> AllDirections = [Up, Right, Down, Left];
 
 
+	public static Direction Reverse(this Direction direction)
+		=> direction switch {
+			Up    => Down,
+			Right => Left,
+			Down  => Up,
+			Left  => Right,
+			NorthWest => SouthEast,
+			NorthEast => SouthWest,
+			SouthEast => NorthWest,
+			SouthWest => NorthEast,
+			_ => throw new NotImplementedException(),
+		};
+
 	public static Direction TurnRight(this Direction direction)
 		=> direction switch {
 			Up    => Right,
