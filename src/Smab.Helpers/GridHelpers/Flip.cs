@@ -6,7 +6,7 @@ public static partial class ArrayHelpers {
 
 		T[,] result = new T[colsCount, rowsCount];
 
-		array.Indexes().ForEach(ix => result[ix.X, ix.Y] = array[colsCount - ix.X - 1, ix.Y]);
+		array.Indexes().ForEach(ix => { result[ix.X, ix.Y] = array[colsCount - ix.X - 1, ix.Y]; });
 
 		return result;
 	}
@@ -17,7 +17,7 @@ public static partial class ArrayHelpers {
 
 		T[,] result = new T[colsCount, rowsCount];
 
-		array.Indexes().ForEach(ix => result[ix.X, ix.Y] = array[ix.X, rowsCount - ix.Y - 1]);
+		array.Indexes().ForEach(ix => { result[ix.X, ix.Y] = array[ix.X, rowsCount - ix.Y - 1]; });
 
 		return result;
 	}

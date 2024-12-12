@@ -10,20 +10,6 @@ public static partial class ArrayHelpers {
 	public static IEnumerable<Cell<T>> ForEachCell<T>(this T[,] array)
 		=> array.Indexes().Select(ix => new Cell<T>(ix.X, ix.Y, array[ix.X, ix.Y]));
 
-	public static IEnumerable<(int X, int Y)> Indexes<T>(this T[,] array) {
-		foreach (int row in array.RowIndexes()) {
-		foreach (int col in array.ColIndexes()) {
-			yield return new(col, row);
-		}}
-	}
-
-	public static IEnumerable<(int Col, int Row)> IndexesColRow<T>(this T[,] array) {
-		foreach (int row in array.RowIndexes()) {
-		foreach (int col in array.ColIndexes()) {
-			yield return new(col, row);
-		}}
-	}
-
 	[Obsolete("Use ForEachCell instead", false)]
 	public static IEnumerable<Cell<T>> WalkWithValues<T>(this T[,] array) {
 		int cols = array.GetUpperBound(COL_DIMENSION);

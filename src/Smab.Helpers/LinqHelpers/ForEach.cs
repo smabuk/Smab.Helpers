@@ -13,4 +13,10 @@ public static partial class LinqHelpers {
 			yield return item;
 		}
 	}
+
+	public static IEnumerable<TResult> ForEach<T, TResult>(this IEnumerable<T> items, Func<T, TResult> action) {
+		foreach (T? item in items) {
+			yield return action(item);
+		}
+	}
 }
