@@ -1,4 +1,6 @@
-﻿namespace Smab.Helpers;
+﻿using System.Runtime.CompilerServices;
+
+namespace Smab.Helpers;
 public static partial class ParsingHelpers {
 	private const StringSplitOptions RemoveEmptyAndTrim = StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries;
 	private static readonly string[] WHITESPACE_SEPARATORS = [" ", "\t"];
@@ -7,7 +9,10 @@ public static partial class ParsingHelpers {
 	public static string[] TrimmedSplit(this string s, string?   separator)            => s.Split(separator,        RemoveEmptyAndTrim);
 
 	public static string[] TrimmedSplit(this string s, char      separator)            => s.Split(separator,        RemoveEmptyAndTrim);
-	public static string[] TrimmedSplit(this string s, char[]?   separator)            => s.Split(separator,        RemoveEmptyAndTrim);
+	
+	[OverloadResolutionPriority(2)]
+	public static string[] TrimmedSplit(this string s, char[]?   separator = null)     => s.Split(separator,        RemoveEmptyAndTrim);
+	[OverloadResolutionPriority(1)]
 	public static string[] TrimmedSplit(this string s, string[]? separator = null)     => s.Split(separator ?? WHITESPACE_SEPARATORS_WITH_NEWLINE,        RemoveEmptyAndTrim);
 
 	public static string[] TrimmedSplit(this string s, char      separator, int count) => s.Split(separator, count, RemoveEmptyAndTrim);
