@@ -54,4 +54,8 @@ public static partial class Directions {
 			SouthWest     => SOUTH_WEST,
 			_ => throw new NotImplementedException(),
 		};
+
+	public static bool IsDiagonal(this Direction direction) => direction is NorthWest or NorthEast or SouthEast or SouthWest;
+	public static bool IsHorizontal(this Direction direction) => direction is East or West;
+	public static bool IsVertical(this Direction direction) => direction is North or South;
 }
