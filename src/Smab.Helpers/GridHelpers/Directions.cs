@@ -8,7 +8,10 @@ public static partial class Directions {
 	public static readonly IEnumerable<Direction> OrdinalDirections    = [NorthWest, NorthEast, SouthEast, SouthWest];
 	public static readonly IEnumerable<Direction> AllCompassDirections = [.. CardinalDirections, .. OrdinalDirections];
 	
-	public static readonly IEnumerable<Direction> AllDirections = [Up, Right, Down, Left];
+	public static readonly IEnumerable<Direction> URDL = [Up, Right, Down, Left];
+	public static readonly IEnumerable<Direction> UDLR = [Up, Down, Left, Right];
+	public static readonly IEnumerable<Direction> NESW = [North, East, South, West];
+	public static readonly IEnumerable<Direction> NSEW = [North, South, East, West];
 
 
 	public static Direction Reverse(this Direction direction)
