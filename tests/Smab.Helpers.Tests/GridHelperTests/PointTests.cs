@@ -30,6 +30,68 @@ public class PointTests {
 	}
 
 	[Theory]
+	[InlineData(0, 0,   0,  0, false)]
+	[InlineData(0, 0,   1,  1, false)]
+	[InlineData(1, 0,   0,  0, true)]
+	[InlineData(8, 9,  12,  4, true)]
+	[InlineData(8, 9, -12, -4, true)]
+	public void PointComparison_P1_GT_P2(int p1x, int p1y, int p2x, int p2y, bool expected) {
+		Point p1 = new(p1x, p1y);
+		Point p2 = new(p2x, p2y);
+
+		bool actual = p1 > p2;
+		Assert.Equal(actual, expected);
+	}
+
+	[Theory]
+	[InlineData(0, 0,   0,  0, false)]
+	[InlineData(0, 0,   1,  1, true)]
+	[InlineData(1, 0,   0,  0, false)]
+	[InlineData(8, 9,  12,  4, false)]
+	[InlineData(8, 9, -12, -4, false)]
+	public void PointComparison_P2_LT_P1(int p1x, int p1y, int p2x, int p2y, bool expected) {
+		Point p1 = new(p1x, p1y);
+		Point p2 = new(p2x, p2y);
+
+		bool actual = p1 < p2;
+		Assert.Equal(actual, expected);
+	}
+
+	[Theory]
+	[InlineData(0, 0,   0,  0, true)]
+	[InlineData(0, 0,   1,  1, false)]
+	[InlineData(1, 0,   0,  0, true)]
+	[InlineData(8, 9,  12,  4, true)]
+	[InlineData(8, 9, -12, -4, true)]
+	public void PointComparison_P1_GTE_P2(int p1x, int p1y, int p2x, int p2y, bool expected) {
+		Point p1 = new(p1x, p1y);
+		Point p2 = new(p2x, p2y);
+
+		bool actual = p1 >= p2;
+		Assert.Equal(actual, expected);
+	}
+
+	[Fact]
+	public void PointOrdering() {
+		List<Point> points = [
+			new( 1,  0),
+			new( 3,  1),
+			new(-4, -2),
+			new( 2,  6),
+			new( 4,  1),
+			new( 1, -3)];
+
+		List<Point> actual = [.. points.Order()];
+
+		actual[0].ShouldBe(points[5]);
+		actual[1].ShouldBe(points[2]);
+		actual[2].ShouldBe(points[0]);
+		actual[3].ShouldBe(points[1]);
+		actual[4].ShouldBe(points[4]);
+		actual[5].ShouldBe(points[3]);
+	}
+
+	[Theory]
 	[InlineData(0, 0, 0, 0)]
 	[InlineData(8, 9, 9, 8)]
 	[InlineData(-5, 6, 6, -5)]
@@ -58,7 +120,7 @@ public class PointTests {
 		Assert.Equal((4, 3), point.MoveEast());
 		Assert.Equal((8, 3), point.MoveEast(5));
 
-		List<Point> list = point.Adjacent().ToList();
+		List<Point> list = [.. point.Adjacent()];
 		Assert.Equal(4, list.Count);
 		Assert.Collection(list,
 			item => Assert.Equal((3, 2), item),
@@ -67,7 +129,7 @@ public class PointTests {
 			item => Assert.Equal((2, 3), item)
 		);
 
-		list = point.DiagonallyAdjacent().ToList();
+		list = [.. point.DiagonallyAdjacent()];
 		Assert.Equal(4, list.Count);
 		Assert.Collection(list,
 			item => Assert.Equal((2, 2), item),
@@ -76,7 +138,7 @@ public class PointTests {
 			item => Assert.Equal((4, 4), item)
 		);
 
-		list = point.AllAdjacent().ToList();
+		list = [.. point.AllAdjacent()];
 		Assert.Equal(8, list.Count);
 		Assert.Collection(list,
 			item => Assert.Equal((3, 2), item),

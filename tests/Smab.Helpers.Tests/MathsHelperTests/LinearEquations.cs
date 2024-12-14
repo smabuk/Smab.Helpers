@@ -14,6 +14,6 @@ public class LinearEquations {
 	[InlineData(69, 27, 18641, 23, 71, 10279)]
 	[InlineData(26, 67, 12748, 66, 21, 12176)]
 	public void TrySolveLinearEquations_Should_Fail(long ax, long bx, long cx, long ay, long by, long cy ) {
-		MathsHelpers.TrySolveLinearEquations(ax, bx, cx, ay, by, cy, out (long A, long B) actual).ShouldBeFalse();
+		MathsHelpers.TrySolveLinearEquations(ax, bx, cx, ay, by, cy, out (long A, long B) _).ShouldBeFalse();
 	}
 }
