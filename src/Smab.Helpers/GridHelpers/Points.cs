@@ -3,6 +3,9 @@
 namespace Smab.Helpers;
 
 public static partial class Directions {
+	public static Point Move( this Point point, Direction direction, int distance = 1)
+		=> point + (direction.Delta() * distance);
+
 	public static Point MoveEast( this Point point, int distance = 1) => point with { X = point.X + distance };
 	public static Point MoveWest (this Point point, int distance = 1) => point with { X = point.X - distance };
 	public static Point MoveNorth(this Point point, int distance = 1) => point with { Y = point.Y - distance };
@@ -16,6 +19,9 @@ public static partial class Directions {
 	public static IEnumerable<Point> Adjacent(this Point point) => CARDINAL_DIRECTIONS.Select(d => point + d);
 	public static IEnumerable<Point> DiagonallyAdjacent(this Point point) => ORDINAL_DIRECTIONS.Select(d => point + d);
 	public static IEnumerable<Point> AllAdjacent(this Point point) => ALL_DIRECTIONS.Select(d => point + d);
+
+	public static Point Translate(this Point point, Direction direction, int distance = 1)
+		=> point + (direction.Delta() * distance);
 
 	public static Point Transpose(this Point point) => new(point.Y, point.X);
 
