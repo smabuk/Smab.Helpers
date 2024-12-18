@@ -4,7 +4,7 @@ namespace Smab.Helpers;
 
 public static partial class Directions {
 	public static Point Move( this Point point, Direction direction, int distance = 1)
-		=> point + (direction.Delta() * distance);
+		=> point with { X = point.X + (direction.Delta().dX * distance), Y = point.Y + (direction.Delta().dY * distance)};
 
 	public static Point MoveEast( this Point point, int distance = 1) => point with { X = point.X + distance };
 	public static Point MoveWest (this Point point, int distance = 1) => point with { X = point.X - distance };
@@ -21,7 +21,7 @@ public static partial class Directions {
 	public static IEnumerable<Point> AllAdjacent(this Point point) => ALL_DIRECTIONS.Select(d => point + d);
 
 	public static Point Translate(this Point point, Direction direction, int distance = 1)
-		=> point + (direction.Delta() * distance);
+		=> point with { X = point.X + (direction.Delta().dX * distance), Y = point.Y + (direction.Delta().dY * distance) };
 
 	public static Point Transpose(this Point point) => new(point.Y, point.X);
 
