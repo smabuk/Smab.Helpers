@@ -1,5 +1,13 @@
 ﻿namespace Smab.Helpers;
+
 public static partial class ArrayHelpers {
+
+	/// <summary>
+	/// Flips a two-dimensional array horizontally, reversing the order of columns in each row.
+	/// </summary>
+	/// <typeparam name="T">The type of the elements in the array.</typeparam>
+	/// <param name="array">The two-dimensional array to flip.</param>
+	/// <returns>A new two-dimensional array that is flipped horizontally.</returns>
 	public static T[,] FlipHorizontally<T>(this T[,] array) {
 		int colsCount = array.ColsCount();
 		int rowsCount = array.RowsCount();
@@ -11,6 +19,12 @@ public static partial class ArrayHelpers {
 		return result;
 	}
 
+	/// <summary>
+	/// Flips a two-dimensional array vertically, reversing the order of rows in each column.
+	/// </summary>
+	/// <typeparam name="T">The type of the elements in the array.</typeparam>
+	/// <param name="array">The two-dimensional array to flip.</param>
+	/// <returns>A new two-dimensional array that is flipped vertically.</returns>
 	public static T[,] FlipVertically<T>(this T[,] array) {
 		int colsCount = array.ColsCount();
 		int rowsCount = array.RowsCount();

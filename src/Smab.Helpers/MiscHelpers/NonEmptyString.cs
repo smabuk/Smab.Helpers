@@ -17,6 +17,7 @@ public readonly record struct NonEmptyString(string Value) : IParsable<NonEmptyS
 	public static implicit operator string(NonEmptyString value) => value.Value;
 	public static implicit operator NonEmptyString(string value) => new(value);
 
+
 	public static NonEmptyString Parse(string s, IFormatProvider? provider) => new(s);
 	public static bool TryParse([NotNullWhen(true)] string? s, IFormatProvider? provider, [MaybeNullWhen(false)] out NonEmptyString result) {
 		if (!string.IsNullOrWhiteSpace(s)) {

@@ -1,5 +1,14 @@
 ﻿namespace Smab.Helpers;
 
+/// <summary>
+/// Represents a point in a two-dimensional space with integer coordinates.
+/// </summary>
+/// <remarks>The <see cref="Point"/> struct provides a lightweight representation of a 2D point with X and Y
+/// coordinates. It supports various operations such as addition, subtraction, multiplication, and comparison. 
+/// Additionally, it includes predefined points such as <see cref="Zero"/>, <see cref="One"/>, <see cref="UnitX"/>, and
+/// <see cref="UnitY"/>.</remarks>
+/// <param name="X"></param>
+/// <param name="Y"></param>
 [DebuggerDisplay("{DebugDisplay,nq}")]
 public record struct Point(int X, int Y) : IParsable<Point>, IComparable<Point> {
 

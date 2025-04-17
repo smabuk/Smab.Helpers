@@ -8,10 +8,9 @@ public static partial class MathsHelpers {
 	/// <param name="array"></param>
 	/// <returns></returns>
 	public static IEnumerable<T> Modes<T>(this T[] array) {
-		(T Key, int Count)[] counts = array
+		(T Key, int Count)[] counts = [.. array
 			.GroupBy(x => x)
-			.Select(g => (g.Key, Count: g.Count()))
-			.ToArray();
+			.Select(g => (g.Key, Count: g.Count()))];
 
 		int maxCount = counts.Max(c => c.Count);
 

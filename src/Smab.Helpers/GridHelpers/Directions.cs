@@ -13,7 +13,12 @@ public static partial class Directions {
 	public static readonly IEnumerable<Direction> NESW = [North, East, South, West];
 	public static readonly IEnumerable<Direction> NSEW = [North, South, East, West];
 
-
+	/// <summary>
+	/// Reverses the specified <see cref="Direction"/> to its opposite direction.
+	/// </summary>
+	/// <param name="direction">The <see cref="Direction"/> to reverse.</param>
+	/// <returns>The opposite <see cref="Direction"/> of the specified <paramref name="direction"/>.</returns>
+	/// <exception cref="NotImplementedException">Thrown if the specified <paramref name="direction"/> is not a recognized value.</exception>
 	public static Direction Reverse(this Direction direction)
 		=> direction switch {
 			Up    => Down,
@@ -27,6 +32,12 @@ public static partial class Directions {
 			_ => throw new NotImplementedException(),
 		};
 
+	/// <summary>
+	/// Rotates the specified <see cref="Direction"/> 90 degrees clockwise.
+	/// </summary>
+	/// <param name="direction">The current direction to rotate.</param>
+	/// <returns>The <see cref="Direction"/> resulting from a 90-degree clockwise rotation.</returns>
+	/// <exception cref="NotImplementedException">Thrown if the provided <paramref name="direction"/> is not a valid <see cref="Direction"/> value.</exception>
 	public static Direction TurnRight(this Direction direction)
 		=> direction switch {
 			Up    => Right,
@@ -36,6 +47,12 @@ public static partial class Directions {
 			_ => throw new NotImplementedException(),
 		};
 
+	/// <summary>
+	/// Rotates the specified <see cref="Direction"/> 90 degrees counterclockwise.
+	/// </summary>
+	/// <param name="direction">The current direction to rotate from.</param>
+	/// <returns>The <see cref="Direction"/> resulting from a 90-degree counterclockwise rotation.</returns>
+	/// <exception cref="NotImplementedException">Thrown if the specified <paramref name="direction"/> is not a valid <see cref="Direction"/> value.</exception>
 	public static Direction TurnLeft(this Direction direction)
 		=> direction switch {
 			Up    => Left,
@@ -45,6 +62,13 @@ public static partial class Directions {
 			_ => throw new NotImplementedException(),
 		};
 
+	/// <summary>
+	/// Calculates the change in X and Y coordinates (delta) corresponding to the specified direction.
+	/// </summary>
+	/// <param name="direction">The direction for which to calculate the delta. Must be a valid <see cref="Direction"/> value.</param>
+	/// <returns>A tuple containing the change in X and Y coordinates as integers.  The first item (<c>dX</c>) represents the change
+	/// in the X-axis, and the second item (<c>dY</c>) represents the change in the Y-axis.</returns>
+	/// <exception cref="NotImplementedException">Thrown if the specified <paramref name="direction"/> is not implemented or is invalid.</exception>
 	public static (int dX, int dY) Delta(this Direction direction)
 		=> direction switch {
 			North | Up    => NORTH,
@@ -58,7 +82,28 @@ public static partial class Directions {
 			_ => throw new NotImplementedException(),
 		};
 
+	/// <summary>
+	/// Determines whether the specified <see cref="Direction"/> represents a diagonal direction.
+	/// </summary>
+	/// <param name="direction">The <see cref="Direction"/> to evaluate.</param>
+	/// <returns><see langword="true"/> if the <paramref name="direction"/> is diagonal  (i.e., <see cref="Direction.NorthWest"/>,
+	/// <see cref="Direction.NorthEast"/>,  <see cref="Direction.SouthEast"/>, or <see cref="Direction.SouthWest"/>); 
+	/// otherwise, <see langword="false"/>.</returns>
 	public static bool IsDiagonal(this Direction direction) => direction is NorthWest or NorthEast or SouthEast or SouthWest;
+	
+	/// <summary>
+	/// Determines whether the specified <see cref="Direction"/> represents a horizontal direction.
+	/// </summary>
+	/// <param name="direction">The <see cref="Direction"/> to evaluate.</param>
+	/// <returns><see langword="true"/> if the <paramref name="direction"/> is <see cref="Direction.East"/> or <see
+	/// cref="Direction.West"/>; otherwise, <see langword="false"/>.</returns>
 	public static bool IsHorizontal(this Direction direction) => direction is East or West;
+	
+	/// <summary>
+	/// Determines whether the specified <see cref="Direction"/> represents a vertical direction.
+	/// </summary>
+	/// <param name="direction">The <see cref="Direction"/> to evaluate.</param>
+	/// <returns><see langword="true"/> if the <paramref name="direction"/> is <see cref="Direction.North"/> or <see
+	/// cref="Direction.South"/>; otherwise, <see langword="false"/>.</returns>
 	public static bool IsVertical(this Direction direction) => direction is North or South;
 }

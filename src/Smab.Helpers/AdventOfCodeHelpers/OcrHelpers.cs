@@ -75,12 +75,54 @@ public static class OcrHelpers {
 		#....#.|#####..|.####..|.......|######.|#......|.###.#.|#....#.|.......|.###...|#....#.|######.|.......|#....#.|.......|#......|.......|#....#.|.......|.......|.......|.......|.......|#....#.|.......|######.|.......|
 		""";
 
+	/// <summary>
+	/// Identifies and decodes a message from a 2D character array representation of text.
+	/// </summary>
+	/// <remarks>This method processes a 2D grid of characters to identify and decode text based on the specified
+	/// lit and unlit characters. The grid is expected to follow a specific format where letters are separated by a defined
+	/// number of empty columns.</remarks>
+	/// <param name="input">A 2D character array representing the text to decode, where each character corresponds to a pixel or cell in the
+	/// grid.</param>
+	/// <param name="off">The character representing an unlit or empty cell in the grid. Defaults to <see langword="Unlit"/>.</param>
+	/// <param name="on">The character representing a lit or filled cell in the grid. Defaults to <see langword="Lit"/>.</param>
+	/// <param name="whitespace">The number of empty columns used to separate letters in the grid. Must be a non-negative integer. Defaults to 1.</param>
+	/// <param name="ocrLetterSize">The size of the letters in the grid, specified as an <see cref="OcrLetterSize"/> value. Defaults to <see
+	/// cref="OcrLetterSize.Normal"/>.</param>
+	/// <returns>A <see cref="string"/> containing the decoded message. Returns an empty string if the input does not contain any
+	/// recognizable text.</returns>
 	public static string IdentifyMessage(this char[,] input, char off = Unlit, char on = Lit, int whitespace = 1, OcrLetterSize ocrLetterSize = OcrLetterSize.Normal)
 		=> IdentifyMessage(input.AsStrings(), off, on, whitespace, ocrLetterSize);
 
+	/// <summary>
+	/// Identifies and decodes a message from a string representation of OCR-style characters.
+	/// </summary>
+	/// <remarks>This method processes the input string by splitting it into lines, interpreting the OCR-style grid
+	/// of characters, and decoding the message based on the specified parameters. Ensure the input string is formatted
+	/// correctly with consistent line endings and spacing for accurate decoding.</remarks>
+	/// <param name="input">The input string containing OCR-style characters, where each line represents a row of the character grid.</param>
+	/// <param name="off">The character representing an "off" or unlit segment in the OCR grid. Defaults to <see langword="Unlit"/>.</param>
+	/// <param name="on">The character representing an "on" or lit segment in the OCR grid. Defaults to <see langword="Lit"/>.</param>
+	/// <param name="whitespace">The number of whitespace characters separating individual OCR characters. Defaults to 1.</param>
+	/// <param name="ocrLetterSize">The size of the OCR letters to interpret. Defaults to <see cref="OcrLetterSize.Normal"/>.</param>
+	/// <returns>The decoded message as a string.</returns>
 	public static string IdentifyMessage(this string input, char off = Unlit, char on = Lit, int whitespace = 1, OcrLetterSize ocrLetterSize = OcrLetterSize.Normal)
 		=> IdentifyMessage(input.ReplaceLineEndings().Split(Environment.NewLine), off, on, whitespace, ocrLetterSize);
 
+	/// <summary>
+	/// Identifies and reconstructs a message from a sequence of strings representing OCR (Optical Character Recognition)
+	/// input.
+	/// </summary>
+	/// <remarks>This method processes the input by interpreting lit and unlit pixels as letters or digits based on
+	/// the specified OCR letter size. It assumes that the input strings are of uniform length and that the OCR input
+	/// adheres to the expected format.</remarks>
+	/// <param name="input">The collection of strings representing the OCR input, where each string corresponds to a row of the input grid.</param>
+	/// <param name="off">The character representing an "unlit" pixel in the OCR input. Defaults to <see langword="Unlit"/>.</param>
+	/// <param name="on">The character representing a "lit" pixel in the OCR input. Defaults to <see langword="Lit"/>.</param>
+	/// <param name="whitespace">The number of columns of whitespace between letters in the OCR input. Defaults to 1.</param>
+	/// <param name="ocrLetterSize">The size of the OCR letters to interpret. Defaults to <see cref="OcrLetterSize.Normal"/>.</param>
+	/// <returns>A string containing the reconstructed message. If the input contains invalid or unrecognized characters,  the
+	/// method stops processing and returns the message reconstructed up to that point.</returns>
+	/// <exception cref="NotImplementedException">Thrown if an unsupported value of <paramref name="ocrLetterSize"/> is provided.</exception>
 	public static string IdentifyMessage(this IEnumerable<string> input, char off = Unlit, char on = Lit, int whitespace = 1, OcrLetterSize ocrLetterSize = OcrLetterSize.Normal) {
 		List<string> inputList = [.. input];
 		for (int i = 0; i < inputList.Count; i++) {

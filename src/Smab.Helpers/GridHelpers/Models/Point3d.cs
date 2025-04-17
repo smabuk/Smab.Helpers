@@ -1,5 +1,14 @@
 ﻿namespace Smab.Helpers;
 
+/// <summary>
+/// Represents a point in a three-dimensional space with integer coordinates.
+/// </summary>
+/// <remarks>The <see cref="Point3d"/> struct provides a lightweight, immutable representation of a 3D point. It
+/// supports basic arithmetic operations, directional movement, and parsing from string representations. Commonly used
+/// for geometric calculations, spatial representations, and grid-based systems.</remarks>
+/// <param name="X"></param>
+/// <param name="Y"></param>
+/// <param name="Z"></param>
 [DebuggerDisplay("{DebugDisplay,nq}")]
 public record struct Point3d(int X, int Y, int Z) : IParsable<Point3d> {
 

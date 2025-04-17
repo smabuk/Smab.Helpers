@@ -4,12 +4,17 @@ namespace Smab.Helpers;
 public static partial class MathsHelpers {
 
 	/// <summary>
-	/// 
+	/// Calculates the number of digits in the specified non-negative number.
 	/// </summary>
-	/// <typeparam name="T"></typeparam>
-	/// <param name="number"></param>
-	/// <param name="includeNegativeSign"></param>
-	/// <returns></returns>
+	/// <remarks>This method supports various numeric types, including <see cref="int"/>, <see cref="long"/>, <see
+	/// cref="uint"/>, <see cref="ulong"/>, <see cref="short"/>, <see cref="ushort"/>, <see cref="byte"/>, and <see
+	/// cref="sbyte"/>. For other numeric types, the method falls back to calculating the length of the string
+	/// representation of the number.</remarks>
+	/// <typeparam name="T">The numeric type of the input, which must implement <see cref="INumber{T}"/>.</typeparam>
+	/// <param name="number">The number whose digit count is to be calculated. Must be greater than or equal to <see langword="0"/>.</param>
+	/// <returns>The number of digits in the specified number. Returns <c>0</c> if <paramref name="number"/> is <see
+	/// langword="null"/>.</returns>
+	/// <exception cref="ArgumentOutOfRangeException">Thrown if <paramref name="number"/> is less than <see langword="0"/>.</exception>
 	public static int Length<T>(this T number) where T : INumber<T> {
 
 		if (number is null)   { return 0; }

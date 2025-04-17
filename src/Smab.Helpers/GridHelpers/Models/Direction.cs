@@ -1,5 +1,13 @@
 ﻿namespace Smab.Helpers;
 
+/// <summary>
+/// Represents a set of directional values, supporting combinations of multiple directions.
+/// </summary>
+/// <remarks>This enumeration uses the <see cref="FlagsAttribute"/> to allow bitwise combinations of its values.
+/// It includes primary cardinal directions (e.g., <see cref="North"/>, <see cref="East"/>),  intercardinal directions
+/// (e.g., <see cref="NorthEast"/>, <see cref="SouthWest"/>),  and shorthand aliases (e.g., <see cref="N"/>, <see
+/// cref="SE"/>).  Additionally, alternative names such as <see cref="Up"/> and <see cref="Right"/> are provided for
+/// convenience.</remarks>
 [Flags]
 public enum Direction {
 	None = 0,
