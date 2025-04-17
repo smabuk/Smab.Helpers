@@ -70,4 +70,106 @@ public partial class AlgorithmHelperTests(ITestOutputHelper testOutputHelper) {
 		actual.ShouldBe(expected);
 	}
 
+
+	[Theory]
+	[InlineData(0, 10, 5)] // Predicate matches a midpoint
+	[InlineData(0, 10, 0)] // Predicate matches the start
+	[InlineData(0, 10, 9)] // Predicate matches the end
+	public void TryBinaryChop_ShouldFindMatchingElement(int start, int end, int target) {
+		bool found = AlgorithmicHelpers.TryBinaryChop(
+			start: start,
+			end: end,
+			predicate: x => x == target,
+			out int result
+		);
+
+		found.ShouldBeTrue();
+		result.ShouldBe(target);
+	}
+
+	[Theory]
+	[InlineData(0, 10, 5)] // Predicate matches a midpoint
+	[InlineData(0, 10, 0)] // Predicate matches the start
+	[InlineData(0, 10, 9)] // Predicate matches the end
+	public void TryBinaryChop_WithRange_ShouldFindMatchingElement(int start, int end, int target) {
+		bool found = new Range(start, end).TryBinaryChop(
+			predicate: x => x == target,
+			out int result
+		);
+
+		found.ShouldBeTrue();
+		result.ShouldBe(target);
+	}
+
+	[Theory]
+	[InlineData(0, 10, 5)] // Predicate matches a midpoint
+	[InlineData(0, 10, 0)] // Predicate matches the start
+	[InlineData(0, 10, 9)] // Predicate matches the end
+	public void TryBinaryChop_WithLongRange_ShouldFindMatchingElement(long start, long end, long target) {
+		bool found = new LongRange(start, end).TryBinaryChop(
+			predicate: x => x == target,
+			out long result
+		);
+
+		found.ShouldBeTrue();
+		result.ShouldBe(target);
+	}
+
+	[Theory]
+	[InlineData(0, 10, 11)] // Target is outside the range
+	[InlineData(0, 10, -1)] // Target is below the range
+	public void TryBinaryChop_ShouldReturnFalse_WhenNoMatch(int start, int end, int target) {
+		bool found = AlgorithmicHelpers.TryBinaryChop(
+			start: start,
+			end: end,
+			predicate: x => x == target,
+			out int result
+		);
+
+		found.ShouldBeFalse();
+		result.ShouldBe(default);
+	}
+
+	[Theory]
+	[InlineData(0, 10, 5)] // First element greater than or equal to 5
+	[InlineData(0, 10, 0)] // First element greater than or equal to 0
+	[InlineData(0, 10, 9)] // First element greater than or equal to 9
+	public void TryBinaryChop_ShouldFindFirstElementMatchingPredicate(int start, int end, int threshold) {
+		bool found = AlgorithmicHelpers.TryBinaryChop(
+			start: start,
+			end: end,
+			predicate: x => x >= threshold,
+			out int result
+		);
+
+		found.ShouldBeTrue();
+		result.ShouldBe(threshold);
+	}
+
+	[Fact]
+	public void TryBinaryChop_ShouldHandleEmptyRange() {
+		bool found = AlgorithmicHelpers.TryBinaryChop(
+			start: 5,
+			end: 5,
+			predicate: x => x == 5,
+			out int result
+		);
+
+		found.ShouldBeFalse();
+		result.ShouldBe(default);
+	}
+
+	[Fact]
+	public void TryBinaryChop_ShouldHandleSingleElementRange() {
+		bool found = AlgorithmicHelpers.TryBinaryChop(
+			start: 5,
+			end: 6,
+			predicate: x => x == 5,
+			out int result
+		);
+
+		found.ShouldBeTrue();
+		result.ShouldBe(5);
+	}
+
 }
