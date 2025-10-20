@@ -44,36 +44,39 @@ public static partial class AlgorithmicHelpers {
 		return found;
 	}
 
-	/// <summary>
-	/// Attempts to find an integer within the specified range that satisfies the given predicate.
-	/// </summary>
-	/// <remarks>The search is performed using a binary chop algorithm, which assumes that the range is continuous 
-	/// and the predicate exhibits a monotonic behavior (e.g., all <see langword="false"/> values precede all  <see
-	/// langword="true"/> values or vice versa).</remarks>
-	/// <param name="range">The range of integers to search, defined by a start and end value.</param>
-	/// <param name="predicate">A function that determines whether a given integer satisfies a condition.  The function should return <see
-	/// langword="true"/> for a matching integer and <see langword="false"/> otherwise.</param>
-	/// <param name="result">When this method returns <see langword="true"/>, contains the first integer in the range that satisfies the
-	/// predicate. When this method returns <see langword="false"/>, the value is undefined.</param>
-	/// <returns><see langword="true"/> if an integer satisfying the predicate is found within the range;  otherwise, <see
-	/// langword="false"/>.</returns>
-	public static bool TryBinaryChop(this Range range, Predicate<int> predicate, [NotNullWhen(true)] out int result)
-		=> TryBinaryChop<int>(range.Start.Value, range.End.Value, predicate, out result);
+	extension(Range range) {
+		/// <summary>
+		/// Attempts to find an integer within the specified range that satisfies the given predicate.
+		/// </summary>
+		/// <remarks>The search is performed using a binary chop algorithm, which assumes that the range is continuous 
+		/// and the predicate exhibits a monotonic behavior (e.g., all <see langword="false"/> values precede all  <see
+		/// langword="true"/> values or vice versa).</remarks>
+		/// <param name="range">The range of integers to search, defined by a start and end value.</param>
+		/// <param name="predicate">A function that determines whether a given integer satisfies a condition.  The function should return <see
+		/// langword="true"/> for a matching integer and <see langword="false"/> otherwise.</param>
+		/// <param name="result">When this method returns <see langword="true"/>, contains the first integer in the range that satisfies the
+		/// predicate. When this method returns <see langword="false"/>, the value is undefined.</param>
+		/// <returns><see langword="true"/> if an integer satisfying the predicate is found within the range;  otherwise, <see
+		/// langword="false"/>.</returns>
+		public bool TryBinaryChop(Predicate<int> predicate, [NotNullWhen(true)] out int result)
+			=> TryBinaryChop<int>(range.Start.Value, range.End.Value, predicate, out result);
+	}
 
-	/// <summary>
-	/// Attempts to perform a binary search within the specified range to find a value that satisfies the given predicate.
-	/// </summary>
-	/// <remarks>The method performs a binary search, which assumes that the predicate returns <see
-	/// langword="true"/>  for all values greater than or equal to a certain threshold and <see langword="false"/> for all
-	/// values below it.</remarks>
-	/// <param name="range">The range of values to search, defined by a start and an end value.</param>
-	/// <param name="predicate">A function that determines whether a given value satisfies the condition.  The predicate should return <see
-	/// langword="true"/> for the desired value and <see langword="false"/> otherwise.</param>
-	/// <param name="result">When this method returns <see langword="true"/>, contains the value that satisfies the predicate.  If no such value
-	/// is found, the value is undefined.</param>
-	/// <returns><see langword="true"/> if a value satisfying the predicate is found within the range; otherwise, <see
-	/// langword="false"/>.</returns>
-	public static bool TryBinaryChop(this LongRange range, Predicate<long> predicate, [NotNullWhen(true)] out long result)
-		=> TryBinaryChop<long>(range.Start, range.End, predicate, out result);
-
+	extension(LongRange range) {
+		/// <summary>
+		/// Attempts to perform a binary search within the specified range to find a value that satisfies the given predicate.
+		/// </summary>
+		/// <remarks>The method performs a binary search, which assumes that the predicate returns <see
+		/// langword="true"/>  for all values greater than or equal to a certain threshold and <see langword="false"/> for all
+		/// values below it.</remarks>
+		/// <param name="range">The range of values to search, defined by a start and an end value.</param>
+		/// <param name="predicate">A function that determines whether a given value satisfies the condition.  The predicate should return <see
+		/// langword="true"/> for the desired value and <see langword="false"/> otherwise.</param>
+		/// <param name="result">When this method returns <see langword="true"/>, contains the value that satisfies the predicate.  If no such value
+		/// is found, the value is undefined.</param>
+		/// <returns><see langword="true"/> if a value satisfying the predicate is found within the range; otherwise, <see
+		/// langword="false"/>.</returns>
+		public bool TryBinaryChop(Predicate<long> predicate, [NotNullWhen(true)] out long result)
+			=> TryBinaryChop<long>(range.Start, range.End, predicate, out result);
+	}
 }
