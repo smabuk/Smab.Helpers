@@ -1,0 +1,9 @@
+<Solution>
+  <Folder Name="/Solution Items/">
+    <File Path=".editorconfig" />
+    <File Path=".github/workflows/nuget-deploy.yml" />
+    <File Path="nuget.txt" />
+  </Folder>
+  <Project Path="src/Smab.Helpers/Smab.Helpers.csproj" />
+  <Project Path="tests/Smab.Helpers.Tests/Smab.Helpers.Tests.csproj" />
+</Solution>
