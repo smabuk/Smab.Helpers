@@ -48,15 +48,19 @@ internal static class Unix {
 }
 
 internal static class DoubleExtensions {
-	public static DateTime FromUnixDate(this double? unixDate)
+	extension(double? unixDate) {
+		public DateTime FromUnixDate()
 		=> unixDate switch {
 			> 99999999999 => Unix.Epoch.AddSeconds(unixDate / (double)1000 ?? 0.0),
-			_ =>             Unix.Epoch.AddSeconds(unixDate ?? 0.0)
+			_ => Unix.Epoch.AddSeconds(unixDate ?? 0.0)
 		};
+	}
 
-	public static DateTime FromUnixDate(this double unixDate)
+	extension(double unixDate) {
+		public DateTime FromUnixDate()
 		=> unixDate switch {
 			> 99999999999 => Unix.Epoch.AddSeconds(unixDate / 1000),
-			_ =>             Unix.Epoch.AddSeconds(unixDate)
+			_ => Unix.Epoch.AddSeconds(unixDate)
 		};
+	}
 }
