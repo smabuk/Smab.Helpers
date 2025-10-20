@@ -4,96 +4,102 @@ namespace Smab.Helpers;
 
 public static partial class MathsHelpers {
 
-	/// <summary>
-	/// Attempts to determine the overlapping range between two specified ranges.
-	/// </summary>
-	/// <remarks>The method normalizes the input ranges by ensuring that the <see langword="Start"/> value is less
-	/// than or equal to the <see langword="End"/> value for each range before calculating the overlap. If the ranges do
-	/// not overlap, the <paramref name="overlap"/> parameter will be set to its default value.</remarks>
-	/// <typeparam name="T">The type of the range boundaries. Must implement <see cref="INumber{T}"/>.</typeparam>
-	/// <param name="range">The first range, represented as a tuple with <see langword="Start"/> and <see langword="End"/> values.</param>
-	/// <param name="range2">The second range, represented as a tuple with <see langword="Start"/> and <see langword="End"/> values.</param>
-	/// <param name="overlap">When this method returns, contains the overlapping range as a tuple with <see langword="Start"/> and <see
-	/// langword="End"/> values, if an overlap exists; otherwise, contains the default value for the tuple type.</param>
-	/// <returns><see langword="true"/> if the two ranges overlap; otherwise, <see langword="false"/>.</returns>
-	public static bool TryGetOverlap<T>(this (T Start, T End) range, (T Start, T End) range2, out (T Start, T End) overlap) where T : INumber<T> {
-		overlap = default!;
-		T range1Start = T.Min(range.Start, range.End);
-		T range1End   = T.Max(range.Start, range.End);
-		T range2Start = T.Min(range2.Start, range2.End);
-		T range2End   = T.Max(range2.Start, range2.End);
-		T max = T.Max(range1Start, range2Start);
-		T min = T.Min(range1End, range2End);
-		if (max <= min) {
-			overlap = (max, min);
-			return true;
-		} else {
-			return false;
+	extension<T>((T Start, T End) range) where T : INumber<T> {
+		/// <summary>
+		/// Attempts to determine the overlapping range between two specified ranges.
+		/// </summary>
+		/// <remarks>The method normalizes the input ranges by ensuring that the <see langword="Start"/> value is less
+		/// than or equal to the <see langword="End"/> value for each range before calculating the overlap. If the ranges do
+		/// not overlap, the <paramref name="overlap"/> parameter will be set to its default value.</remarks>
+		/// <typeparam name="T">The type of the range boundaries. Must implement <see cref="INumber{T}"/>.</typeparam>
+		/// <param name="range">The first range, represented as a tuple with <see langword="Start"/> and <see langword="End"/> values.</param>
+		/// <param name="range2">The second range, represented as a tuple with <see langword="Start"/> and <see langword="End"/> values.</param>
+		/// <param name="overlap">When this method returns, contains the overlapping range as a tuple with <see langword="Start"/> and <see
+		/// langword="End"/> values, if an overlap exists; otherwise, contains the default value for the tuple type.</param>
+		/// <returns><see langword="true"/> if the two ranges overlap; otherwise, <see langword="false"/>.</returns>
+		public bool TryGetOverlap((T Start, T End) range2, out (T Start, T End) overlap) {
+			overlap = default!;
+			T range1Start = T.Min(range.Start, range.End);
+			T range1End = T.Max(range.Start, range.End);
+			T range2Start = T.Min(range2.Start, range2.End);
+			T range2End = T.Max(range2.Start, range2.End);
+			T max = T.Max(range1Start, range2Start);
+			T min = T.Min(range1End, range2End);
+			if (max <= min) {
+				overlap = (max, min);
+				return true;
+			} else {
+				return false;
+			}
 		}
 	}
 
-	/// <summary>
-	/// Determines the overlapping range between two specified ranges.
-	/// </summary>
-	/// <remarks>The method normalizes the input ranges to ensure that the <c>Start</c> boundary is less than or
-	/// equal to the <c>End</c> boundary before calculating the overlap. If the ranges do not overlap, an exception is
-	/// thrown.</remarks>
-	/// <typeparam name="T">The type of the range boundaries. Must implement <see cref="INumber{T}"/>.</typeparam>
-	/// <param name="range">The first range, represented as a tuple where <c>Start</c> is the starting boundary and <c>End</c> is the ending
-	/// boundary.</param>
-	/// <param name="range2">The second range, represented as a tuple where <c>Start</c> is the starting boundary and <c>End</c> is the ending
-	/// boundary.</param>
-	/// <returns>A tuple representing the overlapping range, where <c>Start</c> is the starting boundary and <c>End</c> is the
-	/// ending boundary.</returns>
-	/// <exception cref="ArgumentOutOfRangeException">Thrown if the specified ranges do not overlap.</exception>
-	public static (T Start, T End) GetOverlap<T>(this (T Start, T End) range, (T Start, T End) range2) where T : INumber<T> {
-		T range1Start = T.Min(range.Start, range.End);
-		T range1End   = T.Max(range.Start, range.End);
-		T range2Start = T.Min(range2.Start, range2.End);
-		T range2End   = T.Max(range2.Start, range2.End);
-		T max = T.Max(range1Start, range2Start);
-		T min = T.Min(range1End, range2End);
-		if (max <= min) {
-			return (max, min);
-		} else {
-			throw new ArgumentOutOfRangeException(nameof(range), "Ranges do not overlap.");
+	extension<T>((T Start, T End) range) where T : INumber<T> {
+		/// <summary>
+		/// Determines the overlapping range between two specified ranges.
+		/// </summary>
+		/// <remarks>The method normalizes the input ranges to ensure that the <c>Start</c> boundary is less than or
+		/// equal to the <c>End</c> boundary before calculating the overlap. If the ranges do not overlap, an exception is
+		/// thrown.</remarks>
+		/// <typeparam name="T">The type of the range boundaries. Must implement <see cref="INumber{T}"/>.</typeparam>
+		/// <param name="range">The first range, represented as a tuple where <c>Start</c> is the starting boundary and <c>End</c> is the ending
+		/// boundary.</param>
+		/// <param name="range2">The second range, represented as a tuple where <c>Start</c> is the starting boundary and <c>End</c> is the ending
+		/// boundary.</param>
+		/// <returns>A tuple representing the overlapping range, where <c>Start</c> is the starting boundary and <c>End</c> is the
+		/// ending boundary.</returns>
+		/// <exception cref="ArgumentOutOfRangeException">Thrown if the specified ranges do not overlap.</exception>
+		public (T Start, T End) GetOverlap((T Start, T End) range2) {
+			T range1Start = T.Min(range.Start, range.End);
+			T range1End = T.Max(range.Start, range.End);
+			T range2Start = T.Min(range2.Start, range2.End);
+			T range2End = T.Max(range2.Start, range2.End);
+			T max = T.Max(range1Start, range2Start);
+			T min = T.Min(range1End, range2End);
+			if (max <= min) {
+				return (max, min);
+			} else {
+				throw new ArgumentOutOfRangeException(nameof(range), "Ranges do not overlap.");
+			}
 		}
 	}
 
-	/// <summary>
-	/// Attempts to calculate the overlapping range between the current range and the specified range.
-	/// </summary>
-	/// <remarks>The method determines whether the two ranges intersect and, if so, calculates the overlapping
-	/// portion. If no overlap exists, the <paramref name="overlap"/> parameter will be set to its default value.</remarks>
-	/// <param name="range">The first range to evaluate for overlap.</param>
-	/// <param name="range2">The second range to evaluate for overlap.</param>
-	/// <param name="overlap">When this method returns, contains the overlapping range if an overlap exists; otherwise, contains the default
-	/// value of <see cref="Range"/>.</param>
-	/// <returns><see langword="true"/> if the two ranges overlap; otherwise, <see langword="false"/>.</returns>
-	public static bool TryGetOverlap(this Range range, Range range2, out Range overlap) {
-		overlap = default!;
-		bool success =  TryGetOverlap((range.Start.Value, range.End.Value), (range2.Start.Value, range2.End.Value), out (int Start, int End) overlap2);
-		if (success) {
-			overlap = new(overlap2.Start, overlap2.End);
+	extension(Range range) {
+		/// <summary>
+		/// Attempts to calculate the overlapping range between the current range and the specified range.
+		/// </summary>
+		/// <remarks>The method determines whether the two ranges intersect and, if so, calculates the overlapping
+		/// portion. If no overlap exists, the <paramref name="overlap"/> parameter will be set to its default value.</remarks>
+		/// <param name="range">The first range to evaluate for overlap.</param>
+		/// <param name="range2">The second range to evaluate for overlap.</param>
+		/// <param name="overlap">When this method returns, contains the overlapping range if an overlap exists; otherwise, contains the default
+		/// value of <see cref="Range"/>.</param>
+		/// <returns><see langword="true"/> if the two ranges overlap; otherwise, <see langword="false"/>.</returns>
+		public bool TryGetOverlap(Range range2, out Range overlap) {
+			overlap = default!;
+			bool success = TryGetOverlap((range.Start.Value, range.End.Value), (range2.Start.Value, range2.End.Value), out (int Start, int End) overlap2);
+			if (success) {
+				overlap = new(overlap2.Start, overlap2.End);
+			}
+			return success;
 		}
-		return success;
-	}
 
-	/// <summary>
-	/// Determines the overlapping range between the current range and the specified range.
-	/// </summary>
-	/// <remarks>This method calculates the intersection of two ranges. If the ranges do not overlap,  an <see
-	/// cref="ArgumentOutOfRangeException"/> is thrown.</remarks>
-	/// <param name="range">The first range to compare.</param>
-	/// <param name="range2">The second range to compare.</param>
-	/// <returns>A <see cref="Range"/> representing the overlapping portion of the two ranges.</returns>
-	/// <exception cref="ArgumentOutOfRangeException">Thrown if the two ranges do not overlap.</exception>
-	public static Range GetOverlap(this Range range, Range range2) {
-		bool success =  TryGetOverlap((range.Start.Value, range.End.Value), (range2.Start.Value, range2.End.Value), out (int Start, int End) overlap2);
-		if (success) {
-			return new(overlap2.Start, overlap2.End);
-		} else {
-			throw new ArgumentOutOfRangeException(nameof(range), "Ranges do not overlap.");
+		/// <summary>
+		/// Determines the overlapping range between the current range and the specified range.
+		/// </summary>
+		/// <remarks>This method calculates the intersection of two ranges. If the ranges do not overlap,  an <see
+		/// cref="ArgumentOutOfRangeException"/> is thrown.</remarks>
+		/// <param name="range">The first range to compare.</param>
+		/// <param name="range2">The second range to compare.</param>
+		/// <returns>A <see cref="Range"/> representing the overlapping portion of the two ranges.</returns>
+		/// <exception cref="ArgumentOutOfRangeException">Thrown if the two ranges do not overlap.</exception>
+		public Range GetOverlap(Range range2) {
+			bool success = TryGetOverlap((range.Start.Value, range.End.Value), (range2.Start.Value, range2.End.Value), out (int Start, int End) overlap2);
+			if (success) {
+				return new(overlap2.Start, overlap2.End);
+			} else {
+				throw new ArgumentOutOfRangeException(nameof(range), "Ranges do not overlap.");
+			}
 		}
 	}
 }
