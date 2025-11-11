@@ -23,7 +23,7 @@ public sealed class JsonDateOnlyConverter : JsonConverter<DateOnly> {
 /// and deserializes them from JSON strings representing a time in the same format.</remarks>
 public sealed class JsonTimeOnlyConverter : JsonConverter<TimeOnly> {
 	public override TimeOnly Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
-		=> TimeOnly.FromDateTime(reader.GetDateTime());
+		=> TimeOnly.Parse(reader.GetString() ?? "");
 
 	public override void Write(Utf8JsonWriter writer, TimeOnly value, JsonSerializerOptions options)
 		=> writer.WriteStringValue(value.ToString("HH:mm:ss"));

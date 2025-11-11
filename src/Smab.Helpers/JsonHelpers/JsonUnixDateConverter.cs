@@ -44,7 +44,7 @@ public sealed class JsonUnixDateConverterWithNulls : JsonConverter<DateTime?> {
 }
 
 internal static class Unix {
-	internal readonly static DateTime Epoch = new(year: 1970, month: 1, day: 1, hour: 0, minute: 0, second: 0, millisecond: 0, kind: DateTimeKind.Utc);
+	internal static DateTime Epoch => DateTime.UnixEpoch;
 }
 
 internal static class DoubleExtensions {
