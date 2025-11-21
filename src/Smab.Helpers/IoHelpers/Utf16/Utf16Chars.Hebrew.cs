@@ -58,7 +58,7 @@ public static partial class Utf16Chars {
 		//public const char HEBREW_PUNCTUATION_NUN_HAFUKHA                                                               = '׆';  // (U+05C6) feff05c6
 		//public const char HEBREW_POINT_QAMATS_QATAN                                                                    = ' ';  // (U+05C7) feff05c7
 
-		public const char HEBREW_LETTER_ALEF                                                                =   (char)0x05D0;    //   = 'א';  // (U+05D0) feff05d0
+		public const char HEBREW_LETTER_ALEF                                                                           = 'א';  // (U+05D0) feff05d0
 		public const char HEBREW_LETTER_BET                                                                            = 'ב';  // (U+05D1) feff05d1
 		public const char HEBREW_LETTER_GIMEL                                                                          = 'ג';  // (U+05D2) feff05d2
 		public const char HEBREW_LETTER_DALET                                                                          = 'ד';  // (U+05D3) feff05d3
