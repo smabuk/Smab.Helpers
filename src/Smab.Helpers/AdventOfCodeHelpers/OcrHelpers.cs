@@ -5,8 +5,8 @@ public static class OcrHelpers {
 	const char Lit   = '#';
 	const char BadCharacter = '!';
 
-	static readonly int Alphabet_Normal_Grid_Width = 6;
-	static readonly int Alphabet_Normal_Grid_Height = 6;
+	const int Alphabet_Normal_Grid_Width = 6;
+	const int Alphabet_Normal_Grid_Height = 6;
 	static readonly string[] Alphabet_Normal = [
 		".##..|###..|.##..|###..|####.|####.|.##..|#..#.|###..|..##.|#..#.|#....|#...#|.....|.##..|###..|.....|###..|.###.|#####|#..#.|.....|.....|.....|#...#|####.|",
 		"#..#.|#..#.|#..#.|#..#.|#....|#....|#..#.|#..#.|.#...|...#.|#.#..|#....|##.##|.....|#..#.|#..#.|.....|#..#.|#....|..#..|#..#.|.....|.....|.....|#...#|...#.|",

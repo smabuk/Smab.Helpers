@@ -7,7 +7,7 @@ public static partial class Directions {
 	public static readonly IEnumerable<Direction> CardinalDirections   = [North, East, South, West];
 	public static readonly IEnumerable<Direction> OrdinalDirections    = [NorthWest, NorthEast, SouthEast, SouthWest];
 	public static readonly IEnumerable<Direction> AllCompassDirections = [.. CardinalDirections, .. OrdinalDirections];
-	
+
 	public static readonly IEnumerable<Direction> URDL = [Up, Right, Down, Left];
 	public static readonly IEnumerable<Direction> UDLR = [Up, Down, Left, Right];
 	public static readonly IEnumerable<Direction> NESW = [North, East, South, West];
@@ -88,7 +88,7 @@ public static partial class Directions {
 		/// </summary>
 		/// <param name="direction">The <see cref="Direction"/> to evaluate.</param>
 		/// <returns><see langword="true"/> if the <paramref name="direction"/> is diagonal  (i.e., <see cref="Direction.NorthWest"/>,
-		/// <see cref="Direction.NorthEast"/>,  <see cref="Direction.SouthEast"/>, or <see cref="Direction.SouthWest"/>); 
+		/// <see cref="Direction.NorthEast"/>,  <see cref="Direction.SouthEast"/>, or <see cref="Direction.SouthWest"/>);
 		/// otherwise, <see langword="false"/>.</returns>
 		public bool IsDiagonal() => direction is NorthWest or NorthEast or SouthEast or SouthWest;
 
