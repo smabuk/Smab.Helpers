@@ -54,4 +54,30 @@ public static partial class ParsingHelpers {
 			? result
 			: TDefault;
 	}
+
+	extension(char c) {
+		/// <summary>
+		/// Converts the current value to the specified enumeration type using a case-insensitive match.
+		/// </summary>
+		/// <remarks>Throws an exception if the current value does not match any member of the specified enumeration
+		/// type. The conversion is performed using a case-insensitive comparison.</remarks>
+		/// <typeparam name="T">The enumeration type to convert the value to. Must be a value type that represents an enum.</typeparam>
+		/// <returns>The value of type <typeparamref name="T"/> that corresponds to the current value.</returns>
+		public T AsEnum<T>() where T : struct => Enum.Parse<T>(c.ToString(), true);
+
+		/// <summary>
+		/// Attempts to convert the current value to the specified enumeration type. Returns the default value if the
+		/// conversion fails.
+		/// </summary>
+		/// <remarks>The conversion is case-insensitive. This method is useful when parsing values that may not always
+		/// correspond to a valid enumeration member.</remarks>
+		/// <typeparam name="T">The enumeration type to convert to. Must be a value type that represents an enum.</typeparam>
+		/// <param name="TDefault">The value to return if the conversion is unsuccessful. Defaults to the default value of the enumeration type.</param>
+		/// <returns>The converted value of type <typeparamref name="T"/> if the conversion succeeds; otherwise, <paramref
+		/// name="TDefault"/>.</returns>
+		public T AsEnumOrDefault<T>(T TDefault = default) where T : struct =>
+			Enum.TryParse<T>(c.ToString(), true, out T result)
+			? result
+			: TDefault;
+	}
 }

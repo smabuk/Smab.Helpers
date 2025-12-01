@@ -20,6 +20,14 @@ public class AsEnum {
 		input.AsEnumOrDefault<TestEnum>(TestEnum.InvalidNumber).ShouldBe(expected);
 	}
 
+	[Theory]
+	[InlineData('I', TestEnum.I)]
+	[InlineData('v', TestEnum.V)]
+	[InlineData('X', TestEnum.X)]
+	public void AsEnum_From_Char(char input, TestEnum expected) {
+		input.AsEnum<TestEnum>().ShouldBe(expected);
+	}
+
 
 	public enum TestEnum {
 		InvalidNumber = int.MinValue,
@@ -29,5 +37,9 @@ public class AsEnum {
 		Two = 2,
 		Three = 3,
 		Four = 4,
+
+		I = 1,
+		V = 5,
+		X = 10,
 	}
 }
