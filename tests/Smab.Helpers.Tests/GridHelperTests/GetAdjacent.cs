@@ -1,4 +1,5 @@
-﻿namespace Smab.Helpers.Tests.GridHelperTests;
+﻿
+namespace Smab.Helpers.Tests.GridHelperTests;
 public partial class GetAdjacent {
 
 	[Theory]
@@ -12,7 +13,7 @@ public partial class GetAdjacent {
 			input[i] = new((char)(65 + i), i + 1);
 		}
 		(char, int)[,] array = input.To2dArray(5);
-		var points = array.GetAdjacentCells((X, Y), includeDiagonals: includeDiagonals);
+		IEnumerable<Cell<(char, int)>> points = array.GetAdjacentCells((X, Y), includeDiagonals: includeDiagonals);
 		points.Count().ShouldBe(expected);
 	}
 
@@ -26,7 +27,7 @@ public partial class GetAdjacent {
 			input[i] = new((char)(65 + i), i + 1);
 		}
 		(char, int)[,] array = input.To2dArray(5);
-		var points = array.GetAdjacentCells((X, Y), includeDiagonals: includeDiagonals, exclude: [ArrayHelpers.RIGHT, ArrayHelpers.NORTH_EAST]);
+		IEnumerable<Cell<(char, int)>> points = array.GetAdjacentCells((X, Y), includeDiagonals: includeDiagonals, exclude: [ArrayHelpers.RIGHT, ArrayHelpers.NORTH_EAST]);
 		points.Count().ShouldBe(expected);
 	}
 
@@ -39,7 +40,7 @@ public partial class GetAdjacent {
 			input[i] = new((char)(65 + i), i + 1);
 		}
 		(char, int)[,] array = input.To2dArray(5);
-		var points = array.GetCornerCells((X, Y));
+		IEnumerable<Cell<(char, int)>> points = array.GetCornerCells((X, Y));
 		points.Count().ShouldBe(expected);
 	}
 

@@ -38,7 +38,7 @@ public class AsEnum {
 		Three = 3,
 		Four = 4,
 
-		I = 1,
+		I = One,
 		V = 5,
 		X = 10,
 	}
