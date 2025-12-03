@@ -3,6 +3,14 @@
 namespace Smab.Helpers.Tests.ParsingHelperTests;
 public partial class As {
 	[Theory]
+	[InlineData('1', 1)]
+	[InlineData('6', 6)]
+	public void AsInt_FromChar_ShouldBe(char input, int expected) {
+		int actual = input.As<int>();
+		Assert.Equal(expected, actual);
+	}
+
+	[Theory]
 	[InlineData("1", 1)]
 	[InlineData("23", 23)]
 	[InlineData("-46", -46)]

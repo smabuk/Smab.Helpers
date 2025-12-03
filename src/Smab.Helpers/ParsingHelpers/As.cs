@@ -19,6 +19,20 @@ public static partial class ParsingHelpers {
 			=> s.Select(s => s.As(defaultIfInvalid, provider));
 	}
 
+	extension(char c) {
+		/// <summary>
+		/// Attempts to parse the specified string into the specified type, returning a default value if parsing fails.
+		/// </summary>
+		/// <typeparam name="T">The type to which the string should be parsed. Must implement <see cref="IParsable{T}"/>.</typeparam>
+		/// <param name="s">The string to parse.</param>
+		/// <param name="defaultIfInvalid">The value to return if parsing fails. Defaults to the default value of <typeparamref name="T"/>.</param>
+		/// <param name="provider">An optional <see cref="IFormatProvider"/> to use for parsing. If null, the default format provider is used.</param>
+		/// <returns>The parsed value of type <typeparamref name="T"/> if parsing succeeds; otherwise, <paramref
+		/// name="defaultIfInvalid"/>.</returns>
+		public T As<T>(T defaultIfInvalid = default!, IFormatProvider? provider = null) where T : IParsable<T>
+			=> T.TryParse(c.ToString(), provider, out T? value) switch { true => value, false => defaultIfInvalid };
+	}
+
 	extension(string s) {
 		/// <summary>
 		/// Attempts to parse the specified string into the specified type, returning a default value if parsing fails.
