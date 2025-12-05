@@ -1,6 +1,60 @@
 ﻿namespace Smab.Helpers;
 
 public static partial class ArrayHelpers {
+	extension<T>(Grid<T> grid) {
+		/// <summary>
+		/// Returns an enumerable collection of all diagonals in the grid, where each diagonal is represented as a sequence of
+		/// elements of type T.
+		/// </summary>
+		/// <remarks>Use this method to iterate over all diagonals in the grid, which can be useful for algorithms
+		/// that require diagonal traversal, such as searching for patterns or calculating diagonal sums. The method does not
+		/// modify the grid.</remarks>
+		/// <returns>An enumerable of enumerables, each containing the elements along a single diagonal of the grid. The order of
+		/// diagonals and their direction may depend on the grid's implementation.</returns>
+		public IEnumerable<IEnumerable<T>> Diagonals() => grid.Cells.Diagonals();
+
+		/// <summary>
+		/// Returns an enumerable collection of all south-east diagonals in the grid, where each diagonal is represented as a
+		/// sequence of elements.
+		/// </summary>
+		/// <remarks>South-east diagonals run from the top-left towards the bottom-right of the grid. The order of
+		/// diagonals and their elements corresponds to their position in the grid, starting from the top row and leftmost
+		/// column.</remarks>
+		/// <returns>An enumerable of enumerables, each containing the elements along a single south-east diagonal of the grid. If the
+		/// grid is empty, the returned collection will also be empty.</returns>
+		public IEnumerable<IEnumerable<T>> DiagonalsSouthEast() => grid.Cells.DiagonalsSouthEast();
+
+		/// <summary>
+		/// Returns an enumerable collection of elements located on the south-east diagonal from the specified cell index
+		/// within the grid.
+		/// </summary>
+		/// <param name="index">The zero-based index of the cell from which to start the south-east diagonal traversal. Must be within the bounds
+		/// of the grid.</param>
+		/// <returns>An enumerable collection of elements of type T found along the south-east diagonal starting from the specified
+		/// index. The collection will be empty if the index is out of bounds or if no diagonal cells exist.</returns>
+		public IEnumerable<T> DiagonalsSouthEast(int index) => grid.Cells.DiagonalsSouthEast(index);
+
+		/// <summary>
+		/// Returns an enumerable collection of all south-west diagonals in the grid, where each diagonal is represented as a
+		/// sequence of elements of type T.
+		/// </summary>
+		/// <remarks>South-west diagonals run from the top-right corner of the grid towards the bottom-left. The
+		/// number and length of diagonals depend on the grid's dimensions. The returned sequences do not overlap and each
+		/// element of the grid appears in exactly one diagonal.</remarks>
+		/// <returns>An enumerable of enumerables, each containing the elements along a single south-west diagonal of the grid. The
+		/// outer collection contains all such diagonals, ordered from top-right to bottom-left.</returns>
+		public IEnumerable<IEnumerable<T>> DiagonalsSouthWest() => grid.Cells.DiagonalsSouthWest();
+
+		/// <summary>
+		/// Returns an enumerable collection of elements located on the south-west diagonal from the specified cell index.
+		/// </summary>
+		/// <param name="index">The zero-based index of the cell from which to start the south-west diagonal traversal. Must be within the bounds
+		/// of the grid.</param>
+		/// <returns>An enumerable collection of elements of type T found along the south-west diagonal starting from the specified
+		/// index. The collection will be empty if no diagonal cells exist from the given index.</returns>
+		public IEnumerable<T> DiagonalsSouthWest(int index) => grid.Cells.DiagonalsSouthWest(index);
+	}
+
 	extension<T>(T[,] array) {
 		/// <summary>
 		/// Retrieves all diagonals from a two-dimensional array, traversing in both south-east and south-west directions.

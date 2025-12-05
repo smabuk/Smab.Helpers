@@ -36,4 +36,25 @@ public class Transpose {
 		actual[1].ShouldBe(".#");
 		actual[2].ShouldBe("#.");
 	}
+
+	[Fact]
+	public void Grid_Transpose() {
+		Grid<char> grid = """
+			# #
+			## 
+			"""
+			.Split(Environment.NewLine)
+			.To2dGrid();
+
+		Grid<char> actual = grid.Transpose();
+		
+		actual.ColsCount.ShouldBe(2);
+		actual.RowsCount.ShouldBe(3);
+		actual[0, 0].ShouldBe('#');
+		actual[1, 0].ShouldBe('#');
+		actual[0, 1].ShouldBe(' ');
+		actual[1, 1].ShouldBe('#');
+		actual[0, 2].ShouldBe('#');
+		actual[1, 2].ShouldBe(' ');
+	}
 }

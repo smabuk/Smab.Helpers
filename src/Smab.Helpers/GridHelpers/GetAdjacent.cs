@@ -2,11 +2,66 @@
 
 public static partial class ArrayHelpers {
 
+	extension<T>(Grid<T> grid) {
+		/// <summary>
+		/// Returns the adjacent cells surrounding the specified cell coordinates.
+		/// </summary>
+		/// <remarks>Cells returned are within the bounds of the grid. Excluded offsets are applied after determining
+		/// adjacency. This method does not return the cell at (x, y) itself.</remarks>
+		/// <param name="x">The zero-based X coordinate of the target cell.</param>
+		/// <param name="y">The zero-based Y coordinate of the target cell.</param>
+		/// <param name="includeDiagonals">true to include diagonal neighbors; otherwise, false to include only orthogonal neighbors.</param>
+		/// <param name="exclude">An optional collection of relative coordinate offsets to exclude from the results. If null, no offsets are
+		/// excluded.</param>
+		/// <returns>An enumerable collection of adjacent cells. The collection may be empty if no adjacent cells exist at the
+		/// specified location.</returns>
+		public IEnumerable<Cell<T>> GetAdjacentCells(int x, int y, bool includeDiagonals = false, IEnumerable<(int dX, int dY)>? exclude = null)
+			=> grid.Cells.GetAdjacentCells<T>(x, y, includeDiagonals, exclude);
+
+		/// <summary>
+		/// Returns the adjacent cells surrounding the specified point in the grid.
+		/// </summary>
+		/// <param name="point">The coordinates of the cell for which to retrieve adjacent cells. The tuple represents the x and y position within
+		/// the grid.</param>
+		/// <param name="includeDiagonals">Specifies whether to include diagonal neighbors in the result. If <see langword="true"/>, diagonal cells are
+		/// included; otherwise, only orthogonal neighbors are returned.</param>
+		/// <param name="exclude">An optional collection of relative coordinate offsets to exclude from the adjacency search. Each tuple represents
+		/// a direction (dX, dY) to omit from the results. If <see langword="null"/>, no directions are excluded.</param>
+		/// <returns>An enumerable collection of adjacent <see cref="Cell{T}"/> instances. The collection may be empty if the specified
+		/// point has no valid neighbors.</returns>
+		public IEnumerable<Cell<T>> GetAdjacentCells((int x, int y) point, bool includeDiagonals = false, IEnumerable<(int dX, int dY)>? exclude = null)
+			=> grid.Cells.GetAdjacentCells<T>(point.x, point.y, includeDiagonals, exclude);
+
+		/// <summary>
+		/// Returns the corner cells adjacent to the specified cell coordinates.
+		/// </summary>
+		/// <param name="x">The x-coordinate of the target cell for which to retrieve adjacent corner cells.</param>
+		/// <param name="y">The y-coordinate of the target cell for which to retrieve adjacent corner cells.</param>
+		/// <param name="exclude">An optional collection of direction offsets to exclude from the result. Each tuple represents a relative direction
+		/// (dX, dY) to omit.</param>
+		/// <returns>An enumerable collection of corner cells adjacent to the specified cell. The collection will be empty if no corner
+		/// cells are found.</returns>
+		public IEnumerable<Cell<T>> GetCornerCells(int x, int y, IEnumerable<(int dX, int dY)>? exclude = null)
+			=> grid.Cells.GetCornerCells<T>(x, y, exclude);
+
+		/// <summary>
+		/// Returns the corner-adjacent cells surrounding the specified point in the grid.
+		/// </summary>
+		/// <param name="point">The coordinates of the cell for which to retrieve corner-adjacent neighbors. The tuple represents the x and y
+		/// position within the grid.</param>
+		/// <param name="exclude">An optional collection of relative corner directions to exclude from the result. Each tuple specifies the x and y
+		/// offset of a corner direction to omit.</param>
+		/// <returns>An enumerable collection of corner-adjacent cells. The collection may be empty if no valid corner neighbors exist
+		/// or all are excluded.</returns>
+		public IEnumerable<Cell<T>> GetCornerCells((int x, int y) point, IEnumerable<(int dX, int dY)>? exclude = null)
+			=> grid.Cells.GetCornerCells<T>(point.x, point.y, exclude);
+	}
+
 	extension<T>(T[,] array) {
 		/// <summary>
 		/// Retrieves the adjacent cells of a specified element in a two-dimensional array.
 		/// </summary>
-		/// <remarks>The method checks bounds to ensure that only valid adjacent cells within the array are returned. 
+		/// <remarks>The method checks bounds to ensure that only valid adjacent cells within the array are returned.
 		/// Use the <paramref name="exclude"/> parameter to filter out specific directions if needed.</remarks>
 		/// <typeparam name="T">The type of elements in the array.</typeparam>
 		/// <param name="array">The two-dimensional array to search for adjacent cells.</param>

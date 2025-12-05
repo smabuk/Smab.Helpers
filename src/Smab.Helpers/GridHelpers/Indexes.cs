@@ -1,6 +1,20 @@
 ﻿namespace Smab.Helpers;
 
 public static partial class ArrayHelpers {
+	extension<T>(Grid<T> grid) {
+		/// <summary>
+		/// Returns an enumerable collection of index pairs representing the coordinates of all cells in the grid.
+		/// </summary>
+		/// <returns>An enumerable sequence of tuples, where each tuple contains the X and Y coordinates of a cell in the grid.</returns>
+		public IEnumerable<(int X, int Y)> Indexes() => grid.Cells.Indexes();
+
+		/// <summary>
+		/// Returns an enumerable collection of column and row index pairs for all cells in the grid.
+		/// </summary>
+		/// <returns>An enumerable sequence of tuples, each containing the column and row indices of a cell in the grid.</returns>
+		public IEnumerable<(int Col, int Row)> IndexesColRow() => grid.Cells.IndexesColRow();
+	}
+
 	extension<T>(T[,] array) {
 		/// <summary>
 		/// Enumerates the indexes of a two-dimensional array as tuples of X and Y coordinates.

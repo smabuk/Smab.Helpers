@@ -108,31 +108,6 @@ public static partial class ArrayHelpers {
 		/// </summary>
 		/// <returns>An enumerable collection of Y values.</returns>
 		public IEnumerable<int> YValues() => grid.RowIndexes();
-
-		/// <summary>
-		/// Enumerates the indexes of the grid as tuples of X and Y coordinates.
-		/// </summary>
-		/// <returns>An enumerable collection of tuples, where each tuple contains the X and Y indices.</returns>
-		public IEnumerable<(int X, int Y)> Indexes() {
-			foreach (int y in grid.RowIndexes()) {
-				foreach (int x in grid.ColIndexes()) {
-					yield return new(x, y);
-				}
-			}
-		}
-
-		/// <summary>
-		/// Enumerates the column and row indexes of the grid.
-		/// </summary>
-		/// <returns>An enumerable collection of tuples, where each tuple contains the column and row indices.</returns>
-		public IEnumerable<(int Col, int Row)> IndexesColRow() {
-			foreach (int row in grid.RowIndexes()) {
-				foreach (int col in grid.ColIndexes()) {
-					yield return new(col, row);
-				}
-			}
-		}
-
 	}
 
 	extension<T>(T[,] array) {
