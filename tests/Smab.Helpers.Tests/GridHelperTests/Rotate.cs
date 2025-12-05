@@ -1,4 +1,5 @@
 ﻿namespace Smab.Helpers.Tests.GridHelperTests;
+
 public class Rotate(ITestOutputHelper testOutputHelper) {
 	[Fact]
 	public void Rotate_String() {

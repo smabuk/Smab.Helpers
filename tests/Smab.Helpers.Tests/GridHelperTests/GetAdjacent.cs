@@ -1,5 +1,6 @@
 ﻿
 namespace Smab.Helpers.Tests.GridHelperTests;
+
 public partial class GetAdjacent {
 
 	[Theory]

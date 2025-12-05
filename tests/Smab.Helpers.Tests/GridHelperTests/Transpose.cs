@@ -1,4 +1,5 @@
 ﻿namespace Smab.Helpers.Tests.GridHelperTests;
+
 public class Transpose {
 	[Fact]
 	public void Transpose_2dArray() {

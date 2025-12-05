@@ -1,4 +1,5 @@
 ﻿namespace Smab.Helpers.Tests.ParsingHelperTests;
+
 public partial class TrimmedSplit {
 	[Fact]
 	public void TrimmedSplit_ShouldBe() {

@@ -2,7 +2,7 @@
 
 public static class OcrHelpers {
 	const char Unlit = '.';
-	const char Lit   = '#';
+	const char Lit = '#';
 	const char BadCharacter = '!';
 
 	const int Alphabet_Normal_Grid_Width = 6;

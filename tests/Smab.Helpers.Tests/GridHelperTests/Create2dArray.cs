@@ -1,4 +1,5 @@
 ﻿namespace Smab.Helpers.Tests.GridHelperTests;
+
 public class Create2dArray {
 	[Fact]
 	public void Create2dArray_ShouldBe() {

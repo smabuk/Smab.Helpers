@@ -1,4 +1,5 @@
 ﻿namespace Smab.Helpers.Tests.DateTimeHelpers;
+
 public class DateTimeHelperTests {
 	[Fact]
 	public void MonthYear_Formats_ShouldBe() {

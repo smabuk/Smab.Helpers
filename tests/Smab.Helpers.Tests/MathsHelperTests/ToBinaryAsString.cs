@@ -1,4 +1,5 @@
 ﻿namespace Smab.Helpers.Tests.MathsHelperTests;
+
 public class ToBinaryAsString {
 	[Theory]
 	[InlineData(0, "0")]

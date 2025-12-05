@@ -1,4 +1,5 @@
 ﻿namespace Smab.Helpers.Tests.ParsingHelperTests;
+
 public class AsPoints {
 
 	[Fact]
@@ -9,8 +10,8 @@ public class AsPoints {
 			"    0,     2",
 			];
 
-		List<Point> points = [..input.AsPoints()];
-		points.ShouldBe([new Point(3,0), new(7, 1), new(0, 2)]);
+		List<Point> points = [.. input.AsPoints()];
+		points.ShouldBe([new Point(3, 0), new(7, 1), new(0, 2)]);
 	}
 
 	[Fact]
@@ -22,11 +23,11 @@ public class AsPoints {
 			..........
 			""";
 
-		List<Point> points = [..input.AsPoints('#')];
-		points.ShouldBe([new Point(3,0), new(7, 1), new(0, 2)]);
+		List<Point> points = [.. input.AsPoints('#')];
+		points.ShouldBe([new Point(3, 0), new(7, 1), new(0, 2)]);
 
-		points = [..input.Split(Environment.NewLine).AsPoints('#')];
-		points.ShouldBe([new Point(3,0), new(7, 1), new(0, 2)]);
+		points = [.. input.Split(Environment.NewLine).AsPoints('#')];
+		points.ShouldBe([new Point(3, 0), new(7, 1), new(0, 2)]);
 	}
 
 }

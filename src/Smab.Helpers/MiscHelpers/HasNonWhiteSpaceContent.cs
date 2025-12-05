@@ -1,4 +1,5 @@
 ﻿namespace Smab.Helpers;
+
 public static partial class StringHelpers {
 	extension([NotNullWhen(true)] string? value) {
 		/// <summary>

@@ -1,4 +1,5 @@
 ﻿namespace Smab.Helpers.Tests.MathsHelperTests;
+
 public class ToBaseAsString {
 	[Theory]
 	[InlineData(0, "0")]

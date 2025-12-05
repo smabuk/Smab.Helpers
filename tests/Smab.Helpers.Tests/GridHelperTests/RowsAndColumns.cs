@@ -1,4 +1,5 @@
 ﻿namespace Smab.Helpers.Tests.GridHelperTests;
+
 public class RowsAndColumns {
 	[Fact]
 	public void ColAsString() {

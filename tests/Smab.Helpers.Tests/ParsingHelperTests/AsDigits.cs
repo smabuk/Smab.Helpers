@@ -1,6 +1,7 @@
 ﻿using Microsoft.VisualBasic;
 
 namespace Smab.Helpers.Tests.ParsingHelperTests;
+
 public class AsDigits {
 	[Fact]
 	public void AsDigits_Tests() {
@@ -10,7 +11,7 @@ public class AsDigits {
 		digits.AsDigits<long>().ShouldBe([0, 4, 5, 6, 7, 8]);
 		digits.AsDigits<double>().ShouldBe([0.0, 4.0, 5.0, 6.0, 7.0, 8.0]);
 
-		digits.AsDigits<char>().ShouldBe(['0','4', '5', '6', '7', '8']);
+		digits.AsDigits<char>().ShouldBe(['0', '4', '5', '6', '7', '8']);
 
 		string[] strings = ["0123434", "5678956", "23499"];
 		strings.AsDigits<int>().ShouldBe(
@@ -30,7 +31,7 @@ public class AsDigits {
 		digits.AsDigitsOrDefaults<long>(-1).ShouldBe([0, 4, 5, 6, 7, 8]);
 		digits.AsDigitsOrDefaults<double>(-1).ShouldBe([0.0, 4.0, 5.0, 6.0, 7.0, 8.0]);
 
-		digits.AsDigitsOrDefaults<char>('!').ShouldBe(['0','4', '5', '6', '7', '8']);
+		digits.AsDigitsOrDefaults<char>('!').ShouldBe(['0', '4', '5', '6', '7', '8']);
 
 		badDigits.AsDigitsOrDefaults<int>(-1).ShouldBe([0, 4, 5, -1, 7, -1]);
 

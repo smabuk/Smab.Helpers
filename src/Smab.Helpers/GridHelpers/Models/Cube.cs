@@ -13,7 +13,7 @@
 [DebuggerDisplay("{DebugDisplay,nq}")]
 public record Cube<T>(Point3d Position, T Value) {
 
-	public Cube( int X, int Y, int Z, T Value)       : this(new Point3d(X, Y, Z), Value) { }
+	public Cube(int X, int Y, int Z, T Value) : this(new Point3d(X, Y, Z), Value) { }
 	public Cube((int X, int Y, int Z, T Value) cube) : this(new Point3d(cube.X, cube.Y, cube.Z), cube.Value) { }
 
 	public int X => Position.X;

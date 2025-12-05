@@ -41,32 +41,32 @@ public record struct Point(int X, int Y) : IParsable<Point>, IComparable<Point> 
 
 	public static implicit operator (int x, int y)(Point point) => (point.X, point.Y);
 
-	public static Point operator +(Point p1, Point p2)          => new(p1.X + p2.X, p1.Y + p2.Y);
+	public static Point operator +(Point p1, Point p2) => new(p1.X + p2.X, p1.Y + p2.Y);
 	public static Point operator +((int X, int Y) p1, Point p2) => new(p1.X + p2.X, p1.Y + p2.Y);
-	public static Point operator +(int lhs, Point p2)           => new(lhs + p2.X, lhs + p2.Y);
-	public static Point operator +(Point p1, int rhs)           => new(rhs + p1.X, rhs + p1.Y);
+	public static Point operator +(int lhs, Point p2) => new(lhs + p2.X, lhs + p2.Y);
+	public static Point operator +(Point p1, int rhs) => new(rhs + p1.X, rhs + p1.Y);
 	public static Point operator +(Point p1, (int X, int Y) p2) => new(p1.X + p2.X, p1.Y + p2.Y);
 
-	public static Point operator -(Point p1, Point p2)          => new(p1.X - p2.X, p1.Y - p2.Y);
+	public static Point operator -(Point p1, Point p2) => new(p1.X - p2.X, p1.Y - p2.Y);
 	public static Point operator -(Point p1, (int X, int Y) p2) => new(p1.X - p2.X, p1.Y - p2.Y);
-	public static Point operator -(Point p1, int rhs)           => new(p1.X - rhs, p1.Y - rhs);
+	public static Point operator -(Point p1, int rhs) => new(p1.X - rhs, p1.Y - rhs);
 	public static Point operator -((int X, int Y) p1, Point p2) => new(p1.X - p2.X, p1.Y - p2.Y);
-	public static Point operator -(Point p1)                    => Zero - p1;
+	public static Point operator -(Point p1) => Zero - p1;
 
-	public static Point operator *(Point p1, Point p2)          => new(p1.X * p2.X, p1.Y * p2.Y);
+	public static Point operator *(Point p1, Point p2) => new(p1.X * p2.X, p1.Y * p2.Y);
 	public static Point operator *(Point p1, (int X, int Y) p2) => new(p1.X * p2.X, p1.Y * p2.Y);
 	public static Point operator *((int X, int Y) p1, Point p2) => new(p1.X * p2.X, p1.Y * p2.Y);
 	public static Point operator *(in Point lhs, int rhs) => new(lhs.X * rhs, lhs.Y * rhs);
 	public static Point operator *(int lhs, in Point rhs) => new(rhs.X * lhs, rhs.Y * lhs);
 
-	public static Point operator %(Point p1, Point p2)          => new(p1.X % p2.X, p1.Y % p2.Y);
+	public static Point operator %(Point p1, Point p2) => new(p1.X % p2.X, p1.Y % p2.Y);
 	public static Point operator %(Point p1, (int X, int Y) p2) => new(p1.X % p2.X, p1.Y % p2.Y);
-	public static Point operator %(Point p1, int rhs)           => new(p1.X % rhs, p1.Y % rhs);
+	public static Point operator %(Point p1, int rhs) => new(p1.X % rhs, p1.Y % rhs);
 	public static Point operator %((int X, int Y) p1, Point p2) => new(p1.X % p2.X, p1.Y % p2.Y);
 
 
-	public static bool operator  <(Point point1, Point point2) => point1.CompareTo(point2)  < 0;
-	public static bool operator  >(Point point1, Point point2) => point1.CompareTo(point2)  > 0;
+	public static bool operator <(Point point1, Point point2) => point1.CompareTo(point2) < 0;
+	public static bool operator >(Point point1, Point point2) => point1.CompareTo(point2) > 0;
 	public static bool operator <=(Point point1, Point point2) => point1.CompareTo(point2) <= 0;
 	public static bool operator >=(Point point1, Point point2) => point1.CompareTo(point2) >= 0;
 

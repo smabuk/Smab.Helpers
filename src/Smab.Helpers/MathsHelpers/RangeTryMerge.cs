@@ -22,7 +22,7 @@ public static partial class MathsHelpers {
 			T range2Lower = T.Min(range2.Start, range2.End);
 			T range2Upper = T.Max(range2.Start, range2.End);
 			if (range.TryGetOverlap(range2, out (T Start, T End) _) || rangeUpper + T.One == range2Lower || range2Upper + T.One == rangeLower) {
-				mergedRange = new (T.Min(rangeLower, range2Lower), T.Max(rangeUpper, range2Upper));
+				mergedRange = new(T.Min(rangeLower, range2Lower), T.Max(rangeUpper, range2Upper));
 				return true;
 			} else {
 				return false;
@@ -44,8 +44,8 @@ public static partial class MathsHelpers {
 		/// langword="false"/>.</returns>
 		public bool TryMerge(Range range2, [NotNullWhen(true)] out Range mergedRange) {
 			mergedRange = default!;
-			int rangeLower  = int.Min(range.Start.Value, range.End.Value);
-			int rangeUpper  = int.Max(range.Start.Value, range.End.Value);
+			int rangeLower = int.Min(range.Start.Value, range.End.Value);
+			int rangeUpper = int.Max(range.Start.Value, range.End.Value);
 			int range2Lower = int.Min(range2.Start.Value, range2.End.Value);
 			int range2Upper = int.Max(range2.Start.Value, range2.End.Value);
 			if (range.TryGetOverlap(range2, out Range _) || rangeUpper + 1 == range2Lower || range2Upper + 1 == rangeLower) {

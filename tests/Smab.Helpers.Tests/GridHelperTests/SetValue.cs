@@ -82,7 +82,7 @@ public class SetValue(ITestOutputHelper testOutputHelper) {
 	[Fact]
 	public void SetValue_WithReferenceType_ShouldStoreReference() {
 		// Arrange
-		List<int>[,] grid = new List<int>[2,2];
+		List<int>[,] grid = new List<int>[2, 2];
 		List<int> expected = [1, 2, 3];
 
 		// Act

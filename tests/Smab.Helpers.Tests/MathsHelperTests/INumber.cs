@@ -1,4 +1,5 @@
 ﻿namespace Smab.Helpers.Tests.MathsHelperTests;
+
 public class INumber {
 	[Theory]
 	[InlineData(1, false)]

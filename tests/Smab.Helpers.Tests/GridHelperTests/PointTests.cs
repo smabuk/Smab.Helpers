@@ -30,10 +30,10 @@ public class PointTests {
 	}
 
 	[Theory]
-	[InlineData(0, 0,   0,  0, false)]
-	[InlineData(0, 0,   1,  1, false)]
-	[InlineData(1, 0,   0,  0, true)]
-	[InlineData(8, 9,  12,  4, true)]
+	[InlineData(0, 0, 0, 0, false)]
+	[InlineData(0, 0, 1, 1, false)]
+	[InlineData(1, 0, 0, 0, true)]
+	[InlineData(8, 9, 12, 4, true)]
 	[InlineData(8, 9, -12, -4, true)]
 	public void PointComparison_P1_GT_P2(int p1x, int p1y, int p2x, int p2y, bool expected) {
 		Point p1 = new(p1x, p1y);
@@ -44,10 +44,10 @@ public class PointTests {
 	}
 
 	[Theory]
-	[InlineData(0, 0,   0,  0, false)]
-	[InlineData(0, 0,   1,  1, true)]
-	[InlineData(1, 0,   0,  0, false)]
-	[InlineData(8, 9,  12,  4, false)]
+	[InlineData(0, 0, 0, 0, false)]
+	[InlineData(0, 0, 1, 1, true)]
+	[InlineData(1, 0, 0, 0, false)]
+	[InlineData(8, 9, 12, 4, false)]
 	[InlineData(8, 9, -12, -4, false)]
 	public void PointComparison_P2_LT_P1(int p1x, int p1y, int p2x, int p2y, bool expected) {
 		Point p1 = new(p1x, p1y);
@@ -58,10 +58,10 @@ public class PointTests {
 	}
 
 	[Theory]
-	[InlineData(0, 0,   0,  0, true)]
-	[InlineData(0, 0,   1,  1, false)]
-	[InlineData(1, 0,   0,  0, true)]
-	[InlineData(8, 9,  12,  4, true)]
+	[InlineData(0, 0, 0, 0, true)]
+	[InlineData(0, 0, 1, 1, false)]
+	[InlineData(1, 0, 0, 0, true)]
+	[InlineData(8, 9, 12, 4, true)]
 	[InlineData(8, 9, -12, -4, true)]
 	public void PointComparison_P1_GTE_P2(int p1x, int p1y, int p2x, int p2y, bool expected) {
 		Point p1 = new(p1x, p1y);
@@ -155,8 +155,8 @@ public class PointTests {
 
 	[Fact]
 	public void Point_Constants() {
-		(Point.Zero  is (0, 0)).ShouldBeTrue();
-		(Point.One   is (1, 1)).ShouldBeTrue();
+		(Point.Zero is (0, 0)).ShouldBeTrue();
+		(Point.One is (1, 1)).ShouldBeTrue();
 		(Point.UnitX is (1, 0)).ShouldBeTrue();
 		(Point.UnitY is (0, 1)).ShouldBeTrue();
 		Point point = new(Point.One);

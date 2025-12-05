@@ -1,6 +1,7 @@
 ﻿using System.Runtime.InteropServices;
 
 namespace Smab.Helpers;
+
 public static partial class ArrayHelpers {
 	extension<T>(Grid<T> grid) {
 		/// <summary>

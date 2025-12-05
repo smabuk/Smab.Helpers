@@ -7,7 +7,7 @@ namespace Smab.Helpers;
 /// <param name="Value"></param>
 /// <exception cref="ArgumentNullException"></exception>
 public readonly record struct NonEmptyString(string Value) : IParsable<NonEmptyString> {
-	public string Value { get; init; } = 
+	public string Value { get; init; } =
 		!string.IsNullOrWhiteSpace(Value)
 		? Value.Trim()
 		: throw new ArgumentNullException("Value cannot be null or white space", nameof(Value));

@@ -1,4 +1,5 @@
 ﻿namespace Smab.Helpers.Tests.ParsingHelperTests;
+
 public partial class FromBinaryAs {
 	[Theory]
 	[InlineData("#", 1)]

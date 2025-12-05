@@ -1,6 +1,7 @@
 ﻿using System.Numerics;
 
 namespace Smab.Helpers;
+
 public static partial class ParsingHelpers {
 
 	extension(IEnumerable<string> s) {

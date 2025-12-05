@@ -2,7 +2,7 @@
 
 public class StripTrailingBlankLineOrDefault {
 	[Theory]
-	[InlineData(new string[] { "Line 1", "" },       new string[] { "Line 1" })]
+	[InlineData(new string[] { "Line 1", "" }, new string[] { "Line 1" })]
 	[InlineData(new string[] { "Line 1", "Line 2" }, new string[] { "Line 1", "Line 2" })]
 	[InlineData(null, new string[0])]
 	public void Should_StripTrailingBlankLine_IfLineIsEmpty(string[]? input, string[] expected) {
@@ -12,10 +12,10 @@ public class StripTrailingBlankLineOrDefault {
 
 	[Fact]
 	public void Should_ReturnDefault_IfLineIsEmpty() {
-		string? input = null; 
+		string? input = null;
 		input.StripTrailingBlankLineOrDefault("empty").ShouldBe("empty");
 
-		string[]? inputArray = null; 
+		string[]? inputArray = null;
 		inputArray.StripTrailingBlankLineOrDefault(["empty"]).ShouldBe(["empty"]);
 	}
 }

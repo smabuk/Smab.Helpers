@@ -1,4 +1,5 @@
 ﻿namespace Smab.Helpers.Tests.MathsHelperTests;
+
 public class MinMax {
 	[Theory]
 	[InlineData((int[])[2, 3], 2, 3)]

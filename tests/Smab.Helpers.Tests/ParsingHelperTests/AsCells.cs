@@ -1,4 +1,5 @@
 ﻿namespace Smab.Helpers.Tests.ParsingHelperTests;
+
 public class AsCells {
 
 	[Fact]

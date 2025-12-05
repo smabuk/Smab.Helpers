@@ -1,6 +1,7 @@
 ﻿using System.Numerics;
 
 namespace Smab.Helpers;
+
 public static partial class MathsHelpers {
 	extension<T>(T number1) where T : INumber<T> {
 		/// <summary>

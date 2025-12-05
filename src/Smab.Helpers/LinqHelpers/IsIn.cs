@@ -1,4 +1,5 @@
 ﻿namespace Smab.Helpers;
+
 public static partial class LinqHelpers {
 	extension<T>(T value) {
 		/// <summary>

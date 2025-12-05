@@ -2,6 +2,7 @@
 using System.Runtime.CompilerServices;
 
 namespace Smab.Helpers;
+
 public static partial class ParsingHelpers {
 	private static readonly char[] DefaultSeparators = [',', '|', ' ', ':', ';', '~', '(', ')', '{', '}', '[', ']'];
 

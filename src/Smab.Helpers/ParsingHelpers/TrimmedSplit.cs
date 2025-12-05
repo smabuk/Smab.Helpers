@@ -1,6 +1,7 @@
 ﻿using System.Runtime.CompilerServices;
 
 namespace Smab.Helpers;
+
 public static partial class ParsingHelpers {
 	private const StringSplitOptions RemoveEmptyAndTrim = StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries;
 	private static readonly string[] WHITESPACE_SEPARATORS = [" ", "\t"];

@@ -1,4 +1,5 @@
 ﻿namespace Smab.Helpers;
+
 public static partial class MathsHelpers {
 	extension(IEnumerable<Point> points) {
 		/// <summary>

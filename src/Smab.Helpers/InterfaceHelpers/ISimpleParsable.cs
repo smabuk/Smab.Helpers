@@ -1,5 +1,6 @@
 ﻿namespace Smab.Helpers;
-public interface ISimpleParsable<TSelf> : IParsable<TSelf> where TSelf: IParsable<TSelf> {
+
+public interface ISimpleParsable<TSelf> : IParsable<TSelf> where TSelf : IParsable<TSelf> {
 
 	/// <summary>
 	/// Converts the string representation of a value to its <typeparamref name="TSelf"/> equivalent.

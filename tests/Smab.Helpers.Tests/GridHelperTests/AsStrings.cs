@@ -1,4 +1,5 @@
 ﻿namespace Smab.Helpers.Tests.GridHelperTests;
+
 public class AsStrings {
 
 	[Theory]
@@ -9,7 +10,7 @@ public class AsStrings {
 		, 2, 3
 		, "12")]
 	public void AsStrings_Int_Should_Have_Shape(int[] input, int cols, int? rows, string expected) {
-		string[] actual = [..input.To2dArray(cols, rows).AsStrings()];
+		string[] actual = [.. input.To2dArray(cols, rows).AsStrings()];
 		Assert.Equal(expected, actual[0]);
 	}
 

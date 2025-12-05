@@ -1,9 +1,7 @@
 ﻿namespace Smab.Helpers.Tests.IoHelperTests;
 
-public class Utf16CharsTests
-{
-	public class BlockElementsTests
-	{
+public class Utf16CharsTests {
+	public class BlockElementsTests {
 		[Theory]
 		[InlineData('\u2580', "UPPER_HALF_BLOCK")]
 		[InlineData('\u2581', "LOWER_ONE_EIGHTH_BLOCK")]
@@ -15,10 +13,8 @@ public class Utf16CharsTests
 		[InlineData('\u2591', "LIGHT_SHADE")]
 		[InlineData('\u2592', "MEDIUM_SHADE")]
 		[InlineData('\u2593', "DARK_SHADE")]
-		public void BlockElements_Constants_Should_HaveCorrectValues(char expected, string description)
-		{
-			char actual = description switch
-			{
+		public void BlockElements_Constants_Should_HaveCorrectValues(char expected, string description) {
+			char actual = description switch {
 				"UPPER_HALF_BLOCK" => Utf16Chars.BlockElements.UPPER_HALF_BLOCK,
 				"LOWER_ONE_EIGHTH_BLOCK" => Utf16Chars.BlockElements.LOWER_ONE_EIGHTH_BLOCK,
 				"LOWER_ONE_QUARTER_BLOCK" => Utf16Chars.BlockElements.LOWER_ONE_QUARTER_BLOCK,
@@ -36,23 +32,20 @@ public class Utf16CharsTests
 		}
 
 		[Fact]
-		public void BlockElements_FULL_BLOCK_Should_BeU2588()
-		{
+		public void BlockElements_FULL_BLOCK_Should_BeU2588() {
 			Utf16Chars.BlockElements.FULL_BLOCK.ShouldBe('\u2588');
 			((int)Utf16Chars.BlockElements.FULL_BLOCK).ShouldBe(0x2588);
 		}
 
 		[Fact]
-		public void BlockElements_Shades_Should_HaveDifferentValues()
-		{
+		public void BlockElements_Shades_Should_HaveDifferentValues() {
 			Utf16Chars.BlockElements.LIGHT_SHADE.ShouldNotBe(Utf16Chars.BlockElements.MEDIUM_SHADE);
 			Utf16Chars.BlockElements.MEDIUM_SHADE.ShouldNotBe(Utf16Chars.BlockElements.DARK_SHADE);
 			Utf16Chars.BlockElements.LIGHT_SHADE.ShouldNotBe(Utf16Chars.BlockElements.DARK_SHADE);
 		}
 	}
 
-	public class BoxDrawingTests
-	{
+	public class BoxDrawingTests {
 		[Theory]
 		[InlineData('\u2500', "LIGHT_HORIZONTAL")]
 		[InlineData('\u2501', "HEAVY_HORIZONTAL")]
@@ -69,10 +62,8 @@ public class Utf16CharsTests
 		[InlineData('\u253C', "LIGHT_VERTICAL_AND_HORIZONTAL")]
 		[InlineData('\u2550', "DOUBLE_HORIZONTAL")]
 		[InlineData('\u2551', "DOUBLE_VERTICAL")]
-		public void BoxDrawing_Constants_Should_HaveCorrectValues(char expected, string constantName)
-		{
-			char actual = constantName switch
-			{
+		public void BoxDrawing_Constants_Should_HaveCorrectValues(char expected, string constantName) {
+			char actual = constantName switch {
 				"LIGHT_HORIZONTAL" => Utf16Chars.BoxDrawing.LIGHT_HORIZONTAL,
 				"HEAVY_HORIZONTAL" => Utf16Chars.BoxDrawing.HEAVY_HORIZONTAL,
 				"LIGHT_VERTICAL" => Utf16Chars.BoxDrawing.LIGHT_VERTICAL,
@@ -95,8 +86,7 @@ public class Utf16CharsTests
 		}
 
 		[Fact]
-		public void BoxDrawing_Aliases_Should_MatchFullNames()
-		{
+		public void BoxDrawing_Aliases_Should_MatchFullNames() {
 			Utf16Chars.BoxDrawing.LIGHT_HORIZONTAL.ShouldBe(Utf16Chars.BoxDrawing.BOX_DRAWINGS_LIGHT_HORIZONTAL);
 			Utf16Chars.BoxDrawing.LIGHT_VERTICAL.ShouldBe(Utf16Chars.BoxDrawing.BOX_DRAWINGS_LIGHT_VERTICAL);
 			Utf16Chars.BoxDrawing.DOUBLE_HORIZONTAL.ShouldBe(Utf16Chars.BoxDrawing.BOX_DRAWINGS_DOUBLE_HORIZONTAL);
@@ -104,8 +94,7 @@ public class Utf16CharsTests
 		}
 
 		[Fact]
-		public void BoxDrawing_ArcCharacters_Should_HaveCorrectValues()
-		{
+		public void BoxDrawing_ArcCharacters_Should_HaveCorrectValues() {
 			Utf16Chars.BoxDrawing.LIGHT_ARC_DOWN_AND_RIGHT.ShouldBe('\u256D');
 			Utf16Chars.BoxDrawing.LIGHT_ARC_DOWN_AND_LEFT.ShouldBe('\u256E');
 			Utf16Chars.BoxDrawing.LIGHT_ARC_UP_AND_LEFT.ShouldBe('\u256F');
@@ -113,8 +102,7 @@ public class Utf16CharsTests
 		}
 	}
 
-	public class BrailleTests
-	{
+	public class BrailleTests {
 		[Theory]
 		[InlineData('\u2800', "BLANK")]
 		[InlineData('\u2801', "DOTS_1")]
@@ -125,10 +113,8 @@ public class Utf16CharsTests
 		[InlineData('\u282F', "DOTS_12346")]
 		[InlineData('\u283F', "DOTS_123456")]
 		[InlineData('\u28FF', "DOTS_12345678")]
-		public void Braille_Constants_Should_HaveCorrectValues(char expected, string pattern)
-		{
-			char actual = pattern switch
-			{
+		public void Braille_Constants_Should_HaveCorrectValues(char expected, string pattern) {
+			char actual = pattern switch {
 				"BLANK" => Utf16Chars.Braille.BRAILLE_PATTERN_BLANK,
 				"DOTS_1" => Utf16Chars.Braille.BRAILLE_PATTERN_DOTS_1,
 				"DOTS_12" => Utf16Chars.Braille.BRAILLE_PATTERN_DOTS_12,
@@ -145,22 +131,19 @@ public class Utf16CharsTests
 		}
 
 		[Fact]
-		public void Braille_BLANK_Should_BeU2800()
-		{
+		public void Braille_BLANK_Should_BeU2800() {
 			Utf16Chars.Braille.BRAILLE_PATTERN_BLANK.ShouldBe('\u2800');
 			((int)Utf16Chars.Braille.BRAILLE_PATTERN_BLANK).ShouldBe(0x2800);
 		}
 
 		[Fact]
-		public void Braille_FullPattern_Should_BeU28FF()
-		{
+		public void Braille_FullPattern_Should_BeU28FF() {
 			Utf16Chars.Braille.BRAILLE_PATTERN_DOTS_12345678.ShouldBe('\u28FF');
 			((int)Utf16Chars.Braille.BRAILLE_PATTERN_DOTS_12345678).ShouldBe(0x28FF);
 		}
 	}
 
-	public class GeometricShapesTests
-	{
+	public class GeometricShapesTests {
 		[Theory]
 		[InlineData('\u25A0', "BLACK_SQUARE")]
 		[InlineData('\u25A1', "WHITE_SQUARE")]
@@ -173,10 +156,8 @@ public class Utf16CharsTests
 		[InlineData('\u25C0', "BLACK_LEFT_POINTING_TRIANGLE")]
 		[InlineData('\u25C6', "BLACK_DIAMOND")]
 		[InlineData('\u25C7', "WHITE_DIAMOND")]
-		public void GeometricShapes_Constants_Should_HaveCorrectValues(char expected, string shapeName)
-		{
-			char actual = shapeName switch
-			{
+		public void GeometricShapes_Constants_Should_HaveCorrectValues(char expected, string shapeName) {
+			char actual = shapeName switch {
 				"BLACK_SQUARE" => Utf16Chars.GeometricShapes.BLACK_SQUARE,
 				"WHITE_SQUARE" => Utf16Chars.GeometricShapes.WHITE_SQUARE,
 				"BLACK_CIRCLE" => Utf16Chars.GeometricShapes.BLACK_CIRCLE,
@@ -195,16 +176,14 @@ public class Utf16CharsTests
 		}
 
 		[Fact]
-		public void GeometricShapes_BlackAndWhite_Should_HaveDifferentValues()
-		{
+		public void GeometricShapes_BlackAndWhite_Should_HaveDifferentValues() {
 			Utf16Chars.GeometricShapes.BLACK_SQUARE.ShouldNotBe(Utf16Chars.GeometricShapes.WHITE_SQUARE);
 			Utf16Chars.GeometricShapes.BLACK_CIRCLE.ShouldNotBe(Utf16Chars.GeometricShapes.WHITE_CIRCLE);
 			Utf16Chars.GeometricShapes.BLACK_DIAMOND.ShouldNotBe(Utf16Chars.GeometricShapes.WHITE_DIAMOND);
 		}
 
 		[Fact]
-		public void GeometricShapes_Triangles_Should_PointInDifferentDirections()
-		{
+		public void GeometricShapes_Triangles_Should_PointInDifferentDirections() {
 			char up = Utf16Chars.GeometricShapes.BLACK_UP_POINTING_TRIANGLE;
 			char right = Utf16Chars.GeometricShapes.BLACK_RIGHT_POINTING_TRIANGLE;
 			char down = Utf16Chars.GeometricShapes.BLACK_DOWN_POINTING_TRIANGLE;
@@ -217,18 +196,15 @@ public class Utf16CharsTests
 		}
 	}
 
-	public class CharacterEncodingTests
-	{
+	public class CharacterEncodingTests {
 		[Theory]
 		[InlineData("BlockElements.FULL_BLOCK", 0x2580, 0x259F)]
 		[InlineData("BoxDrawing.LIGHT_HORIZONTAL", 0x2500, 0x257F)]
 		[InlineData("Braille.BRAILLE_PATTERN_BLANK", 0x2800, 0x28FF)]
 		[InlineData("GeometricShapes.BLACK_SQUARE", 0x25A0, 0x25FF)]
-		public void Utf16Chars_Should_BeInValidUnicodeRanges(string category, int rangeStart, int rangeEnd)
-		{
+		public void Utf16Chars_Should_BeInValidUnicodeRanges(string category, int rangeStart, int rangeEnd) {
 			// Test a sample character from each category is within expected Unicode block range
-			int charValue = category switch
-			{
+			int charValue = category switch {
 				"BlockElements.FULL_BLOCK" => Utf16Chars.BlockElements.FULL_BLOCK,
 				"BoxDrawing.LIGHT_HORIZONTAL" => Utf16Chars.BoxDrawing.LIGHT_HORIZONTAL,
 				"Braille.BRAILLE_PATTERN_BLANK" => Utf16Chars.Braille.BRAILLE_PATTERN_BLANK,
@@ -241,8 +217,7 @@ public class Utf16CharsTests
 		}
 
 		[Fact]
-		public void Utf16Chars_Constants_Should_BeValidCharacters()
-		{
+		public void Utf16Chars_Constants_Should_BeValidCharacters() {
 			// Sample characters should not be control characters
 			char.IsControl(Utf16Chars.BlockElements.FULL_BLOCK).ShouldBeFalse();
 			char.IsControl(Utf16Chars.BoxDrawing.LIGHT_HORIZONTAL).ShouldBeFalse();
@@ -250,8 +225,7 @@ public class Utf16CharsTests
 		}
 
 		[Fact]
-		public void Utf16Chars_Constants_Should_HaveUnicodeCategory_OtherSymbol()
-		{
+		public void Utf16Chars_Constants_Should_HaveUnicodeCategory_OtherSymbol() {
 			// Most of these characters should be in the Symbol category
 			char.GetUnicodeCategory(Utf16Chars.BlockElements.FULL_BLOCK).ShouldBe(System.Globalization.UnicodeCategory.OtherSymbol);
 			char.GetUnicodeCategory(Utf16Chars.BoxDrawing.LIGHT_HORIZONTAL).ShouldBe(System.Globalization.UnicodeCategory.OtherSymbol);
@@ -259,18 +233,16 @@ public class Utf16CharsTests
 		}
 	}
 
-	public class UsageExamplesTests
-	{
+	public class UsageExamplesTests {
 		[Fact]
-		public void BoxDrawing_CanCreateSimpleBox()
-		{
+		public void BoxDrawing_CanCreateSimpleBox() {
 			string box = $"{Utf16Chars.BoxDrawing.LIGHT_DOWN_AND_RIGHT}" +
-			             $"{Utf16Chars.BoxDrawing.LIGHT_HORIZONTAL}" +
-			             $"{Utf16Chars.BoxDrawing.LIGHT_DOWN_AND_LEFT}\n" +
-			             $"{Utf16Chars.BoxDrawing.LIGHT_VERTICAL} {Utf16Chars.BoxDrawing.LIGHT_VERTICAL}\n" +
-			             $"{Utf16Chars.BoxDrawing.LIGHT_UP_AND_RIGHT}" +
-			             $"{Utf16Chars.BoxDrawing.LIGHT_HORIZONTAL}" +
-			             $"{Utf16Chars.BoxDrawing.LIGHT_UP_AND_LEFT}";
+						 $"{Utf16Chars.BoxDrawing.LIGHT_HORIZONTAL}" +
+						 $"{Utf16Chars.BoxDrawing.LIGHT_DOWN_AND_LEFT}\n" +
+						 $"{Utf16Chars.BoxDrawing.LIGHT_VERTICAL} {Utf16Chars.BoxDrawing.LIGHT_VERTICAL}\n" +
+						 $"{Utf16Chars.BoxDrawing.LIGHT_UP_AND_RIGHT}" +
+						 $"{Utf16Chars.BoxDrawing.LIGHT_HORIZONTAL}" +
+						 $"{Utf16Chars.BoxDrawing.LIGHT_UP_AND_LEFT}";
 
 			box.ShouldContain("\u250C\u2500\u2510"); // ┌─┐
 			box.ShouldContain("\u2502 \u2502");      // │ │
@@ -278,20 +250,18 @@ public class Utf16CharsTests
 		}
 
 		[Fact]
-		public void BlockElements_CanCreateProgressBar()
-		{
+		public void BlockElements_CanCreateProgressBar() {
 			string progressBar = new string(Utf16Chars.BlockElements.FULL_BLOCK, 5) +
-			                     new string(Utf16Chars.BlockElements.LIGHT_SHADE, 5);
+								 new string(Utf16Chars.BlockElements.LIGHT_SHADE, 5);
 
 			progressBar.ShouldBe("\u2588\u2588\u2588\u2588\u2588\u2591\u2591\u2591\u2591\u2591"); // █████░░░░░
 			progressBar.Length.ShouldBe(10);
 		}
 
 		[Fact]
-		public void GeometricShapes_CanBeUsedAsMarkers()
-		{
+		public void GeometricShapes_CanBeUsedAsMarkers() {
 			string checklist = $"{Utf16Chars.GeometricShapes.BLACK_SQUARE} Completed\n" +
-			                   $"{Utf16Chars.GeometricShapes.WHITE_SQUARE} Pending";
+							   $"{Utf16Chars.GeometricShapes.WHITE_SQUARE} Pending";
 
 			checklist.ShouldContain("\u25A0 Completed"); // ■ Completed
 			checklist.ShouldContain("\u25A1 Pending");   // □ Pending

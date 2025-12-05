@@ -1,6 +1,7 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 
 namespace Smab.Helpers.Tests.ParsingHelperTests;
+
 public partial class As {
 	[Theory]
 	[InlineData('1', 1)]

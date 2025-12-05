@@ -1,4 +1,5 @@
 ﻿namespace Smab.Helpers.Tests.AlgorithmHelperTests;
+
 public partial class AlgorithmHelperTests {
 	[Theory]
 	[InlineData(1, 2, 3, 4, 4)]

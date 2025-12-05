@@ -1,4 +1,5 @@
 ﻿namespace Smab.Helpers.Tests.GridHelperTests;
+
 public class ForEach {
 	[Fact]
 	public void ForEach_2dArray_Should_Travel_Across_Then_Down() {

@@ -1,6 +1,7 @@
 ﻿using System.Numerics;
 
 namespace Smab.Helpers;
+
 public static partial class AlgorithmicHelpers {
 
 	extension<T>((T X, T Y) point1) where T : INumber<T> {

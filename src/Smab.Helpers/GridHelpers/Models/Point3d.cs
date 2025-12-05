@@ -43,19 +43,19 @@ public record struct Point3d(int X, int Y, int Z) : IParsable<Point3d> {
 
 	public static implicit operator (int x, int y, int z)(Point3d point) => (point.X, point.Y, point.Z);
 
-	public static Point3d operator +(in Point3d lhs, in Point3d rhs)               => new(lhs.X + rhs.X, lhs.Y + rhs.Y, lhs.Z + rhs.Z);
+	public static Point3d operator +(in Point3d lhs, in Point3d rhs) => new(lhs.X + rhs.X, lhs.Y + rhs.Y, lhs.Z + rhs.Z);
 	public static Point3d operator +(in Point3d lhs, in (int X, int Y, int Z) rhs) => new(lhs.X + rhs.X, lhs.Y + rhs.Y, lhs.Z + rhs.Z);
 	public static Point3d operator +(in (int X, int Y, int Z) lhs, in Point3d rhs) => new(lhs.X + rhs.X, lhs.Y + rhs.Y, lhs.Z + rhs.Z);
 
-	public static Point3d operator -(in Point3d lhs, in Point3d rhs)               => new(lhs.X - rhs.X, lhs.Y - rhs.Y, lhs.Z - rhs.Z);
+	public static Point3d operator -(in Point3d lhs, in Point3d rhs) => new(lhs.X - rhs.X, lhs.Y - rhs.Y, lhs.Z - rhs.Z);
 	public static Point3d operator -(in Point3d lhs, in (int X, int Y, int Z) rhs) => new(lhs.X - rhs.X, lhs.Y - rhs.Y, lhs.Z - rhs.Z);
 	public static Point3d operator -(in (int X, int Y, int Z) lhs, in Point3d rhs) => new(lhs.X - rhs.X, lhs.Y - rhs.Y, lhs.Z - rhs.Z);
-	public static Point3d operator -(in Point3d value)                             => new(-value.X, -value.Y, -value.Z);
+	public static Point3d operator -(in Point3d value) => new(-value.X, -value.Y, -value.Z);
 
 	public static Point3d operator *(in Point3d lhs, in Point3d rhs) => new(lhs.X * rhs.X, lhs.Y * rhs.Y, lhs.Z * rhs.Z);
 
-	public static Point3d operator *(in Point3d lhs, int rhs)        => new(lhs.X * rhs, lhs.Y * rhs, lhs.Z * rhs);
-	public static Point3d operator *(int lhs, in Point3d rhs)        => new(rhs.X * lhs, rhs.Y * lhs, rhs.Z * lhs);
+	public static Point3d operator *(in Point3d lhs, int rhs) => new(lhs.X * rhs, lhs.Y * rhs, lhs.Z * rhs);
+	public static Point3d operator *(int lhs, in Point3d rhs) => new(rhs.X * lhs, rhs.Y * lhs, rhs.Z * lhs);
 
 
 	public readonly void Deconstruct(out int x, out int y, out int z) {
@@ -64,20 +64,20 @@ public record struct Point3d(int X, int Y, int Z) : IParsable<Point3d> {
 		z = Z;
 	}
 
-	public Point3d East(int distance = 1)  => this with { X = X + distance };
-	public Point3d West(int distance = 1)  => this with { X = X - distance };
+	public Point3d East(int distance = 1) => this with { X = X + distance };
+	public Point3d West(int distance = 1) => this with { X = X - distance };
 	public Point3d North(int distance = 1) => this with { Y = Y - distance };
 	public Point3d South(int distance = 1) => this with { Y = Y + distance };
 	public Point3d Front(int distance = 1) => this with { Z = Z - distance };
-	public Point3d Back(int distance = 1)  => this with { Z = Z + distance };
+	public Point3d Back(int distance = 1) => this with { Z = Z + distance };
 	public Point3d Right(int distance = 1) => this with { X = X + distance };
-	public Point3d Left(int distance = 1)  => this with { X = X - distance };
-	public Point3d Up(int distance = 1)    => this with { Y = Y - distance };
-	public Point3d Down(int distance = 1)  => this with { Y = Y + distance };
+	public Point3d Left(int distance = 1) => this with { X = X - distance };
+	public Point3d Up(int distance = 1) => this with { Y = Y - distance };
+	public Point3d Down(int distance = 1) => this with { Y = Y + distance };
 
 	public IEnumerable<Point3d> Adjacent() {
 		Point3d p = this;
-		return CARDINAL_DIRECTIONS.Select(d => p with { X = p.X + d.dX, Y = p.Y + d.dY, Z = p.Z + d.dZ});
+		return CARDINAL_DIRECTIONS.Select(d => p with { X = p.X + d.dX, Y = p.Y + d.dY, Z = p.Z + d.dZ });
 	}
 
 	public IEnumerable<Point3d> AllAdjacent() {
@@ -85,8 +85,7 @@ public record struct Point3d(int X, int Y, int Z) : IParsable<Point3d> {
 		for (int z = -1; z <= 1; z++) {
 			for (int y = -1; y <= 1; y++) {
 				for (int x = -1; x <= 1; x++) {
-					if (x == 0 && y == 0 && z == 0)
-					{
+					if (x == 0 && y == 0 && z == 0) {
 						continue;
 					}
 					yield return p with { X = p.X + x, Y = p.Y + y, Z = p.Z + z };

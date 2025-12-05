@@ -1,4 +1,5 @@
 ﻿namespace Smab.Helpers.Tests.MathsHelperTests;
+
 public class Length {
 	[Theory]
 	[InlineData(0, 1)]

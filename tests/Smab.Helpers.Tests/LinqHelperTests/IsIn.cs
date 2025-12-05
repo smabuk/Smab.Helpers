@@ -1,6 +1,7 @@
 ﻿namespace Smab.Helpers.Tests.LinqHelperTests;
+
 public class IsIn {
-	private static readonly IEnumerable<int>    ints    = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
+	private static readonly IEnumerable<int> ints = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
 	private static readonly IEnumerable<double> doubles = [1.0, 2.0, 3.0, 4.0];
 
 	[Theory]

@@ -1,6 +1,7 @@
 ﻿using System.Text.RegularExpressions;
 
 namespace Smab.Helpers.Tests.ParsingHelperTests;
+
 public partial class As {
 
 	[GeneratedRegex(@"(?<number1>\d+), (?<number2>\d+), (?<number3>\d+)")]

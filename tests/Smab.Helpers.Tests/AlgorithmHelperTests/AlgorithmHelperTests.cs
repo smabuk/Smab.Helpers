@@ -1,10 +1,11 @@
 ﻿namespace Smab.Helpers.Tests.AlgorithmHelperTests;
+
 public partial class AlgorithmHelperTests(ITestOutputHelper testOutputHelper) {
 	[Theory]
-	[InlineData((int[])[2, 3],    0, 1)]
-	[InlineData((int[])[2, 3],    1, 2)]
+	[InlineData((int[])[2, 3], 0, 1)]
+	[InlineData((int[])[2, 3], 1, 2)]
 	[InlineData((int[])[2, 3, 4], 1, 3)]
-	[InlineData((int[])[2, 3],    2, 1)]
+	[InlineData((int[])[2, 3], 2, 1)]
 	[InlineData((int[])[2, 3, 4], 2, 3)]
 	[InlineData((int[])[2, 3, 4, 5, 6, 7, 8], 3, 35)]
 	public void Combinations_k_of_n_ShouldBe(int[] numbers, int k, int expectedCount) {
@@ -19,7 +20,7 @@ public partial class AlgorithmHelperTests(ITestOutputHelper testOutputHelper) {
 	}
 
 	[Theory]
-	[InlineData((int[])[2, 3],    2)]
+	[InlineData((int[])[2, 3], 2)]
 	[InlineData((int[])[2, 3, 4], 6)]
 	[InlineData((int[])[2, 3, 4, 5, 6, 7, 8], 5040)]
 	public void Permutations_ShouldBe(int[] numbers, int expectedCount) {
@@ -33,10 +34,10 @@ public partial class AlgorithmHelperTests(ITestOutputHelper testOutputHelper) {
 		actual.Count.ShouldBe(expectedCount);
 	}
 	[Theory]
-	[InlineData((int[])[2, 3],    0, 1)]
-	[InlineData((int[])[2, 3],    1, 2)]
+	[InlineData((int[])[2, 3], 0, 1)]
+	[InlineData((int[])[2, 3], 1, 2)]
 	[InlineData((int[])[2, 3, 4], 1, 3)]
-	[InlineData((int[])[2, 3],    2, 2)]
+	[InlineData((int[])[2, 3], 2, 2)]
 	[InlineData((int[])[2, 3, 4], 2, 6)]
 	[InlineData((int[])[2, 3, 4, 5, 6, 7, 8], 3, 210)]
 	public void Permutations_k_of_n_ShouldBe(int[] numbers, int k, int expectedCount) {

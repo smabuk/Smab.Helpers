@@ -12,10 +12,10 @@
 public static partial class ConsoleX {
 
 	//private const int COLOURS_8BIT = 5;
-	private const int COLOURS_ALL  = 2;
-	private const char ESCAPE  = '\u001b';
+	private const int COLOURS_ALL = 2;
+	private const char ESCAPE = '\u001b';
 
-	private static readonly string BOLD  = $"{ESCAPE}[{(int)FontEffect.Bold}m";
+	private static readonly string BOLD = $"{ESCAPE}[{(int)FontEffect.Bold}m";
 	private static readonly string RESET = $"{ESCAPE}[{(int)FontEffect.None}m";
 
 	/// <summary>
@@ -126,17 +126,17 @@ public static partial class ConsoleX {
 	/// <remarks>If <paramref name="n"/> is 0, the cursor remains in its current position.  This method does not
 	/// perform bounds checking; ensure the cursor does not move beyond the top of the console window.</remarks>
 	/// <param name="n">The number of lines to move the cursor up. Must be a non-negative integer.</param>
-	public static void CursorUp(int n)    => Console.Write($"{ESCAPE}[{n}A");
-	public static void CursorDown(int n)  => Console.Write($"{ESCAPE}[{n}B");
+	public static void CursorUp(int n) => Console.Write($"{ESCAPE}[{n}A");
+	public static void CursorDown(int n) => Console.Write($"{ESCAPE}[{n}B");
 	public static void CursorRight(int n) => Console.Write($"{ESCAPE}[{n}C");
-	public static void CursorLeft(int n)  => Console.Write($"{ESCAPE}[{n}D");
+	public static void CursorLeft(int n) => Console.Write($"{ESCAPE}[{n}D");
 
 
 	public static void CursorNextLine(int n) => Console.Write($"{ESCAPE}[{n}E");
 	public static void CursorPrevLine(int n) => Console.Write($"{ESCAPE}[{n}F");
-	
-	
-	public static void SetColumn(int column)            => Console.Write($"{ESCAPE}[{column}G");
+
+
+	public static void SetColumn(int column) => Console.Write($"{ESCAPE}[{column}G");
 	public static void SetPosition(int row, int column) => Console.Write($"{ESCAPE}[{row};{column}H");
 
 
@@ -150,20 +150,20 @@ public static partial class ConsoleX {
 	public static void ClearEntireLine() => Console.Write($"{ESCAPE}[2K");
 
 
-	public static void ScrollUp(int n)   => Console.Write($"{ESCAPE}[{n}S");
+	public static void ScrollUp(int n) => Console.Write($"{ESCAPE}[{n}S");
 	public static void ScrollDown(int n) => Console.Write($"{ESCAPE}[{n}T");
 
 
 	public static void RestorePosition() => Console.Write($"{ESCAPE}[u");
-	public static void SavePosition()    => Console.Write($"{ESCAPE}[s");
+	public static void SavePosition() => Console.Write($"{ESCAPE}[s");
 
 
-	public static void Reset()   => Console.Write(RESET);
+	public static void Reset() => Console.Write(RESET);
 	public static void SetBold() => Console.Write(BOLD);
-	
+
 
 	public static void SetColours(int rgbForeground, int rgbBackground) => Console.Write($"{ESCAPE}[38;{COLOURS_ALL};{(rgbForeground >> 16) & 255};{(rgbForeground >> 8) & 255};{rgbForeground & 255};48;{COLOURS_ALL};{(rgbBackground >> 16) & 255};{(rgbBackground >> 8) & 255};{rgbBackground & 255}m");
-	
+
 
 	public static void SetForegroundColour(int red, int green, int blue) => Console.Write($"{ESCAPE}[38;{COLOURS_ALL};{red};{green};{blue}m");
 	public static void SetBackgroundColour(int red, int green, int blue) => Console.Write($"{ESCAPE}[48;{COLOURS_ALL};{red};{green};{blue}m");
@@ -180,22 +180,22 @@ public static partial class ConsoleX {
 	/// indicating the removal of the corresponding effect.   This enumeration is typically used in text rendering or
 	/// styling contexts where font appearance  needs to be dynamically adjusted.</remarks>
 	public enum FontEffect {
-		None      = 0,
+		None = 0,
 
-		Bold      = 1,
-		Dim       = 2,
-		Italic    = 3,
+		Bold = 1,
+		Dim = 2,
+		Italic = 3,
 		Underline = 4,
-		Blink     = 5,
-		Reverse   = 7,
-		Hide      = 8,
+		Blink = 5,
+		Reverse = 7,
+		Hide = 8,
 
-		BoldOff      = 20 + Bold,
-		DimOff       = 20 + Dim,
-		ItalicOff    = 20 + Italic,
+		BoldOff = 20 + Bold,
+		DimOff = 20 + Dim,
+		ItalicOff = 20 + Italic,
 		UnderlineOff = 20 + Underline,
-		BlinkOff     = 20 + Blink,
-		ReverseOff   = 20 + Reverse,
-		HideOff      = 20 + Hide,
+		BlinkOff = 20 + Blink,
+		ReverseOff = 20 + Reverse,
+		HideOff = 20 + Hide,
 	}
 }

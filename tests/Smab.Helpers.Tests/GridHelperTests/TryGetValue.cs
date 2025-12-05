@@ -1,4 +1,5 @@
 ﻿namespace Smab.Helpers.Tests.GridHelperTests;
+
 public class TryGetValue {
 
 	private static readonly char[,] INPUT = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".To2dArray(5);

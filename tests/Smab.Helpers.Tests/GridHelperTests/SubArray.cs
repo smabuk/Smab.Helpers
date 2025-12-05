@@ -1,4 +1,5 @@
 ﻿namespace Smab.Helpers.Tests.GridHelperTests;
+
 public class SubArray {
 
 	private static readonly char[,] INPUT_ARRAY = """

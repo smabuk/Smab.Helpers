@@ -18,8 +18,7 @@ public static partial class AlgorithmicHelpers {
 	/// of <typeparamref name="TIterator"/>. This parameter is only guaranteed to be non-null if the method returns <see
 	/// langword="true"/>.</param>
 	/// <returns><see langword="true"/> if an element satisfying the predicate is found; otherwise, <see langword="false"/>.</returns>
-	public static bool TryBinaryChop<TIterator>(TIterator start, TIterator end, Predicate<TIterator> predicate, [NotNullWhen(true)] out TIterator result) where TIterator : INumber<TIterator>
-	{
+	public static bool TryBinaryChop<TIterator>(TIterator start, TIterator end, Predicate<TIterator> predicate, [NotNullWhen(true)] out TIterator result) where TIterator : INumber<TIterator> {
 		result = default!;
 		bool found = false;
 
@@ -40,7 +39,7 @@ public static partial class AlgorithmicHelpers {
 		if (!found && predicate(result)) {
 			found = true;
 		}
-		
+
 		return found;
 	}
 

@@ -1,4 +1,5 @@
 ﻿namespace Smab.Helpers.Tests.GridHelperTests;
+
 public class Flip {
 
 	private static readonly char[,] INPUT_ARRAY = """

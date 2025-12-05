@@ -33,8 +33,8 @@ public record HexCoordinate(int X, int Y, int Z) {
 	/// <exception cref="NotImplementedException">Thrown if the specified <paramref name="direction"/> is not a valid <see cref="HexDirection"/>.</exception>
 	public HexCoordinate Step(HexDirection direction, int distance = 1) {
 		return direction switch {
-			HexDirection.N  => this with { X = X + 0, Y = Y + distance, Z = Z - distance },
-			HexDirection.S  => this with { X = X + 0, Y = Y - distance, Z = Z + distance },
+			HexDirection.N => this with { X = X + 0, Y = Y + distance, Z = Z - distance },
+			HexDirection.S => this with { X = X + 0, Y = Y - distance, Z = Z + distance },
 
 			HexDirection.NE => this with { X = X + distance, Y = Y + 0, Z = Z - distance },
 			HexDirection.SW => this with { X = X - distance, Y = Y + 0, Z = Z + distance },

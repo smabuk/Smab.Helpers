@@ -1,7 +1,7 @@
 ﻿namespace Smab.Helpers;
 
 public static class DateTimeExtensions {
-	private const string DD_MMM_YYYY  = "dd MMM, yyyy";
+	private const string DD_MMM_YYYY = "dd MMM, yyyy";
 	private const string DD_MMMM_YYYY = "dd MMMM, yyyy";
 
 	extension(DateTime dateTime) {

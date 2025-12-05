@@ -4,8 +4,8 @@ using static Smab.Helpers.Direction;
 namespace Smab.Helpers;
 
 public static partial class Directions {
-	public static readonly IEnumerable<Direction> CardinalDirections   = [North, East, South, West];
-	public static readonly IEnumerable<Direction> OrdinalDirections    = [NorthWest, NorthEast, SouthEast, SouthWest];
+	public static readonly IEnumerable<Direction> CardinalDirections = [North, East, South, West];
+	public static readonly IEnumerable<Direction> OrdinalDirections = [NorthWest, NorthEast, SouthEast, SouthWest];
 	public static readonly IEnumerable<Direction> AllCompassDirections = [.. CardinalDirections, .. OrdinalDirections];
 
 	public static readonly IEnumerable<Direction> URDL = [Up, Right, Down, Left];

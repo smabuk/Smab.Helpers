@@ -16,7 +16,8 @@ public static class SequenceHelpers {
 		}
 		for (int n = 1; n <= count; n++) {
 			yield return TriangularNumber(n);
-		};
+		}
+		;
 	}
 	public static int TriangularNumber(int n) => (1 + n) * n / 2;
 
@@ -31,7 +32,7 @@ public static class SequenceHelpers {
 
 
 
-	public static IEnumerable<long> FactorialNumbers(int count) 
+	public static IEnumerable<long> FactorialNumbers(int count)
 		=> Enumerable.Range(1, count).Select(n => Factorial(n));
 
 	public static long Factorial(int n)
@@ -48,7 +49,8 @@ public static class SequenceHelpers {
 			prev = next;
 			next = sum;
 			yield return sum;
-		};
+		}
+		;
 	}
 
 	public static long Fibonacci(int n) {
@@ -59,7 +61,8 @@ public static class SequenceHelpers {
 			sum = prev + next;
 			prev = next;
 			next = sum;
-		};
+		}
+		;
 		return sum;
 	}
 }

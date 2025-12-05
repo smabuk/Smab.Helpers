@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 
 namespace Smab.Helpers.Tests.GridHelperTests;
+
 public class Indexes {
 	[Fact]
 	public void Indexes_Should_Travel_Across_Then_Down() {

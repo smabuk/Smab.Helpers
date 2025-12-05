@@ -1,4 +1,5 @@
 ﻿namespace Smab.Helpers.Tests.MiscHelperTests;
+
 public class HasNonWhiteSpaceContentTests {
 
 	[Theory]
