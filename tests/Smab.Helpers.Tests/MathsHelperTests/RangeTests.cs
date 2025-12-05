@@ -21,7 +21,7 @@ public class RangeTests {
 		} else {
 			Should.Throw<ArgumentOutOfRangeException>(() => range1.GetOverlap(range2))
 				.Message
-				.ShouldEndWith("Ranges do not overlap. (Parameter 'range')");
+				.ShouldEndWith("Ranges do not overlap. (Parameter 'range2')");
 		}
 	}
 
@@ -33,7 +33,7 @@ public class RangeTests {
 	[InlineData(39, 12, 4, 18, true, 12, 18)]
 	[InlineData(39L, 12L, 4L, 18L, true, 12L, 18L)]
 	public void Tuple_DoesItOverlap(int r1Start, int r1End, int r2Start, int r2End, bool expectedResult, int expectedStart, int expectedEnd) {
-		
+
 		(int Start, int End) expected = new(expectedStart, expectedEnd);
 		(int Start, int End) range1   = new(r1Start, r1End);
 		(int Start, int End) range2   = new(r2Start, r2End);
@@ -46,7 +46,7 @@ public class RangeTests {
 		} else {
 			Should.Throw<ArgumentOutOfRangeException>(() => range1.GetOverlap(range2))
 				.Message
-				.ShouldEndWith("Ranges do not overlap. (Parameter 'range')");
+				.ShouldEndWith("Ranges do not overlap. (Parameter 'range2')");
 		}
 	}
 

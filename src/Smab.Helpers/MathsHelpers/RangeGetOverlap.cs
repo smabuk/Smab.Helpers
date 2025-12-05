@@ -32,9 +32,7 @@ public static partial class MathsHelpers {
 				return false;
 			}
 		}
-	}
 
-	extension<T>((T Start, T End) range) where T : INumber<T> {
 		/// <summary>
 		/// Determines the overlapping range between two specified ranges.
 		/// </summary>
@@ -59,7 +57,7 @@ public static partial class MathsHelpers {
 			if (max <= min) {
 				return (max, min);
 			} else {
-				throw new ArgumentOutOfRangeException(nameof(range), "Ranges do not overlap.");
+				throw new ArgumentOutOfRangeException(nameof(range2), "Ranges do not overlap.");
 			}
 		}
 	}
@@ -98,92 +96,60 @@ public static partial class MathsHelpers {
 			if (success) {
 				return new(overlap2.Start, overlap2.End);
 			} else {
-				throw new ArgumentOutOfRangeException(nameof(range), "Ranges do not overlap.");
-			}
-		}
-	}
-}
-
-/// <summary>
-/// Represents a range of 64-bit signed integers with a defined start and end.
-/// </summary>
-/// <remarks>The <see cref="LongRange"/> type provides properties and methods to work with ranges of integers,
-/// including calculating the range's length, determining its bounds, enumerating its values, and finding overlaps with
-/// other ranges. The range is inclusive of both the start and end values.</remarks>
-/// <param name="Start"></param>
-/// <param name="End"></param>
-public record struct LongRange(long Start, long End) {
-
-	public long Length { get; } = End - Start + 1;
-
-	public long Lower { get; } = Math.Min(Start, End);
-	public long Upper { get; } = Math.Max(Start, End);
-
-	public readonly IEnumerable<long> Values {
-		get {
-			for (long l = Lower; l <= Upper; l++) {
-				yield return l;
+				throw new ArgumentOutOfRangeException(nameof(range2), "Ranges do not overlap.");
 			}
 		}
 	}
 
-	/// <summary>
-	/// Attempts to determine the overlapping range between the current range and the specified range.
-	/// </summary>
-	/// <param name="range">The range to check for overlap with the current range.</param>
-	/// <param name="overlap">When this method returns, contains the overlapping range if an overlap exists;  otherwise, contains an
-	/// uninitialized <see cref="LongRange"/> value.</param>
-	/// <returns><see langword="true"/> if the specified range overlaps with the current range;  otherwise, <see langword="false"/>.</returns>
-	public readonly bool TryGetOverlap(LongRange range, out LongRange overlap)
-		=> TryGetOverlap(this, range, out overlap);
+	extension(LongRange range) {
 
-	/// <summary>
-	/// Attempts to determine the overlap between the current range and the specified range.
-	/// </summary>
-	/// <param name="start">The starting value of the range to check for overlap.</param>
-	/// <param name="end">The ending value of the range to check for overlap.</param>
-	/// <param name="overlap">When this method returns, contains the overlapping range, if an overlap exists; otherwise, contains an
-	/// uninitialized <see cref="LongRange"/> value.</param>
-	/// <returns><see langword="true"/> if an overlap exists between the current range and the specified range; otherwise, <see
-	/// langword="false"/>.</returns>
-	public readonly bool TryGetOverlap(long start, long end, out LongRange overlap)
-		=> TryGetOverlap(this, new(start, end), out overlap);
+		///// <summary>
+		///// Attempts to determine the overlapping range between the current range and the specified range.
+		///// </summary>
+		///// <param name="range">The range to check for overlap with the current range.</param>
+		///// <param name="overlap">When this method returns, contains the overlapping range if an overlap exists;  otherwise, contains an
+		///// uninitialized <see cref="LongRange"/> value.</param>
+		///// <returns><see langword="true"/> if the specified range overlaps with the current range;  otherwise, <see langword="false"/>.</returns>
+		//public bool TryGetOverlap(out LongRange overlap)
+		//	=> TryGetOverlap(this, range, out overlap);
 
-	/// <summary>
-	/// Attempts to determine the overlapping range between two <see cref="LongRange"/> instances.
-	/// </summary>
-	/// <remarks>This method normalizes the start and end values of the input ranges before evaluating the overlap.
-	/// If the ranges do not overlap, the <paramref name="overlap"/> parameter will be set to its default value.</remarks>
-	/// <param name="range1">The first range to evaluate. The start and end values do not need to be ordered.</param>
-	/// <param name="range2">The second range to evaluate. The start and end values do not need to be ordered.</param>
-	/// <param name="overlap">When this method returns, contains the overlapping range between <paramref name="range1"/> and  <paramref
-	/// name="range2"/>, if an overlap exists; otherwise, the default value of <see cref="LongRange"/>.</param>
-	/// <returns><see langword="true"/> if the two ranges overlap; otherwise, <see langword="false"/>.</returns>
-	public static bool TryGetOverlap(LongRange range1, LongRange range2, out LongRange overlap) {
-		overlap = default!;
-		long range1Start = Math.Min(range1.Start, range1.End);
-		long range1End   = Math.Max(range1.Start, range1.End);
-		long range2Start = Math.Min(range2.Start, range2.End);
-		long range2End   = Math.Max(range2.Start, range2.End);
-		long max = Math.Max(range1Start, range2Start);
-		long min = Math.Min(range1End,   range2End);
-		if (max <= min) {
-			overlap = new(max, min);
-			return true;
-		} else {
-			return false;
+		/// <summary>
+		/// Attempts to determine the overlap between the current range and the specified range.
+		/// </summary>
+		/// <param name="start">The starting value of the range to check for overlap.</param>
+		/// <param name="end">The ending value of the range to check for overlap.</param>
+		/// <param name="overlap">When this method returns, contains the overlapping range, if an overlap exists; otherwise, contains an
+		/// uninitialized <see cref="LongRange"/> value.</param>
+		/// <returns><see langword="true"/> if an overlap exists between the current range and the specified range; otherwise, <see
+		/// langword="false"/>.</returns>
+		public bool TryGetOverlap(long start, long end, out LongRange overlap)
+			=> TryGetOverlap(range, new(start, end), out overlap);
+
+		/// <summary>
+		/// Attempts to determine the overlapping range between two <see cref="LongRange"/> instances.
+		/// </summary>
+		/// <remarks>This method normalizes the start and end values of the input ranges before evaluating the overlap.
+		/// If the ranges do not overlap, the <paramref name="overlap"/> parameter will be set to its default value.</remarks>
+		/// <param name="range1">The first range to evaluate. The start and end values do not need to be ordered.</param>
+		/// <param name="range2">The second range to evaluate. The start and end values do not need to be ordered.</param>
+		/// <param name="overlap">When this method returns, contains the overlapping range between <paramref name="range1"/> and  <paramref
+		/// name="range2"/>, if an overlap exists; otherwise, the default value of <see cref="LongRange"/>.</param>
+		/// <returns><see langword="true"/> if the two ranges overlap; otherwise, <see langword="false"/>.</returns>
+		public bool TryGetOverlap(LongRange range2, out LongRange overlap) {
+			overlap = default!;
+			long max = Math.Max(range.Lower, range2.Lower);
+			long min = Math.Min(range.Upper, range2.Upper);
+			if (max <= min) {
+				overlap = new(max, min);
+				return true;
+			} else {
+				return false;
+			}
 		}
+
 	}
 
-	public LongRange((long Start, long End) range) : this(range.Start, range.End) { }
-
-	public static implicit operator (long start, long end)(LongRange range) {
-		range.Deconstruct(out long start, out long end);
-		return (start, end);
-	}
-
-	public readonly void Deconstruct(out long start, out long end) {
-		start = Start;
-		end = End;
+	extension(LongRange) {
+		//public bool TryGetOverlap(LongRange range1, LongRange range2, out LongRange overlap) => range1.TryGetOverlap(range2, out overlap);
 	}
 }

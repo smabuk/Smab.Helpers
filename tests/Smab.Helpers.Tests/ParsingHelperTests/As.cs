@@ -35,7 +35,7 @@ public partial class As {
 	[Theory]
 	[InlineData((string[])["1", "2", "3"], (int[])[1, 2, 3,])]
 	public void AsInts_ShouldBe(string[] input, int[] expected) {
-		int[] actual = ParsingHelpers.As<int>(input).ToArray();
+		int[] actual = [.. ParsingHelpers.As<int>(input)];
 		Assert.Equal(expected, actual);
 	}
 
@@ -43,7 +43,7 @@ public partial class As {
 	[InlineData((string[])["1", "2", "3"], (int[])[1, 2, 3,])]
 	[InlineData((string[])["3", "2", "1"], (int[])[3, 2, 1,])]
 	public void AsInts_ShouldBe_AsExtensionMethod(string[] input, int[] expected) {
-		int[] actual = input.As<int>().ToArray();
+		int[] actual = [.. input.As<int>()];
 		Assert.Equal(expected, actual);
 	}
 	[Theory]
@@ -102,7 +102,7 @@ public partial class As {
 	[Theory]
 	[InlineData((string[])["1", "2", "3"], (long[])[1, 2, 3,])]
 	public void AsLongs_ShouldBe(string[] input, long[] expected) {
-		long[] actual = ParsingHelpers.As<long>(input).ToArray();
+		long[] actual = [.. ParsingHelpers.As<long>(input)];
 		Assert.Equal(expected, actual);
 	}
 
@@ -110,7 +110,7 @@ public partial class As {
 	[InlineData((string[])["1", "2", "3"], (long[])[1, 2, 3,])]
 	[InlineData((string[])["3", "2", "1"], (long[])[3, 2, 1,])]
 	public void AsLongs_ShouldBe_AsExtensionMethod(string[] input, long[] expected) {
-		long[] actual = input.As<long>().ToArray();
+		long[] actual = [.. input.As<long>()];
 		Assert.Equal(expected, actual);
 	}
 
