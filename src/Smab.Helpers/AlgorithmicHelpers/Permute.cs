@@ -11,16 +11,16 @@ public static partial class AlgorithmicHelpers {
 		/// <param name="elements"></param>
 		/// <returns></returns>
 		public IEnumerable<T[]> Permute() {
-			return permute(elements.ToArray(), []);
+			return permute([.. elements], []);
 			IEnumerable<T[]> permute(IEnumerable<T> remainder, IEnumerable<T> prefix) =>
 				!remainder.Any() ? [[.. prefix]] :
 				remainder.SelectMany((c, i) => permute(
-					remainder.Take(i).Concat(remainder.Skip(i + 1)).ToArray(),
+					[.. remainder.Take(i), .. remainder.Skip(i + 1)],
 					prefix.Append(c)));
 		}
 
 		public IEnumerable<T[]> Permute(int k) {
-			return elements.Combinations(k).SelectMany(p => p.Permute().ToArray());
+			return elements.Combinations(k).SelectMany(p => p.Permute());
 		}
 	}
 }

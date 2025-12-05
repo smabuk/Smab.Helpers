@@ -34,7 +34,7 @@ public static partial class ParsingHelpers {
 		/// Splits the input string into an array of substrings based on the specified separators,  trimming whitespace from
 		/// each resulting substring and removing any empty entries.
 		/// </summary>
-		/// <remarks>This method is a convenience extension for splitting strings while ensuring that each resulting 
+		/// <remarks>This method is a convenience extension for splitting strings while ensuring that each resulting
 		/// substring is trimmed of leading and trailing whitespace, and that no empty substrings are included  in the
 		/// result.</remarks>
 		/// <param name="s">The string to split. Cannot be <see langword="null"/>.</param>
@@ -47,7 +47,7 @@ public static partial class ParsingHelpers {
 		/// Splits the input string into an array of substrings based on the specified separators,  trimming whitespace from
 		/// each resulting substring and removing empty entries.
 		/// </summary>
-		/// <remarks>This method ensures that each resulting substring is trimmed of leading and trailing whitespace, 
+		/// <remarks>This method ensures that each resulting substring is trimmed of leading and trailing whitespace,
 		/// and any empty substrings resulting from consecutive delimiters are excluded from the output.</remarks>
 		/// <param name="s">The string to split. Cannot be <see langword="null"/>.</param>
 		/// <param name="separator">An array of strings that delimit the substrings in this string. If <see langword="null"/>,  a default set of

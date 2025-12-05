@@ -24,9 +24,6 @@ public static partial class ArrayHelpers {
 		/// the array contains reference types, the references themselves are copied, not the objects they refer to.</remarks>
 		/// <returns>A new two-dimensional array containing the same elements as the original array. The returned array is a shallow
 		/// copy; reference-type elements are not cloned.</returns>
-		public T[,] Copy() {
-			T[,] result = (T[,])array.Clone();
-			return result;
-		}
+		public T[,] Copy() => (T[,])array.Clone();
 	}
 }

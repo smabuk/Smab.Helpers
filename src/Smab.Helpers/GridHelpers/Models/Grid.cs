@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Smab.Helpers;
+﻿namespace Smab.Helpers;
 
 /// <summary>
 /// Represents a two-dimensional grid of values.
@@ -11,8 +9,7 @@ namespace Smab.Helpers;
 [DebuggerDisplay("{DebugDisplay,nq}")]
 public record Grid<T>(int ColsCount, int RowsCount) {
 
-	private readonly T[,] cells = new T[ColsCount, RowsCount];
-	internal T[,] Cells => cells;
+	public T[,] Cells { get; internal set; } = new T[ColsCount, RowsCount];
 
 	// Indexer
 	/// <summary>
@@ -22,8 +19,8 @@ public record Grid<T>(int ColsCount, int RowsCount) {
 	/// <param name="row">The zero-based row index.</param>
 	/// <returns>The element at the specified position.</returns>
 	public T this[int col, int row] {
-		get => cells[col, row];
-		set => cells[col, row] = value;
+		get => Cells[col, row];
+		set => Cells[col, row] = value;
 	}
 
 	// Indexer
@@ -34,8 +31,8 @@ public record Grid<T>(int ColsCount, int RowsCount) {
 	/// respectively.</param>
 	/// <returns>The value stored at the given grid location.</returns>
 	public T this[Point point] {
-		get => cells[point.X, point.Y];
-		set => cells[point.X, point.Y] = value;
+		get => Cells[point.X, point.Y];
+		set => Cells[point.X, point.Y] = value;
 	}
 
 	// Indexer
@@ -46,8 +43,8 @@ public record Grid<T>(int ColsCount, int RowsCount) {
 	/// grid.</param>
 	/// <returns>The value stored at the cell located at the specified coordinates.</returns>
 	public T this[(int X, int Y) point] {
-		get => cells[point.X, point.Y];
-		set => cells[point.X, point.Y] = value;
+		get => Cells[point.X, point.Y];
+		set => Cells[point.X, point.Y] = value;
 	}
 
 	// Conversion to underlying array
@@ -56,7 +53,7 @@ public record Grid<T>(int ColsCount, int RowsCount) {
 	/// </summary>
 	/// <remarks>Direct modifications to the returned array will affect the grid.</remarks>
 	/// <returns>The underlying two-dimensional array.</returns>
-	public T[,] ToArray() => cells;
+	public T[,] ToArray() => Cells;
 
 	private string DebugDisplay => $$"""{{nameof(Grid<>)}} [{{ColsCount}}, {{RowsCount}}]""";
 }

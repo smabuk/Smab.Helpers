@@ -38,5 +38,5 @@ public record Cell<T>(Point Index, T Value) {
 		value = Value;
 	}
 
-	private string DebugDisplay => $$"""{{nameof(Cell<T>)}} ({{Index.X}}, {{Index.Y}}) = {{Value}}""";
+	private string DebugDisplay => $$"""{{nameof(Cell<>)}} ({{Index.X}}, {{Index.Y}}) = {{Value}}""";
 }

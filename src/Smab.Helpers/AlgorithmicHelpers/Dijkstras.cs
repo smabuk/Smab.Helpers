@@ -6,21 +6,21 @@ public static partial class AlgorithmicHelpers {
 
 	/// <summary>
 	///  Dijkstra's algorithm
-	/// 
+	///
 	/// PseudoCode:
 	///  function Dijkstra(Graph, source):
 	///      dist[source] ← 0                           // Initialization
-	/// 
+	///
 	///      create vertex priority queue Q
-	/// 
-	///      for each vertex v in Graph:          
+	///
+	///      for each vertex v in Graph:
 	///          if v ≠ source
 	///              dist[v] ← INFINITY                 // Unknown distance from source to v
 	///              prev[v] ← UNDEFINED                // Predecessor of v
-	/// 
+	///
 	///          Q.add_with_priority(v, dist[v])
-	/// 
-	/// 
+	///
+	///
 	///      while Q is not empty:                      // The main loop
 	///          u ← Q.extract_min()                    // Remove and return best vertex
 	///          for each neighbor v of u:              // only v that are still in Q
@@ -29,9 +29,9 @@ public static partial class AlgorithmicHelpers {
 	///                  dist[v] ← alt
 	///                  prev[v] ← u
 	///                  Q.decrease_priority(v, alt)
-	/// 
+	///
 	///      return dist, prev
-	/// 
+	///
 	/// </summary>
 	/// <see cref="https://en.wikipedia.org/wiki/Dijkstra's_algorithm"/>
 	/// <param name="grid"></param>

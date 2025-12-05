@@ -70,7 +70,7 @@ public static partial class ParsingHelpers {
 		/// Splits the input string into substrings based on the specified separators and converts each substring to an
 		/// integer.
 		/// </summary>
-		/// <remarks>This method uses the <see cref="int.Parse(string)"/> method to convert substrings to integers. 
+		/// <remarks>This method uses the <see cref="int.Parse(string)"/> method to convert substrings to integers.
 		/// Ensure that the input string contains valid integer representations to avoid exceptions.</remarks>
 		/// <param name="s">The input string to be split and converted. Cannot be <see langword="null"/>.</param>
 		/// <param name="separator">An array of strings that delimit the substrings in the input string. If <see langword="null"/>, whitespace is used

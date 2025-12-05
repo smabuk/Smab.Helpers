@@ -3,7 +3,7 @@
 /// <summary>
 /// Represents a cube in a 3D space with a specified position and associated value.
 /// </summary>
-/// <remarks>The <see cref="Cube{T}"/> type provides functionality to represent a cube's position in 3D space 
+/// <remarks>The <see cref="Cube{T}"/> type provides functionality to represent a cube's position in 3D space
 /// using <see cref="Point3d"/> coordinates and an associated value of type <typeparamref name="T"/>.  It supports
 /// deconstruction, implicit conversions, and provides access to individual coordinates  through the <see cref="X"/>,
 /// <see cref="Y"/>, and <see cref="Z"/> properties.</remarks>
@@ -36,5 +36,5 @@ public record Cube<T>(Point3d Position, T Value) {
 		value = Value;
 	}
 
-	private string DebugDisplay => $$"""{{nameof(Cube<T>)}} ({{X}}, {{Y}} {{Z}}) = {{Value}}""";
+	private string DebugDisplay => $$"""{{nameof(Cube<>)}} ({{X}}, {{Y}} {{Z}}) = {{Value}}""";
 }
