@@ -1,28 +1,13 @@
 ﻿namespace Smab.Helpers;
 
 /// <summary>
-/// Represents a range of 64-bit signed integers with a defined start and end.
+/// Represents an inclusive range of 64-bit integer values, defined by a start and end point.
 /// </summary>
-/// <remarks>The <see cref="LongRange"/> type provides properties and methods to work with ranges of integers,
-/// including calculating the range's length, determining its bounds, enumerating its values, and finding overlaps with
-/// other ranges. The range is inclusive of both the start and end values.</remarks>
-/// <param name="Start"></param>
-/// <param name="End"></param>
+/// <remarks>The range includes both the start and end values. The struct can be deconstructed into its start and
+/// end components, and supports implicit conversion to a tuple for convenient usage in tuple-based APIs.</remarks>
+/// <param name="Start">The first value of the range, inclusive.</param>
+/// <param name="End">The last value of the range, inclusive.</param>
 public record struct LongRange(long Start, long End) {
-
-	public long Length { get; } = End - Start + 1;
-
-	public long Lower { get; } = Math.Min(Start, End);
-	public long Upper { get; } = Math.Max(Start, End);
-
-	public readonly IEnumerable<long> Values {
-		get {
-			for (long l = Lower; l <= Upper; l++) {
-				yield return l;
-			}
-		}
-	}
-
 	public LongRange((long Start, long End) range) : this(range.Start, range.End) { }
 
 	public static implicit operator (long start, long end)(LongRange range) {
@@ -33,5 +18,30 @@ public record struct LongRange(long Start, long End) {
 	public readonly void Deconstruct(out long start, out long end) {
 		start = Start;
 		end = End;
+	}
+}
+
+public static partial class LongRangeExtensions {
+	extension(LongRange range) {
+		/// <summary>
+		/// Gets the total number of elements in the range.
+		/// </summary>
+		public long Length => range.Upper - range.Lower + 1;
+
+		/// <summary>
+		/// Gets the lower bound of the range as a 64-bit signed integer.
+		/// </summary>
+		public long Lower => long.Min(range.Start, range.End);
+
+		/// <summary>
+		/// Gets the upper bound of the range represented by this instance.
+		/// </summary>
+		public long Upper => long.Max(range.Start, range.End);
+
+		/// <summary>
+		/// Gets an enumerable collection of all long values within the specified range, inclusive of the lower and upper
+		/// bounds.
+		/// </summary>
+		public IEnumerable<long> Values => Enumerable.Sequence(range.Lower, range.Upper, 1);
 	}
 }

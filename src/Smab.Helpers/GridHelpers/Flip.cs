@@ -2,6 +2,29 @@
 
 public static partial class ArrayHelpers {
 
+	extension<T>(Grid<T> grid) {
+		/// <summary>
+		/// Flips the grid horizontally, reversing the order of columns in each row.
+		/// </summary>
+		/// <returns>A new grid that is flipped horizontally.</returns>
+		public Grid<T> FlipHorizontally() {
+			Grid<T> result = new(grid.ColsCount, grid.RowsCount);
+			grid.Indexes().ForEach(ix => { result[ix.X, ix.Y] = grid[grid.ColsCount - ix.X - 1, ix.Y]; });
+			return result;
+		}
+
+		/// <summary>
+		/// Flips the grid vertically, reversing the order of rows in each column.
+		/// </summary>
+		/// <returns>A new grid that is flipped vertically.</returns>
+		public Grid<T> FlipVertically() {
+			Grid<T> result = new(grid.ColsCount, grid.RowsCount);
+			grid.Indexes().ForEach(ix => { result[ix.X, ix.Y] = grid[ix.X, grid.RowsCount - ix.Y - 1]; });
+			return result;
+		}
+
+	}
+
 	extension<T>(T[,] array) {
 		/// <summary>
 		/// Flips a two-dimensional array horizontally, reversing the order of columns in each row.

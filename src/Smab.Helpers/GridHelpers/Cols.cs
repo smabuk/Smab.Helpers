@@ -1,6 +1,24 @@
 ﻿namespace Smab.Helpers;
 
 public static partial class ArrayHelpers {
+
+	extension<T>(Grid<T> grid) {
+		/// <summary>
+		/// Retrieves all elements from the specified column.
+		/// </summary>
+		/// <param name="colNo">The zero-based column index.</param>
+		/// <returns>An enumerable containing the elements of the specified column.</returns>
+		public IEnumerable<T> Col(int colNo)
+			=> grid.RowIndexes().Select(row => grid[colNo, row]);
+
+		/// <summary>
+		/// Enumerates the columns of the grid as sequences of elements.
+		/// </summary>
+		/// <returns>An enumerable of sequences, where each sequence represents a column.</returns>
+		public IEnumerable<IEnumerable<T>> Cols()
+			=> grid.ColIndexes().Select(ix => grid.Col(ix));
+	}
+
 	extension<T>(T[,] array) {
 		/// <summary>
 		/// Retrieves all elements from the specified column of a two-dimensional array.

@@ -2,6 +2,20 @@
 
 public static partial class ArrayHelpers {
 
+	extension<T>(Grid<T> grid) {
+		/// <summary>
+		/// Transposes the grid, swapping its rows and columns.
+		/// </summary>
+		/// <returns>A new grid where the rows and columns are swapped.</returns>
+		public Grid<T> Transpose() {
+			Grid<T> result = new(grid.RowsCount, grid.ColsCount);
+			foreach ((int col, int row) in grid.Indexes()) {
+				result[row, col] = grid[col, row];
+			}
+			return result;
+		}
+	}
+
 	extension<T>(T[,] array) {
 		/// <summary>
 		/// Transposes the specified two-dimensional array, swapping its rows and columns.
@@ -30,7 +44,7 @@ public static partial class ArrayHelpers {
 		/// Transposes a collection of strings, swapping rows and columns.
 		/// </summary>
 		/// <remarks>This method assumes that all strings in the input collection have the same length. If the input
-		/// collection contains strings of varying lengths, the behavior is undefined. The method processes the input lazily, 
+		/// collection contains strings of varying lengths, the behavior is undefined. The method processes the input lazily,
 		/// generating each transposed row on demand.</remarks>
 		/// <param name="array">The collection of strings to transpose. Each string in the collection must have the same length.</param>
 		/// <returns>An enumerable collection of strings where each string represents a column from the original input as a row.</returns>

@@ -2,6 +2,54 @@
 
 public static partial class ArrayHelpers {
 
+	extension<T>(Grid<T> grid) {
+		/// <summary>
+		/// Attempts to retrieve the value at the specified coordinates.
+		/// </summary>
+		/// <param name="x">The zero-based x index.</param>
+		/// <param name="y">The zero-based y index.</param>
+		/// <param name="value">When this method returns, contains the value at the specified coordinates if successful; otherwise, the default value.</param>
+		/// <returns>true if the coordinates are within bounds; otherwise, false.</returns>
+		public bool TryGetValue(int x, int y, out T value) {
+			value = default!;
+			if (grid.IsOutOfBounds(x, y)) {
+				return false;
+			}
+			value = grid[x, y];
+			return true;
+		}
+
+		/// <summary>
+		/// Attempts to retrieve the value at the specified coordinates.
+		/// </summary>
+		/// <param name="point">A tuple representing the coordinates.</param>
+		/// <param name="value">When this method returns, contains the value at the specified coordinates if successful; otherwise, the default value.</param>
+		/// <returns>true if the coordinates are within bounds; otherwise, false.</returns>
+		public bool TryGetValue((int X, int Y) point, out T value) {
+			value = default!;
+			if (grid.IsOutOfBounds(point.X, point.Y)) {
+				return false;
+			}
+			value = grid[point.X, point.Y];
+			return true;
+		}
+
+		/// <summary>
+		/// Attempts to retrieve the value at the specified point.
+		/// </summary>
+		/// <param name="point">The point coordinates.</param>
+		/// <param name="value">When this method returns, contains the value at the specified point if successful; otherwise, the default value.</param>
+		/// <returns>true if the point is within bounds; otherwise, false.</returns>
+		public bool TryGetValue(Point point, out T value) {
+			value = default!;
+			if (grid.IsOutOfBounds(point.X, point.Y)) {
+				return false;
+			}
+			value = grid[point.X, point.Y];
+			return true;
+		}
+	}
+
 	extension<T>(T[,] array) {
 		/// <summary>
 		/// Attempts to retrieve the value at the specified coordinates in a two-dimensional array.

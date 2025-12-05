@@ -2,6 +2,139 @@
 
 public static partial class ArrayHelpers {
 
+	extension<T>(Grid<T> grid) {
+		/// <summary>
+		/// Gets the minimum column index (always 0).
+		/// </summary>
+		public int ColsMin => 0;
+
+		/// <summary>
+		/// Gets the minimum row index (always 0).
+		/// </summary>
+		public int RowsMin => 0;
+
+		/// <summary>
+		/// Gets the maximum column index.
+		/// </summary>
+		public int ColsMax => grid.ColsCount - 1;
+
+		/// <summary>
+		/// Gets the maximum row index.
+		/// </summary>
+		public int RowsMax => grid.RowsCount - 1;
+
+		/// <summary>
+		/// Gets the minimum X index (always 0).
+		/// </summary>
+		public int XMin => 0;
+
+		/// <summary>
+		/// Gets the minimum Y index (always 0).
+		/// </summary>
+		public int YMin => 0;
+
+		/// <summary>
+		/// Gets the maximum X index.
+		/// </summary>
+		public int XMax => grid.ColsCount - 1;
+
+		/// <summary>
+		/// Gets the maximum Y index.
+		/// </summary>
+		public int YMax => grid.RowsCount - 1;
+
+		// Bounds checking
+		/// <summary>
+		/// Determines whether the specified column and row indices are within the bounds of the grid.
+		/// </summary>
+		/// <param name="col">The column index to check.</param>
+		/// <param name="row">The row index to check.</param>
+		/// <returns>true if the indices are within bounds; otherwise, false.</returns>
+		public bool IsInBounds(int col, int row)
+			=> col >= 0 && col < grid.ColsCount && row >= 0 && row < grid.RowsCount;
+
+		/// <summary>
+		/// Determines whether the specified point is within the bounds of the grid.
+		/// </summary>
+		/// <param name="point">A tuple representing the coordinates to check.</param>
+		/// <returns>true if the point is within bounds; otherwise, false.</returns>
+		public bool IsInBounds((int col, int row) point)
+			=> point.col >= 0 && point.col < grid.ColsCount && point.row >= 0 && point.row < grid.RowsCount;
+
+		/// <summary>
+		/// Determines whether the specified column and row indices are out of bounds.
+		/// </summary>
+		/// <param name="col">The column index to check.</param>
+		/// <param name="row">The row index to check.</param>
+		/// <returns>true if the indices are out of bounds; otherwise, false.</returns>
+		public bool IsOutOfBounds(int col, int row) => !grid.IsInBounds(col, row);
+
+		/// <summary>
+		/// Determines whether the specified point is outside the bounds of the grid.
+		/// </summary>
+		/// <param name="point">A tuple representing the coordinates to check.</param>
+		/// <returns>true if the point is out of bounds; otherwise, false.</returns>
+		public bool IsOutOfBounds((int col, int row) point) => !grid.IsInBounds(point);
+
+		// Index enumeration
+		/// <summary>
+		/// Enumerates the column indexes of the grid.
+		/// </summary>
+		/// <returns>An enumerable collection of column indexes.</returns>
+		public IEnumerable<int> ColIndexes() {
+			for (int col = 0; col < grid.ColsCount; col++) {
+				yield return col;
+			}
+		}
+
+		/// <summary>
+		/// Enumerates the row indexes of the grid.
+		/// </summary>
+		/// <returns>An enumerable collection of row indexes.</returns>
+		public IEnumerable<int> RowIndexes() {
+			for (int row = 0; row < grid.RowsCount; row++) {
+				yield return row;
+			}
+		}
+
+		/// <summary>
+		/// Retrieves the X values (column indexes) of the grid.
+		/// </summary>
+		/// <returns>An enumerable collection of X values.</returns>
+		public IEnumerable<int> XValues() => grid.ColIndexes();
+
+		/// <summary>
+		/// Enumerates the Y values (row indexes) of the grid.
+		/// </summary>
+		/// <returns>An enumerable collection of Y values.</returns>
+		public IEnumerable<int> YValues() => grid.RowIndexes();
+
+		/// <summary>
+		/// Enumerates the indexes of the grid as tuples of X and Y coordinates.
+		/// </summary>
+		/// <returns>An enumerable collection of tuples, where each tuple contains the X and Y indices.</returns>
+		public IEnumerable<(int X, int Y)> Indexes() {
+			foreach (int y in grid.RowIndexes()) {
+				foreach (int x in grid.ColIndexes()) {
+					yield return new(x, y);
+				}
+			}
+		}
+
+		/// <summary>
+		/// Enumerates the column and row indexes of the grid.
+		/// </summary>
+		/// <returns>An enumerable collection of tuples, where each tuple contains the column and row indices.</returns>
+		public IEnumerable<(int Col, int Row)> IndexesColRow() {
+			foreach (int row in grid.RowIndexes()) {
+				foreach (int col in grid.ColIndexes()) {
+					yield return new(col, row);
+				}
+			}
+		}
+
+	}
+
 	extension<T>(T[,] array) {
 		/// <summary>
 		/// Gets the number of columns in the specified two-dimensional array.

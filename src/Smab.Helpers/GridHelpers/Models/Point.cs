@@ -4,7 +4,7 @@
 /// Represents a point in a two-dimensional space with integer coordinates.
 /// </summary>
 /// <remarks>The <see cref="Point"/> struct provides a lightweight representation of a 2D point with X and Y
-/// coordinates. It supports various operations such as addition, subtraction, multiplication, and comparison. 
+/// coordinates. It supports various operations such as addition, subtraction, multiplication, and comparison.
 /// Additionally, it includes predefined points such as <see cref="Zero"/>, <see cref="One"/>, <see cref="UnitX"/>, and
 /// <see cref="UnitY"/>.</remarks>
 /// <param name="X"></param>
@@ -58,7 +58,7 @@ public record struct Point(int X, int Y) : IParsable<Point>, IComparable<Point> 
 	public static Point operator *((int X, int Y) p1, Point p2) => new(p1.X * p2.X, p1.Y * p2.Y);
 	public static Point operator *(in Point lhs, int rhs) => new(lhs.X * rhs, lhs.Y * rhs);
 	public static Point operator *(int lhs, in Point rhs) => new(rhs.X * lhs, rhs.Y * lhs);
-	
+
 	public static Point operator %(Point p1, Point p2)          => new(p1.X % p2.X, p1.Y % p2.Y);
 	public static Point operator %(Point p1, (int X, int Y) p2) => new(p1.X % p2.X, p1.Y % p2.Y);
 	public static Point operator %(Point p1, int rhs)           => new(p1.X % rhs, p1.Y % rhs);

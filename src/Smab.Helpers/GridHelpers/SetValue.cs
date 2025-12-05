@@ -1,6 +1,31 @@
 ﻿namespace Smab.Helpers;
 
 public static partial class ArrayHelpers {
+
+	extension<T>(Grid<T> grid) {
+		/// <summary>
+		/// Sets the element at the specified coordinates to the given value.
+		/// </summary>
+		/// <param name="value">The value to assign.</param>
+		/// <param name="x">The zero-based column index.</param>
+		/// <param name="y">The zero-based row index.</param>
+		public void SetValue(T value, int x, int y) => grid[x, y] = value;
+
+		/// <summary>
+		/// Sets the value at the specified coordinates.
+		/// </summary>
+		/// <param name="value">The value to assign.</param>
+		/// <param name="point">A tuple representing the coordinates.</param>
+		public void SetValue(T value, (int X, int Y) point) => grid[point.X, point.Y] = value;
+
+		/// <summary>
+		/// Sets the value at the specified point.
+		/// </summary>
+		/// <param name="value">The value to assign.</param>
+		/// <param name="point">The point coordinates.</param>
+		public void SetValue(T value, Point point) => grid[point.X, point.Y] = value;
+	}
+
 	extension<T>(T[,] array) {
 		/// <summary>
 		/// Sets the element at the specified coordinates to the given value.

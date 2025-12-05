@@ -3,7 +3,7 @@
 /// <summary>
 /// Represents a cell in a grid or table, defined by its position and associated value.
 /// </summary>
-/// <remarks>A <see cref="Cell{T}"/> is identified by its position, specified as a <see cref="Point"/> or 
+/// <remarks>A <see cref="Cell{T}"/> is identified by its position, specified as a <see cref="Point"/> or
 /// individual X and Y coordinates, and holds a value of type <typeparamref name="T"/>.  It provides implicit
 /// conversions for convenience, allowing the cell to be treated as its value,  position, or a tuple containing its
 /// coordinates and value.</remarks>

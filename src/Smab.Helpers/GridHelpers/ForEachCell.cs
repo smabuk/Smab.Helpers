@@ -1,11 +1,21 @@
 ﻿namespace Smab.Helpers;
 
 public static partial class ArrayHelpers {
+	extension<T>(Grid<T> grid) {
+		// Cell enumeration
+		/// <summary>
+		/// Enumerates all cells in the grid, providing their coordinates and values.
+		/// </summary>
+		/// <returns>An enumerable of Cell objects, where each object contains the coordinates and value.</returns>
+		public IEnumerable<Cell<T>> ForEachCell()
+			=> grid.Indexes().Select(ix => new Cell<T>(ix.X, ix.Y, grid[ix.X, ix.Y]));
+	}
+
 	extension<T>(T[,] array) {
 		/// <summary>
 		/// Enumerates all cells in a two-dimensional array, providing their coordinates and values.
 		/// </summary>
-		/// <remarks>This method allows iteration over all elements in a two-dimensional array, providing both the 
+		/// <remarks>This method allows iteration over all elements in a two-dimensional array, providing both the
 		/// coordinates and the value of each element. It is particularly useful for scenarios where both  the position and
 		/// value of elements are required.</remarks>
 		/// <typeparam name="T">The type of elements in the array.</typeparam>

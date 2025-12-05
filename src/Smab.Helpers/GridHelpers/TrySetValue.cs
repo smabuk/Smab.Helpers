@@ -2,6 +2,51 @@
 
 public static partial class ArrayHelpers {
 
+	extension<T>(Grid<T> grid) {
+		/// <summary>
+		/// Attempts to set the value at the specified coordinates.
+		/// </summary>
+		/// <param name="x">The zero-based column index.</param>
+		/// <param name="y">The zero-based row index.</param>
+		/// <param name="value">The value to assign.</param>
+		/// <returns>true if the value was set successfully; otherwise, false.</returns>
+		public bool TrySetValue(int x, int y, T value) {
+			if (grid.IsOutOfBounds(x, y)) {
+				return false;
+			}
+			grid[x, y] = value;
+			return true;
+		}
+
+		/// <summary>
+		/// Attempts to set the value at the specified point.
+		/// </summary>
+		/// <param name="point">The coordinates as a tuple.</param>
+		/// <param name="value">The value to assign.</param>
+		/// <returns>true if the value was set successfully; otherwise, false.</returns>
+		public bool TrySetValue((int X, int Y) point, T value) {
+			if (grid.IsOutOfBounds(point.X, point.Y)) {
+				return false;
+			}
+			grid[point.X, point.Y] = value;
+			return true;
+		}
+
+		/// <summary>
+		/// Attempts to set the value at the specified point.
+		/// </summary>
+		/// <param name="point">The point coordinates.</param>
+		/// <param name="value">The value to assign.</param>
+		/// <returns>true if the value was set successfully; otherwise, false.</returns>
+		public bool TrySetValue(Point point, T value) {
+			if (grid.IsOutOfBounds(point.X, point.Y)) {
+				return false;
+			}
+			grid[point.X, point.Y] = value;
+			return true;
+		}
+	}
+
 	extension<T>(T[,] array) {
 		/// <summary>
 		/// Attempts to set the value at the specified coordinates in the underlying two-dimensional array.

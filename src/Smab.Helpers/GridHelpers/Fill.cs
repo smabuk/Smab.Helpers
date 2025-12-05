@@ -2,6 +2,31 @@
 
 namespace Smab.Helpers;
 public static partial class ArrayHelpers {
+	extension<T>(Grid<T> grid) {
+		/// <summary>
+		/// Creates a new grid by cloning this grid and filling all its elements with the specified value.
+		/// </summary>
+		/// <param name="value">The value to assign to each element in the cloned grid.</param>
+		/// <returns>A new grid with all elements set to the specified value.</returns>
+		public Grid<T> Fill(T value) {
+			Grid<T> result = grid.Copy();
+			result.FillInPlace(value);
+			return result;
+		}
+
+		/// <summary>
+		/// Fills all elements of the grid with the provided value.
+		/// </summary>
+		/// <remarks>This method modifies the grid in place.</remarks>
+		/// <param name="value">The value to assign to each element of the grid.</param>
+		public void FillInPlace(T value) {
+			Span<T> span = MemoryMarshal.CreateSpan(ref grid.Cells[0, 0], grid.Cells.Length);
+			for (int i = 0; i < grid.Cells.Length; i++) {
+				span[i] = value;
+			}
+		}
+	}
+
 	extension<T>(T[,] array) {
 		/// <summary>
 		/// Creates a new two-dimensional array by cloning the specified array and filling all its elements with the specified

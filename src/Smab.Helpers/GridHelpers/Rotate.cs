@@ -2,6 +2,44 @@
 
 public static partial class ArrayHelpers {
 
+	extension<T>(Grid<T> grid) {
+		/// <summary>
+		/// Rotates the grid by the specified angle in degrees.
+		/// </summary>
+		/// <remarks>Supports rotations of 0, 90, 180, and 270 degrees (or their negative equivalents).</remarks>
+		/// <param name="rotation">The angle of rotation in degrees. Must be a multiple of 90 and within the range -360 to 360.</param>
+		/// <returns>A new grid containing the rotated elements.</returns>
+		/// <exception cref="ArgumentOutOfRangeException">Thrown if rotation is not a multiple of 90 or is outside the range -360 to 360.</exception>
+		public Grid<T> Rotate(int rotation) {
+			const int DEG_0 = 0;
+			const int DEG_90 = 1;
+			const int DEG_180 = 2;
+			const int DEG_270 = 3;
+
+			int rotationType = rotation >= 0 ? (rotation / 90) % 360 : ((360 + rotation) / 90) % 360;
+
+			Grid<T> result = rotationType switch {
+				DEG_0 or DEG_180 => new Grid<T>(grid.ColsCount, grid.RowsCount),
+				DEG_90 or DEG_270 => new Grid<T>(grid.RowsCount, grid.ColsCount),
+				_ => throw new ArgumentOutOfRangeException(nameof(rotation), "Rotation must be a multiple of 90 and be between -360 and 360"),
+			};
+
+			int maxCol = result.ColsCount - 1;
+			int maxRow = result.RowsCount - 1;
+
+			foreach ((int col, int row) in result.Indexes()) {
+				result[col, row] = rotationType switch {
+					DEG_0 => grid[col, row],
+					DEG_90 => grid[row, maxCol - col],
+					DEG_180 => grid[maxCol - col, maxRow - row],
+					DEG_270 => grid[maxRow - row, col],
+					_ => throw new ArgumentOutOfRangeException(nameof(rotation), "Rotation must be a multiple of 90 and be between -360 and 360"),
+				};
+			}
+			return result;
+		}
+	}
+
 	extension<T>(T[,] array) {
 		/// <summary>
 		/// Rotates a two-dimensional array by the specified angle in degrees.

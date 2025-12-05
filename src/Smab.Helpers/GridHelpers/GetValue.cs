@@ -2,6 +2,30 @@
 
 public static partial class ArrayHelpers {
 
+	extension<T>(Grid<T> grid) {
+		/// <summary>
+		/// Retrieves the value at the specified coordinates.
+		/// </summary>
+		/// <param name="x">The zero-based column index.</param>
+		/// <param name="y">The zero-based row index.</param>
+		/// <returns>The value at the specified position.</returns>
+		public T GetValue(int x, int y) => grid[x, y];
+
+		/// <summary>
+		/// Retrieves the value at the specified coordinates.
+		/// </summary>
+		/// <param name="point">A tuple containing the X and Y coordinates.</param>
+		/// <returns>The value at the specified position.</returns>
+		public T GetValue((int X, int Y) point) => grid[point.X, point.Y];
+
+		/// <summary>
+		/// Retrieves the value at the specified point.
+		/// </summary>
+		/// <param name="point">The point coordinates.</param>
+		/// <returns>The value at the specified position.</returns>
+		public T GetValue(Point point) => grid[point.X, point.Y];
+	}
+
 	extension<T>(T[,] array) {
 		/// <summary>
 		/// Retrieves the value stored at the specified coordinates in the two-dimensional array.
