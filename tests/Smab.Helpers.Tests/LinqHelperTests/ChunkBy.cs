@@ -137,6 +137,51 @@ public class ChunkBy {
 	}
 
 	[Fact]
+	public void ChunkBy_WithConversion_StringToLong_ShouldParseCorrectly() {
+		IEnumerable<string> source = ["123", "456", "", "789", "1000"];
+
+		List<List<long>> result = [.. source.ChunkBy(x => string.IsNullOrEmpty(x), x => x.As<long>())];
+
+		result.Count.ShouldBe(2);
+		result[0].ShouldBe([123L, 456L]);
+		result[1].ShouldBe([789L, 1000L]);
+	}
+
+	[Fact]
+	public void ChunkBy_WithConversion_StringToLong_WithMultipleSeparators_ShouldParseCorrectly() {
+		IEnumerable<string> source = ["100", "200", "300", "", "1234567890", "9876543210", "", "42", "99"];
+
+		List<List<long>> result = [.. source.ChunkBy(x => string.IsNullOrEmpty(x), x => x.As<long>())];
+
+		result.Count.ShouldBe(3);
+		result[0].ShouldBe([100L, 200L, 300L]);
+		result[1].ShouldBe([1234567890L, 9876543210L]);
+		result[2].ShouldBe([42L, 99L]);
+	}
+
+	[Fact]
+	public void ChunkBy_WithConversion_StringToLong_WithNegativeNumbers_ShouldParseCorrectly() {
+		IEnumerable<string> source = ["-100", "200", "", "-300", "400"];
+
+		List<List<long>> result = [.. source.ChunkBy(x => string.IsNullOrEmpty(x), x => x.As<long>())];
+
+		result.Count.ShouldBe(2);
+		result[0].ShouldBe([-100L, 200L]);
+		result[1].ShouldBe([-300L, 400L]);
+	}
+
+	[Fact]
+	public void ChunkBy_WithConversion_StringToLong_WithLargeNumbers_ShouldParseCorrectly() {
+		IEnumerable<string> source = ["9223372036854775807", "1", "", "-9223372036854775808"];
+
+		List<List<long>> result = [.. source.ChunkBy(x => string.IsNullOrEmpty(x), x => x.As<long>())];
+
+		result.Count.ShouldBe(2);
+		result[0].ShouldBe([9223372036854775807L, 1L]);
+		result[1].ShouldBe([-9223372036854775808L]);
+	}
+
+	[Fact]
 	public void ChunkByEmpty_EmptySequence_ShouldReturnEmpty() {
 		IEnumerable<string?> source = [];
 
