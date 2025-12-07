@@ -263,9 +263,9 @@ public class PointTests {
 	}
 
 	[Theory]
-	[InlineData(5, 5, 2, 7, 5)]
-	[InlineData(5, 5, 3, 8, 5)]
-	public void Point_MoveWithDistance(int px, int py, int distance, int expectedX, int expectedY) {
+	[InlineData(5, 5, 2, 7)]
+	[InlineData(5, 5, 3, 8)]
+	public void Point_MoveWithDistance(int px, int py, int distance, int expectedX) {
 		Point point = new(px, py);
 		Assert.Equal((expectedX, py), point.MoveRight(distance));
 		Assert.Equal((expectedX, py), point.MoveEast(distance));
