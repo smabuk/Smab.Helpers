@@ -214,6 +214,198 @@ public static partial class ArrayHelpers {
 			}
 			return result;
 		}
+
+		/// <summary>
+		/// Computes the sum of each row in the grid.
+		/// </summary>
+		/// <returns>An enumerable containing the sum of each row.</returns>
+		public IEnumerable<T> RowSums() {
+			for (int row = 0; row < grid.RowsCount; row++) {
+				T sum = T.Zero;
+				for (int col = 0; col < grid.ColsCount; col++) {
+					sum += grid[col, row];
+				}
+				yield return sum;
+			}
+		}
+
+		/// <summary>
+		/// Computes the sum of each column in the grid.
+		/// </summary>
+		/// <returns>An enumerable containing the sum of each column.</returns>
+		public IEnumerable<T> ColSums() {
+			for (int col = 0; col < grid.ColsCount; col++) {
+				T sum = T.Zero;
+				for (int row = 0; row < grid.RowsCount; row++) {
+					sum += grid[col, row];
+				}
+				yield return sum;
+			}
+		}
+
+		/// <summary>
+		/// Computes the average of each row in the grid.
+		/// </summary>
+		/// <returns>An enumerable containing the average of each row.</returns>
+		/// <exception cref="InvalidOperationException">Thrown when the grid has no columns.</exception>
+		public IEnumerable<T> RowAverages() {
+			if (grid.ColsCount == 0) {
+				throw new InvalidOperationException("Cannot compute row averages for a grid with no columns.");
+			}
+
+			T count = T.CreateChecked(grid.ColsCount);
+			for (int row = 0; row < grid.RowsCount; row++) {
+				T sum = T.Zero;
+				for (int col = 0; col < grid.ColsCount; col++) {
+					sum += grid[col, row];
+				}
+				yield return sum / count;
+			}
+		}
+
+		/// <summary>
+		/// Computes the average of each column in the grid.
+		/// </summary>
+		/// <returns>An enumerable containing the average of each column.</returns>
+		/// <exception cref="InvalidOperationException">Thrown when the grid has no rows.</exception>
+		public IEnumerable<T> ColAverages() {
+			if (grid.RowsCount == 0) {
+				throw new InvalidOperationException("Cannot compute column averages for a grid with no rows.");
+			}
+
+			T count = T.CreateChecked(grid.RowsCount);
+			for (int col = 0; col < grid.ColsCount; col++) {
+				T sum = T.Zero;
+				for (int row = 0; row < grid.RowsCount; row++) {
+					sum += grid[col, row];
+				}
+				yield return sum / count;
+			}
+		}
+
+		/// <summary>
+		/// Computes the minimum value of each row in the grid.
+		/// </summary>
+		/// <returns>An enumerable containing the minimum value of each row.</returns>
+		/// <exception cref="InvalidOperationException">Thrown when the grid has no columns.</exception>
+		public IEnumerable<T> RowMins() {
+			if (grid.ColsCount == 0) {
+				throw new InvalidOperationException("Cannot compute row minimums for a grid with no columns.");
+			}
+
+			for (int row = 0; row < grid.RowsCount; row++) {
+				T min = grid[0, row];
+				for (int col = 1; col < grid.ColsCount; col++) {
+					T value = grid[col, row];
+					if (value < min) {
+						min = value;
+					}
+				}
+				yield return min;
+			}
+		}
+
+		/// <summary>
+		/// Computes the maximum value of each row in the grid.
+		/// </summary>
+		/// <returns>An enumerable containing the maximum value of each row.</returns>
+		/// <exception cref="InvalidOperationException">Thrown when the grid has no columns.</exception>
+		public IEnumerable<T> RowMaxs() {
+			if (grid.ColsCount == 0) {
+				throw new InvalidOperationException("Cannot compute row maximums for a grid with no columns.");
+			}
+
+			for (int row = 0; row < grid.RowsCount; row++) {
+				T max = grid[0, row];
+				for (int col = 1; col < grid.ColsCount; col++) {
+					T value = grid[col, row];
+					if (value > max) {
+						max = value;
+					}
+				}
+				yield return max;
+			}
+		}
+
+		/// <summary>
+		/// Computes the minimum value of each column in the grid.
+		/// </summary>
+		/// <returns>An enumerable containing the minimum value of each column.</returns>
+		/// <exception cref="InvalidOperationException">Thrown when the grid has no rows.</exception>
+		public IEnumerable<T> ColMins() {
+			if (grid.RowsCount == 0) {
+				throw new InvalidOperationException("Cannot compute column minimums for a grid with no rows.");
+			}
+
+			for (int col = 0; col < grid.ColsCount; col++) {
+				T min = grid[col, 0];
+				for (int row = 1; row < grid.RowsCount; row++) {
+					T value = grid[col, row];
+					if (value < min) {
+						min = value;
+					}
+				}
+				yield return min;
+			}
+		}
+
+		/// <summary>
+		/// Computes the maximum value of each column in the grid.
+		/// </summary>
+		/// <returns>An enumerable containing the maximum value of each column.</returns>
+		/// <exception cref="InvalidOperationException">Thrown when the grid has no rows.</exception>
+		public IEnumerable<T> ColMaxs() {
+			if (grid.RowsCount == 0) {
+				throw new InvalidOperationException("Cannot compute column maximums for a grid with no rows.");
+			}
+
+			for (int col = 0; col < grid.ColsCount; col++) {
+				T max = grid[col, 0];
+				for (int row = 1; row < grid.RowsCount; row++) {
+					T value = grid[col, row];
+					if (value > max) {
+						max = value;
+					}
+				}
+				yield return max;
+			}
+		}
+
+		/// <summary>
+		/// Computes the cumulative sum across the grid in row-major order.
+		/// </summary>
+		/// <returns>A new grid where each cell contains the sum of all previous cells (in row-major order) plus itself.</returns>
+		public Grid<T> CumulativeSum() {
+			Grid<T> result = new(grid.ColsCount, grid.RowsCount);
+			T cumulative = T.Zero;
+
+			for (int row = 0; row < grid.RowsCount; row++) {
+				for (int col = 0; col < grid.ColsCount; col++) {
+					cumulative += grid[col, row];
+					result[col, row] = cumulative;
+				}
+			}
+
+			return result;
+		}
+
+		/// <summary>
+		/// Computes the cumulative product across the grid in row-major order.
+		/// </summary>
+		/// <returns>A new grid where each cell contains the product of all previous cells (in row-major order) times itself.</returns>
+		public Grid<T> CumulativeProduct() {
+			Grid<T> result = new(grid.ColsCount, grid.RowsCount);
+			T cumulative = T.One;
+
+			for (int row = 0; row < grid.RowsCount; row++) {
+				for (int col = 0; col < grid.ColsCount; col++) {
+					cumulative *= grid[col, row];
+					result[col, row] = cumulative;
+				}
+			}
+
+			return result;
+		}
 	}
 
 	// Operator overloads for Grid<T> with INumber<T> constraint

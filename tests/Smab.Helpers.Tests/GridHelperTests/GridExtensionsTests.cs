@@ -1622,4 +1622,467 @@ public class GridExtensionsTests {
 		combined[0, 2].ShouldBe(5);
 		combined[1, 2].ShouldBe(6);
 	}
+
+	// ========================================
+	// Row/Column Aggregation Tests
+	// ========================================
+
+	[Fact]
+	public void RowSums_ShouldReturnSumForEachRow() {
+		Grid<int> grid = new(3, 3) {
+			[0, 0] = 1,
+			[1, 0] = 2,
+			[2, 0] = 3,
+			[0, 1] = 4,
+			[1, 1] = 5,
+			[2, 1] = 6,
+			[0, 2] = 7,
+			[1, 2] = 8,
+			[2, 2] = 9
+		};
+
+		List<int> rowSums = [.. grid.RowSums()];
+
+		rowSums.Count.ShouldBe(3);
+		rowSums[0].ShouldBe(6);  // 1 + 2 + 3
+		rowSums[1].ShouldBe(15); // 4 + 5 + 6
+		rowSums[2].ShouldBe(24); // 7 + 8 + 9
+	}
+
+	[Fact]
+	public void RowSums_WithSingleColumn_ShouldReturnEachValue() {
+		Grid<int> grid = new(1, 3) {
+			[0, 0] = 5,
+			[0, 1] = 10,
+			[0, 2] = 15
+		};
+
+		List<int> rowSums = [.. grid.RowSums()];
+
+		rowSums.ShouldBe([5, 10, 15]);
+	}
+
+	[Fact]
+	public void RowSums_WithZeroColumns_ShouldReturnZeros() {
+		Grid<int> grid = new(0, 3);
+
+		List<int> rowSums = [.. grid.RowSums()];
+
+		rowSums.Count.ShouldBe(3);
+		rowSums.All(x => x == 0).ShouldBeTrue();
+	}
+
+	[Fact]
+	public void ColSums_ShouldReturnSumForEachColumn() {
+		Grid<int> grid = new(3, 3) {
+			[0, 0] = 1,
+			[1, 0] = 2,
+			[2, 0] = 3,
+			[0, 1] = 4,
+			[1, 1] = 5,
+			[2, 1] = 6,
+			[0, 2] = 7,
+			[1, 2] = 8,
+			[2, 2] = 9
+		};
+
+		List<int> colSums = [.. grid.ColSums()];
+
+		colSums.Count.ShouldBe(3);
+		colSums[0].ShouldBe(12); // 1 + 4 + 7
+		colSums[1].ShouldBe(15); // 2 + 5 + 8
+		colSums[2].ShouldBe(18); // 3 + 6 + 9
+	}
+
+	[Fact]
+	public void ColSums_WithSingleRow_ShouldReturnEachValue() {
+		Grid<int> grid = new(3, 1) {
+			[0, 0] = 5,
+			[1, 0] = 10,
+			[2, 0] = 15
+		};
+
+		List<int> colSums = [.. grid.ColSums()];
+
+		colSums.ShouldBe([5, 10, 15]);
+	}
+
+	[Fact]
+	public void ColSums_WithZeroRows_ShouldReturnZeros() {
+		Grid<int> grid = new(3, 0);
+
+		List<int> colSums = [.. grid.ColSums()];
+
+		colSums.Count.ShouldBe(3);
+		colSums.All(x => x == 0).ShouldBeTrue();
+	}
+
+	[Fact]
+	public void RowAverages_ShouldReturnAverageForEachRow() {
+		Grid<double> grid = new(3, 2) {
+			[0, 0] = 1.0,
+			[1, 0] = 2.0,
+			[2, 0] = 3.0,
+			[0, 1] = 4.0,
+			[1, 1] = 5.0,
+			[2, 1] = 6.0
+		};
+
+		List<double> rowAverages = [.. grid.RowAverages()];
+
+		rowAverages.Count.ShouldBe(2);
+		rowAverages[0].ShouldBe(2.0); // (1 + 2 + 3) / 3
+		rowAverages[1].ShouldBe(5.0); // (4 + 5 + 6) / 3
+	}
+
+	[Fact]
+	public void RowAverages_WithZeroColumns_ShouldThrow() {
+		Grid<int> grid = new(0, 3);
+
+		Should.Throw<InvalidOperationException>(() => grid.RowAverages().ToList());
+	}
+
+	[Fact]
+	public void ColAverages_ShouldReturnAverageForEachColumn() {
+		Grid<double> grid = new(2, 3) {
+			[0, 0] = 1.0,
+			[1, 0] = 4.0,
+			[0, 1] = 2.0,
+			[1, 1] = 5.0,
+			[0, 2] = 3.0,
+			[1, 2] = 6.0
+		};
+
+		List<double> colAverages = [.. grid.ColAverages()];
+
+		colAverages.Count.ShouldBe(2);
+		colAverages[0].ShouldBe(2.0); // (1 + 2 + 3) / 3
+		colAverages[1].ShouldBe(5.0); // (4 + 5 + 6) / 3
+	}
+
+	[Fact]
+	public void ColAverages_WithZeroRows_ShouldThrow() {
+		Grid<int> grid = new(3, 0);
+
+		Should.Throw<InvalidOperationException>(() => grid.ColAverages().ToList());
+	}
+
+	[Fact]
+	public void RowMins_ShouldReturnMinimumForEachRow() {
+		Grid<int> grid = new(3, 3) {
+			[0, 0] = 5,
+			[1, 0] = 2,
+			[2, 0] = 8,
+			[0, 1] = 1,
+			[1, 1] = 9,
+			[2, 1] = 3,
+			[0, 2] = 7,
+			[1, 2] = 4,
+			[2, 2] = 6
+		};
+
+		List<int> rowMins = [.. grid.RowMins()];
+
+		rowMins.Count.ShouldBe(3);
+		rowMins[0].ShouldBe(2); // min(5, 2, 8)
+		rowMins[1].ShouldBe(1); // min(1, 9, 3)
+		rowMins[2].ShouldBe(4); // min(7, 4, 6)
+	}
+
+	[Fact]
+	public void RowMins_WithZeroColumns_ShouldThrow() {
+		Grid<int> grid = new(0, 3);
+
+		Should.Throw<InvalidOperationException>(() => grid.RowMins().ToList());
+	}
+
+	[Fact]
+	public void RowMaxs_ShouldReturnMaximumForEachRow() {
+		Grid<int> grid = new(3, 3) {
+			[0, 0] = 5,
+			[1, 0] = 2,
+			[2, 0] = 8,
+			[0, 1] = 1,
+			[1, 1] = 9,
+			[2, 1] = 3,
+			[0, 2] = 7,
+			[1, 2] = 4,
+			[2, 2] = 6
+		};
+
+		List<int> rowMaxs = [.. grid.RowMaxs()];
+
+		rowMaxs.Count.ShouldBe(3);
+		rowMaxs[0].ShouldBe(8); // max(5, 2, 8)
+		rowMaxs[1].ShouldBe(9); // max(1, 9, 3)
+		rowMaxs[2].ShouldBe(7); // max(7, 4, 6)
+	}
+
+	[Fact]
+	public void RowMaxs_WithZeroColumns_ShouldThrow() {
+		Grid<int> grid = new(0, 3);
+
+		Should.Throw<InvalidOperationException>(() => grid.RowMaxs().ToList());
+	}
+
+	[Fact]
+	public void ColMins_ShouldReturnMinimumForEachColumn() {
+		Grid<int> grid = new(3, 3) {
+			[0, 0] = 5,
+			[1, 0] = 2,
+			[2, 0] = 8,
+			[0, 1] = 1,
+			[1, 1] = 9,
+			[2, 1] = 3,
+			[0, 2] = 7,
+			[1, 2] = 4,
+			[2, 2] = 6
+		};
+
+		List<int> colMins = [.. grid.ColMins()];
+
+		colMins.Count.ShouldBe(3);
+		colMins[0].ShouldBe(1); // min(5, 1, 7)
+		colMins[1].ShouldBe(2); // min(2, 9, 4)
+		colMins[2].ShouldBe(3); // min(8, 3, 6)
+	}
+
+	[Fact]
+	public void ColMins_WithZeroRows_ShouldThrow() {
+		Grid<int> grid = new(3, 0);
+
+		Should.Throw<InvalidOperationException>(() => grid.ColMins().ToList());
+	}
+
+	[Fact]
+	public void ColMaxs_ShouldReturnMaximumForEachColumn() {
+		Grid<int> grid = new(3, 3) {
+			[0, 0] = 5,
+			[1, 0] = 2,
+			[2, 0] = 8,
+			[0, 1] = 1,
+			[1, 1] = 9,
+			[2, 1] = 3,
+			[0, 2] = 7,
+			[1, 2] = 4,
+			[2, 2] = 6
+		};
+
+		List<int> colMaxs = [.. grid.ColMaxs()];
+
+		colMaxs.Count.ShouldBe(3);
+		colMaxs[0].ShouldBe(7); // max(5, 1, 7)
+		colMaxs[1].ShouldBe(9); // max(2, 9, 4)
+		colMaxs[2].ShouldBe(8); // max(8, 3, 6)
+	}
+
+	[Fact]
+	public void ColMaxs_WithZeroRows_ShouldThrow() {
+		Grid<int> grid = new(3, 0);
+
+		Should.Throw<InvalidOperationException>(() => grid.ColMaxs().ToList());
+	}
+
+	[Fact]
+	public void RowSums_WithDoubleGrid_ShouldWork() {
+		Grid<double> grid = new(2, 2) {
+			[0, 0] = 1.5,
+			[1, 0] = 2.5,
+			[0, 1] = 3.5,
+			[1, 1] = 4.5
+		};
+
+		List<double> rowSums = [.. grid.RowSums()];
+
+		rowSums[0].ShouldBe(4.0);
+		rowSums[1].ShouldBe(8.0);
+	}
+
+	[Fact]
+	public void ColSums_WithDecimalGrid_ShouldWork() {
+		Grid<decimal> grid = new(2, 2) {
+			[0, 0] = 10.5m,
+			[1, 0] = 20.5m,
+			[0, 1] = 30.5m,
+			[1, 1] = 40.5m
+		};
+
+		List<decimal> colSums = [.. grid.ColSums()];
+
+		colSums[0].ShouldBe(41.0m);
+		colSums[1].ShouldBe(61.0m);
+	}
+
+	// ========================================
+	// Cumulative Operations Tests
+	// ========================================
+
+	[Fact]
+	public void CumulativeSum_ShouldReturnRunningSum() {
+		Grid<int> grid = new(3, 2) {
+			[0, 0] = 1,
+			[1, 0] = 2,
+			[2, 0] = 3,
+			[0, 1] = 4,
+			[1, 1] = 5,
+			[2, 1] = 6
+		};
+
+		Grid<int> result = grid.CumulativeSum();
+
+		result.ColsCount.ShouldBe(3);
+		result.RowsCount.ShouldBe(2);
+		result[0, 0].ShouldBe(1);  // 1
+		result[1, 0].ShouldBe(3);  // 1 + 2
+		result[2, 0].ShouldBe(6);  // 1 + 2 + 3
+		result[0, 1].ShouldBe(10); // 1 + 2 + 3 + 4
+		result[1, 1].ShouldBe(15); // 1 + 2 + 3 + 4 + 5
+		result[2, 1].ShouldBe(21); // 1 + 2 + 3 + 4 + 5 + 6
+	}
+
+	[Fact]
+	public void CumulativeSum_WithDoubleGrid_ShouldWork() {
+		Grid<double> grid = new(2, 2) {
+			[0, 0] = 1.5,
+			[1, 0] = 2.5,
+			[0, 1] = 3.5,
+			[1, 1] = 4.5
+		};
+
+		Grid<double> result = grid.CumulativeSum();
+
+		result[0, 0].ShouldBe(1.5);
+		result[1, 0].ShouldBe(4.0);
+		result[0, 1].ShouldBe(7.5);
+		result[1, 1].ShouldBe(12.0);
+	}
+
+	[Fact]
+	public void CumulativeSum_WithSingleElement_ShouldReturnSameValue() {
+		Grid<int> grid = new(1, 1) {
+			[0, 0] = 42
+		};
+
+		Grid<int> result = grid.CumulativeSum();
+
+		result[0, 0].ShouldBe(42);
+	}
+
+	[Fact]
+	public void CumulativeSum_WithEmptyGrid_ShouldReturnEmptyGrid() {
+		Grid<int> grid = new(0, 0);
+
+		Grid<int> result = grid.CumulativeSum();
+
+		result.ColsCount.ShouldBe(0);
+		result.RowsCount.ShouldBe(0);
+	}
+
+	[Fact]
+	public void CumulativeProduct_ShouldReturnRunningProduct() {
+		Grid<int> grid = new(3, 2) {
+			[0, 0] = 1,
+			[1, 0] = 2,
+			[2, 0] = 3,
+			[0, 1] = 4,
+			[1, 1] = 5,
+			[2, 1] = 6
+		};
+
+		Grid<int> result = grid.CumulativeProduct();
+
+		result.ColsCount.ShouldBe(3);
+		result.RowsCount.ShouldBe(2);
+		result[0, 0].ShouldBe(1);    // 1
+		result[1, 0].ShouldBe(2);    // 1 * 2
+		result[2, 0].ShouldBe(6);    // 1 * 2 * 3
+		result[0, 1].ShouldBe(24);   // 1 * 2 * 3 * 4
+		result[1, 1].ShouldBe(120);  // 1 * 2 * 3 * 4 * 5
+		result[2, 1].ShouldBe(720);  // 1 * 2 * 3 * 4 * 5 * 6
+	}
+
+	[Fact]
+	public void CumulativeProduct_WithDoubleGrid_ShouldWork() {
+		Grid<double> grid = new(2, 2) {
+			[0, 0] = 2.0,
+			[1, 0] = 3.0,
+			[0, 1] = 4.0,
+			[1, 1] = 5.0
+		};
+
+		Grid<double> result = grid.CumulativeProduct();
+
+		result[0, 0].ShouldBe(2.0);
+		result[1, 0].ShouldBe(6.0);
+		result[0, 1].ShouldBe(24.0);
+		result[1, 1].ShouldBe(120.0);
+	}
+
+	[Fact]
+	public void CumulativeProduct_WithSingleElement_ShouldReturnSameValue() {
+		Grid<int> grid = new(1, 1) {
+			[0, 0] = 7
+		};
+
+		Grid<int> result = grid.CumulativeProduct();
+
+		result[0, 0].ShouldBe(7);
+	}
+
+	[Fact]
+	public void CumulativeProduct_WithEmptyGrid_ShouldReturnEmptyGrid() {
+		Grid<int> grid = new(0, 0);
+
+		Grid<int> result = grid.CumulativeProduct();
+
+		result.ColsCount.ShouldBe(0);
+		result.RowsCount.ShouldBe(0);
+	}
+
+	[Fact]
+	public void CumulativeProduct_WithZero_ShouldMaintainZero() {
+		Grid<int> grid = new(3, 1) {
+			[0, 0] = 2,
+			[1, 0] = 0,
+			[2, 0] = 5
+		};
+
+		Grid<int> result = grid.CumulativeProduct();
+
+		result[0, 0].ShouldBe(2);
+		result[1, 0].ShouldBe(0);
+		result[2, 0].ShouldBe(0);
+	}
+
+	[Fact]
+	public void CumulativeSum_ShouldNotModifyOriginal() {
+		Grid<int> original = new(2, 2) {
+			[0, 0] = 1,
+			[1, 0] = 2,
+			[0, 1] = 3,
+			[1, 1] = 4
+		};
+
+		Grid<int> cumulative = original.CumulativeSum();
+
+		original[0, 0].ShouldBe(1);
+		original[1, 1].ShouldBe(4);
+		cumulative[1, 1].ShouldBe(10);
+	}
+
+	[Fact]
+	public void CumulativeProduct_ShouldNotModifyOriginal() {
+		Grid<int> original = new(2, 2) {
+			[0, 0] = 2,
+			[1, 0] = 3,
+			[0, 1] = 4,
+			[1, 1] = 5
+		};
+
+		Grid<int> cumulative = original.CumulativeProduct();
+
+		original[0, 0].ShouldBe(2);
+		original[1, 1].ShouldBe(5);
+		cumulative[1, 1].ShouldBe(120);
+	}
 }
