@@ -47,6 +47,29 @@ public record Grid<T>(int ColsCount, int RowsCount) {
 		set => Cells[point.X, point.Y] = value;
 	}
 
+	// Indexer
+	/// <summary>
+	/// Gets a sub-grid containing the elements within the specified column and row ranges.
+	/// </summary>
+	/// <param name="colRange">The range of columns to include.</param>
+	/// <param name="rowRange">The range of rows to include.</param>
+	/// <returns>A new grid containing the elements within the specified ranges.</returns>
+	public Grid<T> this[Range colRange, Range rowRange] {
+		get {
+			(int colOffset, int colLength) = colRange.GetOffsetAndLength(ColsCount);
+			(int rowOffset, int rowLength) = rowRange.GetOffsetAndLength(RowsCount);
+
+			Grid<T> result = new(colLength, rowLength);
+			for (int col = 0; col < colLength; col++) {
+				for (int row = 0; row < rowLength; row++) {
+					result[col, row] = Cells[colOffset + col, rowOffset + row];
+				}
+			}
+
+			return result;
+		}
+	}
+
 	// Conversion to underlying array
 	/// <summary>
 	/// Gets a reference to the underlying two-dimensional array.

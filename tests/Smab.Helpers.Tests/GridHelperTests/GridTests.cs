@@ -537,4 +537,136 @@ public class GridTests {
 		array[1, 0] = 99;
 		grid[1, 0].ShouldBe(99); // Should affect grid since it's the same underlying array
 	}
+
+	[Fact]
+	public void RangeIndexer_ShouldExtractSubGrid() {
+		Grid<int> original = new(4, 4);
+		for (int i = 0; i < 4; i++) {
+			for (int j = 0; j < 4; j++) {
+				original[i, j] = i * 10 + j;
+			}
+		}
+
+		Grid<int> subGrid = original[1..3, 1..3];
+
+		subGrid.ColsCount.ShouldBe(2);
+		subGrid.RowsCount.ShouldBe(2);
+		subGrid[0, 0].ShouldBe(11);
+		subGrid[1, 0].ShouldBe(21);
+		subGrid[0, 1].ShouldBe(12);
+		subGrid[1, 1].ShouldBe(22);
+	}
+
+	[Fact]
+	public void RangeIndexer_WithOpenEndRange_ShouldExtractToEnd() {
+		Grid<int> original = new(4, 3);
+		for (int i = 0; i < 4; i++) {
+			for (int j = 0; j < 3; j++) {
+				original[i, j] = i * 10 + j;
+			}
+		}
+
+		Grid<int> subGrid = original[2.., 1..];
+
+		subGrid.ColsCount.ShouldBe(2);
+		subGrid.RowsCount.ShouldBe(2);
+		subGrid[0, 0].ShouldBe(21);
+		subGrid[1, 0].ShouldBe(31);
+		subGrid[0, 1].ShouldBe(22);
+		subGrid[1, 1].ShouldBe(32);
+	}
+
+	[Fact]
+	public void RangeIndexer_WithOpenStartRange_ShouldExtractFromStart() {
+		Grid<int> original = new(4, 3);
+		for (int i = 0; i < 4; i++) {
+			for (int j = 0; j < 3; j++) {
+				original[i, j] = i * 10 + j;
+			}
+		}
+
+		Grid<int> subGrid = original[..2, ..2];
+
+		subGrid.ColsCount.ShouldBe(2);
+		subGrid.RowsCount.ShouldBe(2);
+		subGrid[0, 0].ShouldBe(0);
+		subGrid[1, 0].ShouldBe(10);
+		subGrid[0, 1].ShouldBe(1);
+		subGrid[1, 1].ShouldBe(11);
+	}
+
+	[Fact]
+	public void RangeIndexer_WithFullRange_ShouldCopyEntireGrid() {
+		Grid<int> original = new(2, 2);
+		original[0, 0] = 1;
+		original[1, 0] = 2;
+		original[0, 1] = 3;
+		original[1, 1] = 4;
+
+		Grid<int> subGrid = original[.., ..];
+
+		subGrid.ColsCount.ShouldBe(2);
+		subGrid.RowsCount.ShouldBe(2);
+		subGrid[0, 0].ShouldBe(1);
+		subGrid[1, 0].ShouldBe(2);
+		subGrid[0, 1].ShouldBe(3);
+		subGrid[1, 1].ShouldBe(4);
+		subGrid[0, 0] = 99;
+		original[0, 0].ShouldBe(1); // Original should not be affected
+	}
+
+	[Fact]
+	public void RangeIndexer_WithHatOperator_ShouldExtractFromEnd() {
+		Grid<int> original = new(4, 4);
+		for (int i = 0; i < 4; i++) {
+			for (int j = 0; j < 4; j++) {
+				original[i, j] = i * 10 + j;
+			}
+		}
+
+		Grid<int> subGrid = original[^2.., ^2..];
+
+		subGrid.ColsCount.ShouldBe(2);
+		subGrid.RowsCount.ShouldBe(2);
+		subGrid[0, 0].ShouldBe(22);
+		subGrid[1, 0].ShouldBe(32);
+		subGrid[0, 1].ShouldBe(23);
+		subGrid[1, 1].ShouldBe(33);
+	}
+
+	[Fact]
+	public void RangeIndexer_WithMixedRanges_ShouldExtractCorrectRegion() {
+		Grid<int> original = new(5, 5);
+		for (int i = 0; i < 5; i++) {
+			for (int j = 0; j < 5; j++) {
+				original[i, j] = i * 10 + j;
+			}
+		}
+
+		Grid<int> subGrid = original[1..^1, ..3];
+
+		subGrid.ColsCount.ShouldBe(3);
+		subGrid.RowsCount.ShouldBe(3);
+		subGrid[0, 0].ShouldBe(10);
+		subGrid[1, 0].ShouldBe(20);
+		subGrid[2, 0].ShouldBe(30);
+		subGrid[0, 2].ShouldBe(12);
+		subGrid[2, 2].ShouldBe(32);
+	}
+
+	[Fact]
+	public void RangeIndexer_WithSingleElementRange_ShouldExtractOneByOneGrid() {
+		Grid<int> original = new(3, 3);
+		for (int i = 0; i < 3; i++) {
+			for (int j = 0; j < 3; j++) {
+				original[i, j] = i * 10 + j;
+			}
+		}
+
+		Grid<int> subGrid = original[1..2, 1..2];
+
+		subGrid.ColsCount.ShouldBe(1);
+		subGrid.RowsCount.ShouldBe(1);
+		subGrid[0, 0].ShouldBe(11);
+	}
 }
