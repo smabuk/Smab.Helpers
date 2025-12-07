@@ -25,6 +25,42 @@ public record Grid<T>(int ColsCount, int RowsCount) {
 
 	// Indexer
 	/// <summary>
+	/// Gets or sets the element at the specified column and row using Index values.
+	/// </summary>
+	/// <param name="colIndex">The column index (supports index from end using ^).</param>
+	/// <param name="rowIndex">The row index (supports index from end using ^).</param>
+	/// <returns>The element at the specified position.</returns>
+	public T this[Index colIndex, Index rowIndex] {
+		get => Cells[colIndex.GetOffset(ColsCount), rowIndex.GetOffset(RowsCount)];
+		set => Cells[colIndex.GetOffset(ColsCount), rowIndex.GetOffset(RowsCount)] = value;
+	}
+
+	// Indexer
+	/// <summary>
+	/// Gets or sets the element at the specified column and row.
+	/// </summary>
+	/// <param name="col">The zero-based column index.</param>
+	/// <param name="rowIndex">The row index (supports index from end using ^).</param>
+	/// <returns>The element at the specified position.</returns>
+	public T this[int col, Index rowIndex] {
+		get => Cells[col, rowIndex.GetOffset(RowsCount)];
+		set => Cells[col, rowIndex.GetOffset(RowsCount)] = value;
+	}
+
+	// Indexer
+	/// <summary>
+	/// Gets or sets the element at the specified column and row.
+	/// </summary>
+	/// <param name="colIndex">The column index (supports index from end using ^).</param>
+	/// <param name="row">The zero-based row index.</param>
+	/// <returns>The element at the specified position.</returns>
+	public T this[Index colIndex, int row] {
+		get => Cells[colIndex.GetOffset(ColsCount), row];
+		set => Cells[colIndex.GetOffset(ColsCount), row] = value;
+	}
+
+	// Indexer
+	/// <summary>
 	/// Gets or sets the value at the specified grid location.
 	/// </summary>
 	/// <param name="point">The grid coordinates used to access the value. The X and Y properties specify the column and row indices,

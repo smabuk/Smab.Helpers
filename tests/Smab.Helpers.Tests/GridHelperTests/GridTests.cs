@@ -791,4 +791,100 @@ public class GridTests {
 		slice.Count.ShouldBe(3);
 		slice.ShouldBe([12, 22, 32]);
 	}
+
+	[Fact]
+	public void IndexIndexIndexer_ShouldGetValue() {
+		Grid<int> grid = new(4, 4);
+		for (int i = 0; i < 4; i++) {
+			for (int j = 0; j < 4; j++) {
+				grid[i, j] = i * 10 + j;
+			}
+		}
+
+		grid[^1, ^1].ShouldBe(33);
+		grid[^2, ^3].ShouldBe(21);
+		grid[^4, ^4].ShouldBe(0);
+	}
+
+	[Fact]
+	public void IndexIndexIndexer_ShouldSetValue() {
+		Grid<int> grid = new(4, 4);
+
+		grid[^1, ^1] = 99;
+		grid[^2, ^3] = 88;
+		grid[^4, ^4] = 77;
+
+		grid[3, 3].ShouldBe(99);
+		grid[2, 1].ShouldBe(88);
+		grid[0, 0].ShouldBe(77);
+	}
+
+	[Fact]
+	public void IntIndexIndexer_ShouldGetValue() {
+		Grid<int> grid = new(4, 4);
+		for (int i = 0; i < 4; i++) {
+			for (int j = 0; j < 4; j++) {
+				grid[i, j] = i * 10 + j;
+			}
+		}
+
+		grid[1, ^1].ShouldBe(13);
+		grid[2, ^2].ShouldBe(22);
+		grid[0, ^3].ShouldBe(1);
+	}
+
+	[Fact]
+	public void IntIndexIndexer_ShouldSetValue() {
+		Grid<int> grid = new(4, 4);
+
+		grid[1, ^1] = 99;
+		grid[2, ^2] = 88;
+		grid[0, ^4] = 77;
+
+		grid[1, 3].ShouldBe(99);
+		grid[2, 2].ShouldBe(88);
+		grid[0, 0].ShouldBe(77);
+	}
+
+	[Fact]
+	public void IndexIntIndexer_ShouldGetValue() {
+		Grid<int> grid = new(4, 4);
+		for (int i = 0; i < 4; i++) {
+			for (int j = 0; j < 4; j++) {
+				grid[i, j] = i * 10 + j;
+			}
+		}
+
+		grid[^1, 2].ShouldBe(32);
+		grid[^2, 1].ShouldBe(21);
+		grid[^3, 0].ShouldBe(10);
+	}
+
+	[Fact]
+	public void IndexIntIndexer_ShouldSetValue() {
+		Grid<int> grid = new(4, 4);
+
+		grid[^1, 2] = 99;
+		grid[^2, 1] = 88;
+		grid[^4, 0] = 77;
+
+		grid[3, 2].ShouldBe(99);
+		grid[2, 1].ShouldBe(88);
+		grid[0, 0].ShouldBe(77);
+	}
+
+	[Fact]
+	public void IndexIndexers_WithMixedAccess_ShouldWorkCorrectly() {
+		Grid<int> grid = new(5, 5);
+		for (int i = 0; i < 5; i++) {
+			for (int j = 0; j < 5; j++) {
+				grid[i, j] = i * 10 + j;
+			}
+		}
+
+		grid[^1, ^1].ShouldBe(44);
+		grid[2, ^1].ShouldBe(24);
+		grid[^1, 2].ShouldBe(42);
+		grid[1, 1].ShouldBe(11);
+	}
 }
