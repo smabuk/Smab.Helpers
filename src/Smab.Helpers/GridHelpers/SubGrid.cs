@@ -29,6 +29,18 @@ public static partial class ArrayHelpers {
 		/// <summary>
 		/// Extracts a subgrid from the grid, starting at the given top-left position.
 		/// </summary>
+		/// <param name="topLeft">A tuple containing the column and row indices of the top-left corner.</param>
+		/// <param name="noOfCols">The number of columns to include in the subgrid.</param>
+		/// <param name="noOfRows">The number of rows to include in the subgrid.</param>
+		/// <param name="init">The default value used to initialize elements outside the bounds of the source grid.</param>
+		/// <returns>A new grid containing the extracted subgrid.</returns>
+		public Grid<T> SubGrid((int col, int row) topLeft, int noOfCols, int noOfRows, T init = default!) {
+			return grid.SubGrid(topLeft.col, topLeft.row, noOfCols, noOfRows, init);
+		}
+
+		/// <summary>
+		/// Extracts a subgrid from the grid, starting at the given top-left position.
+		/// </summary>
 		/// <param name="topLeft">The top-left position where the subgrid begins.</param>
 		/// <param name="noOfCols">The number of columns to include in the subgrid.</param>
 		/// <param name="noOfRows">The number of rows to include in the subgrid.</param>
@@ -36,6 +48,17 @@ public static partial class ArrayHelpers {
 		/// <returns>A new grid containing the extracted subgrid.</returns>
 		public Grid<T> SubGrid(Point topLeft, int noOfCols, int noOfRows, T init = default!) {
 			return grid.SubGrid(topLeft.X, topLeft.Y, noOfCols, noOfRows, init);
+		}
+
+		/// <summary>
+		/// Extracts a subgrid defined by the top-left and bottom-right corner coordinates.
+		/// </summary>
+		/// <param name="topLeft">A tuple containing the column and row indices of the top-left corner.</param>
+		/// <param name="bottomRight">A tuple containing the column and row indices of the bottom-right corner.</param>
+		/// <param name="init">The default value used to initialize elements if the range exceeds the bounds.</param>
+		/// <returns>A new grid containing the elements within the specified range.</returns>
+		public Grid<T> SubGrid((int col, int row) topLeft, (int col, int row) bottomRight, T init = default!) {
+			return grid.SubGrid(topLeft.col, topLeft.row, bottomRight.col - topLeft.col + 1, bottomRight.row - topLeft.row + 1, init);
 		}
 
 		/// <summary>

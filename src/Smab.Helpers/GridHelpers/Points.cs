@@ -98,11 +98,11 @@ public static partial class PointHelpers {
 		/// <summary>
 		/// Returns all adjacent points to the specified point in a two-dimensional space.
 		/// </summary>
-		/// <remarks>This method assumes a two-dimensional grid where each point has up to eight neighbors. The returned
+		/// <remarks>This method assumes a two-dimensional grid where each point has up to eight neighbours. The returned
 		/// points are calculated by adding predefined directional offsets to the specified point.</remarks>
 		/// <param name="point">The point for which to find adjacent points.</param>
 		/// <returns>An <see cref="IEnumerable{T}"/> of <see cref="Point"/> objects representing the points adjacent to the specified
-		/// point. The result includes all directly neighboring points in eight possible directions (up, down, left, right, and
+		/// point. The result includes all directly neighbouring points in eight possible directions (up, down, left, right, and
 		/// diagonals).</returns>
 		public IEnumerable<Point> AllAdjacent() => ALL_DIRECTIONS.Select(d => point + d);
 

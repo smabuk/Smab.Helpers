@@ -23,7 +23,7 @@ public static partial class AlgorithmicHelpers {
 	///
 	///      while Q is not empty:                      // The main loop
 	///          u ← Q.extract_min()                    // Remove and return best vertex
-	///          for each neighbor v of u:              // only v that are still in Q
+	///          for each neighbour v of u:              // only v that are still in Q
 	///              alt ← dist[u] + length(u, v)
 	///              if alt < dist[v]
 	///                  dist[v] ← alt

@@ -39,6 +39,27 @@ public static partial class ArrayHelpers {
 		/// <param name="value">The value to locate in the grid.</param>
 		/// <returns>true if the value is found; otherwise, false.</returns>
 		public bool Contains(T value) => grid.Find(value).HasValue;
+
+		/// <summary>
+		/// Finds the first occurrence of a value in the grid and returns the position as a Point.
+		/// </summary>
+		/// <param name="value">The value to find.</param>
+		/// <returns>The Point coordinates of the first occurrence, or null if not found.</returns>
+		public Point? FindAsPoint(T value) {
+			(int col, int row)? result = grid.Find(value);
+			return result.HasValue ? new Point(result.Value.col, result.Value.row) : null;
+		}
+
+		/// <summary>
+		/// Finds all occurrences of a value in the grid and returns the positions as Points.
+		/// </summary>
+		/// <param name="value">The value to find.</param>
+		/// <returns>An enumerable of Point coordinates where the value is found.</returns>
+		public IEnumerable<Point> FindAllAsPoints(T value) {
+			foreach ((int col, int row) in grid.FindAll(value)) {
+				yield return new Point(col, row);
+			}
+		}
 	}
 
 	extension<T>(Grid<T> grid) {
@@ -112,6 +133,27 @@ public static partial class ArrayHelpers {
 			}
 			return count;
 		}
+
+		/// <summary>
+		/// Finds the first element that satisfies the specified predicate and returns the position as a Point.
+		/// </summary>
+		/// <param name="predicate">A function to test each element.</param>
+		/// <returns>The Point coordinates of the first matching element, or null if no match is found.</returns>
+		public Point? FindAsPoint(Predicate<T> predicate) {
+			(int col, int row)? result = grid.Find(predicate);
+			return result.HasValue ? new Point(result.Value.col, result.Value.row) : null;
+		}
+
+		/// <summary>
+		/// Finds all elements that satisfy the specified predicate and returns the positions as Points.
+		/// </summary>
+		/// <param name="predicate">A function to test each element.</param>
+		/// <returns>An enumerable of Point coordinates where elements match the predicate.</returns>
+		public IEnumerable<Point> FindAllAsPoints(Predicate<T> predicate) {
+			foreach ((int col, int row) in grid.FindAll(predicate)) {
+				yield return new Point(col, row);
+			}
+		}
 	}
 
 	extension<T>(T[,] array) where T : IEquatable<T> {
@@ -158,6 +200,27 @@ public static partial class ArrayHelpers {
 		/// <param name="value">The value to locate in the array.</param>
 		/// <returns>true if the value is found; otherwise, false.</returns>
 		public bool Contains(T value) => array.Find(value).HasValue;
+
+		/// <summary>
+		/// Finds the first occurrence of a value in the array and returns the position as a Point.
+		/// </summary>
+		/// <param name="value">The value to find.</param>
+		/// <returns>The Point coordinates of the first occurrence, or null if not found.</returns>
+		public Point? FindAsPoint(T value) {
+			(int col, int row)? result = array.Find(value);
+			return result.HasValue ? new Point(result.Value.col, result.Value.row) : null;
+		}
+
+		/// <summary>
+		/// Finds all occurrences of a value in the array and returns the positions as Points.
+		/// </summary>
+		/// <param name="value">The value to find.</param>
+		/// <returns>An enumerable of Point coordinates where the value is found.</returns>
+		public IEnumerable<Point> FindAllAsPoints(T value) {
+			foreach ((int col, int row) in array.FindAll(value)) {
+				yield return new Point(col, row);
+			}
+		}
 	}
 
 	extension<T>(T[,] array) {
@@ -223,5 +286,27 @@ public static partial class ArrayHelpers {
 			}
 			return true;
 		}
+
+		/// <summary>
+		/// Finds the first element that satisfies the specified predicate and returns the position as a Point.
+		/// </summary>
+		/// <param name="predicate">A function to test each element.</param>
+		/// <returns>The Point coordinates of the first matching element, or null if no match is found.</returns>
+		public Point? FindAsPoint(Predicate<T> predicate) {
+			(int col, int row)? result = array.Find(predicate);
+			return result.HasValue ? new Point(result.Value.col, result.Value.row) : null;
+		}
+
+		/// <summary>
+		/// Finds all elements that satisfies the specified predicate and returns the positions as Points.
+		/// </summary>
+		/// <param name="predicate">A function to test each element.</param>
+		/// <returns>An enumerable of Point coordinates where elements match the predicate.</returns>
+		public IEnumerable<Point> FindAllAsPoints(Predicate<T> predicate) {
+			foreach ((int col, int row) in array.FindAll(predicate)) {
+				yield return new Point(col, row);
+			}
+		}
 	}
 }
+

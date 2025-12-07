@@ -640,11 +640,11 @@ public class GridExtensionsTests {
 	}
 
 	// ========================================
-	// Feature 6: Neighbors Tests
+	// Feature 6: Neighbours Tests
 	// ========================================
 
 	[Fact]
-	public void GetNeighbors_WithoutDiagonals_ShouldReturnCardinalNeighbors() {
+	public void GetNeighbours_WithoutDiagonals_ShouldReturnCardinalNeighbours() {
 		Grid<int> grid = new(3, 3);
 		for (int i = 0; i < 3; i++) {
 			for (int j = 0; j < 3; j++) {
@@ -652,17 +652,17 @@ public class GridExtensionsTests {
 			}
 		}
 
-		List<int> neighbors = [.. grid.GetNeighbors(1, 1, includeDiagonals: false)];
+		List<int> neighbours = [.. grid.GetNeighbours(1, 1, includeDiagonals: false)];
 
-		neighbors.Count.ShouldBe(4);
-		neighbors.ShouldContain(10); // North
-		neighbors.ShouldContain(21); // East
-		neighbors.ShouldContain(12); // South
-		neighbors.ShouldContain(1);  // West
+		neighbours.Count.ShouldBe(4);
+		neighbours.ShouldContain(10); // North
+		neighbours.ShouldContain(21); // East
+		neighbours.ShouldContain(12); // South
+		neighbours.ShouldContain(1);  // West
 	}
 
 	[Fact]
-	public void GetNeighbors_WithDiagonals_ShouldReturnAllEightNeighbors() {
+	public void GetNeighbours_WithDiagonals_ShouldReturnAllEightNeighbours() {
 		Grid<int> grid = new(3, 3);
 		for (int i = 0; i < 3; i++) {
 			for (int j = 0; j < 3; j++) {
@@ -670,21 +670,21 @@ public class GridExtensionsTests {
 			}
 		}
 
-		List<int> neighbors = [.. grid.GetNeighbors(1, 1, includeDiagonals: true)];
+		List<int> neighbours = [.. grid.GetNeighbours(1, 1, includeDiagonals: true)];
 
-		neighbors.Count.ShouldBe(8);
-		neighbors.ShouldContain(0);  // NW
-		neighbors.ShouldContain(10); // N
-		neighbors.ShouldContain(20); // NE
-		neighbors.ShouldContain(21); // E
-		neighbors.ShouldContain(22); // SE
-		neighbors.ShouldContain(12); // S
-		neighbors.ShouldContain(2);  // SW
-		neighbors.ShouldContain(1);  // W
+		neighbours.Count.ShouldBe(8);
+		neighbours.ShouldContain(0);  // NW
+		neighbours.ShouldContain(10); // N
+		neighbours.ShouldContain(20); // NE
+		neighbours.ShouldContain(21); // E
+		neighbours.ShouldContain(22); // SE
+		neighbours.ShouldContain(12); // S
+		neighbours.ShouldContain(2);  // SW
+		neighbours.ShouldContain(1);  // W
 	}
 
 	[Fact]
-	public void GetNeighbors_AtEdge_ShouldReturnOnlyValidNeighbors() {
+	public void GetNeighbours_AtEdge_ShouldReturnOnlyValidNeighbours() {
 		Grid<int> grid = new(3, 3);
 		for (int i = 0; i < 3; i++) {
 			for (int j = 0; j < 3; j++) {
@@ -692,15 +692,15 @@ public class GridExtensionsTests {
 			}
 		}
 
-		List<int> neighbors = [.. grid.GetNeighbors(0, 0, includeDiagonals: false)];
+		List<int> neighbours = [.. grid.GetNeighbours(0, 0, includeDiagonals: false)];
 
-		neighbors.Count.ShouldBe(2);
-		neighbors.ShouldContain(10); // East
-		neighbors.ShouldContain(1);  // South
+		neighbours.Count.ShouldBe(2);
+		neighbours.ShouldContain(10); // East
+		neighbours.ShouldContain(1);  // South
 	}
 
 	[Fact]
-	public void GetNeighbors_AtCorner_WithDiagonals_ShouldReturnThreeNeighbors() {
+	public void GetNeighbours_AtCorner_WithDiagonals_ShouldReturnThreeNeighbours() {
 		Grid<int> grid = new(3, 3);
 		for (int i = 0; i < 3; i++) {
 			for (int j = 0; j < 3; j++) {
@@ -708,16 +708,16 @@ public class GridExtensionsTests {
 			}
 		}
 
-		List<int> neighbors = [.. grid.GetNeighbors(0, 0, includeDiagonals: true)];
+		List<int> neighbours = [.. grid.GetNeighbours(0, 0, includeDiagonals: true)];
 
-		neighbors.Count.ShouldBe(3);
-		neighbors.ShouldContain(10); // E
-		neighbors.ShouldContain(1);  // S
-		neighbors.ShouldContain(11); // SE
+		neighbours.Count.ShouldBe(3);
+		neighbours.ShouldContain(10); // E
+		neighbours.ShouldContain(1);  // S
+		neighbours.ShouldContain(11); // SE
 	}
 
 	[Fact]
-	public void GetNeighborsWithCoords_ShouldReturnNeighborsAndPositions() {
+	public void GetNeighboursWithCoords_ShouldReturnNeighboursAndPositions() {
 		Grid<int> grid = new(3, 3);
 		for (int i = 0; i < 3; i++) {
 			for (int j = 0; j < 3; j++) {
@@ -725,17 +725,17 @@ public class GridExtensionsTests {
 			}
 		}
 
-		List<(int col, int row, int value)> neighbors = [.. grid.GetNeighborsWithCoords(1, 1, includeDiagonals: false)];
+		List<(int col, int row, int value)> neighbours = [.. grid.GetNeighboursWithCoords(1, 1, includeDiagonals: false)];
 
-		neighbors.Count.ShouldBe(4);
-		neighbors.ShouldContain((1, 0, 10)); // North
-		neighbors.ShouldContain((2, 1, 21)); // East
-		neighbors.ShouldContain((1, 2, 12)); // South
-		neighbors.ShouldContain((0, 1, 1));  // West
+		neighbours.Count.ShouldBe(4);
+		neighbours.ShouldContain((1, 0, 10)); // North
+		neighbours.ShouldContain((2, 1, 21)); // East
+		neighbours.ShouldContain((1, 2, 12)); // South
+		neighbours.ShouldContain((0, 1, 1));  // West
 	}
 
 	[Fact]
-	public void GetNorth_ShouldReturnNorthNeighbor() {
+	public void GetNorth_ShouldReturnNorthNeighbour() {
 		Grid<int> grid = new(3, 3) {
 			[1, 0] = 99
 		};
@@ -755,7 +755,7 @@ public class GridExtensionsTests {
 	}
 
 	[Fact]
-	public void GetSouth_ShouldReturnSouthNeighbor() {
+	public void GetSouth_ShouldReturnSouthNeighbour() {
 		Grid<int> grid = new(3, 3) {
 			[1, 2] = 88
 		};
@@ -766,7 +766,7 @@ public class GridExtensionsTests {
 	}
 
 	[Fact]
-	public void GetEast_ShouldReturnEastNeighbor() {
+	public void GetEast_ShouldReturnEastNeighbour() {
 		Grid<int> grid = new(3, 3) {
 			[2, 1] = 77
 		};
@@ -777,7 +777,7 @@ public class GridExtensionsTests {
 	}
 
 	[Fact]
-	public void GetWest_ShouldReturnWestNeighbor() {
+	public void GetWest_ShouldReturnWestNeighbour() {
 		Grid<int> grid = new(3, 3) {
 			[0, 1] = 66
 		};
@@ -788,7 +788,7 @@ public class GridExtensionsTests {
 	}
 
 	[Fact]
-	public void GetCardinalNeighbors_ShouldReturnNeighborsWithDirections() {
+	public void GetCardinalNeighbours_ShouldReturnNeighboursWithDirections() {
 		Grid<int> grid = new(3, 3);
 		for (int i = 0; i < 3; i++) {
 			for (int j = 0; j < 3; j++) {
@@ -796,17 +796,17 @@ public class GridExtensionsTests {
 			}
 		}
 
-		List<(string direction, int col, int row, int value)> neighbors = [.. grid.GetCardinalNeighbors(1, 1)];
+		List<(string direction, int col, int row, int value)> neighbours = [.. grid.GetCardinalNeighbours(1, 1)];
 
-		neighbors.Count.ShouldBe(4);
-		neighbors.ShouldContain(("N", 1, 0, 10));
-		neighbors.ShouldContain(("E", 2, 1, 21));
-		neighbors.ShouldContain(("S", 1, 2, 12));
-		neighbors.ShouldContain(("W", 0, 1, 1));
+		neighbours.Count.ShouldBe(4);
+		neighbours.ShouldContain(("N", 1, 0, 10));
+		neighbours.ShouldContain(("E", 2, 1, 21));
+		neighbours.ShouldContain(("S", 1, 2, 12));
+		neighbours.ShouldContain(("W", 0, 1, 1));
 	}
 
 	[Fact]
-	public void Array_GetNeighbors_ShouldWork() {
+	public void Array_GetNeighbours_ShouldWork() {
 		int[,] array = new int[3, 3];
 		for (int i = 0; i < 3; i++) {
 			for (int j = 0; j < 3; j++) {
@@ -814,11 +814,11 @@ public class GridExtensionsTests {
 			}
 		}
 
-		List<int> neighbors = [.. array.GetNeighbors(1, 1, includeDiagonals: false)];
+		List<int> neighbours = [.. array.GetNeighbours(1, 1, includeDiagonals: false)];
 
-		neighbors.Count.ShouldBe(4);
-		neighbors.ShouldContain(10);
-		neighbors.ShouldContain(21);
+		neighbours.Count.ShouldBe(4);
+		neighbours.ShouldContain(10);
+		neighbours.ShouldContain(21);
 	}
 
 	// ========================================

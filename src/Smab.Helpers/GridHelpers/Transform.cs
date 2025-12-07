@@ -35,6 +35,38 @@ public static partial class ArrayHelpers {
 		}
 
 		/// <summary>
+		/// Transforms each element of the grid using the specified selector function that also receives the element's position as a tuple.
+		/// </summary>
+		/// <typeparam name="TResult">The type of the elements in the resulting grid.</typeparam>
+		/// <param name="selector">A function to transform each element, receiving a tuple of (column, row) and the element value.</param>
+		/// <returns>A new Grid containing the transformed elements.</returns>
+		public Grid<TResult> Map<TResult>(Func<(int col, int row), T, TResult> selector) {
+			Grid<TResult> result = new(grid.ColsCount, grid.RowsCount);
+			for (int col = 0; col < grid.ColsCount; col++) {
+				for (int row = 0; row < grid.RowsCount; row++) {
+					result[col, row] = selector((col, row), grid[col, row]);
+				}
+			}
+			return result;
+		}
+
+		/// <summary>
+		/// Transforms each element of the grid using the specified selector function that also receives the element's position as a Point.
+		/// </summary>
+		/// <typeparam name="TResult">The type of the elements in the resulting grid.</typeparam>
+		/// <param name="selector">A function to transform each element, receiving a Point and the element value.</param>
+		/// <returns>A new Grid containing the transformed elements.</returns>
+		public Grid<TResult> Map<TResult>(Func<Point, T, TResult> selector) {
+			Grid<TResult> result = new(grid.ColsCount, grid.RowsCount);
+			for (int col = 0; col < grid.ColsCount; col++) {
+				for (int row = 0; row < grid.RowsCount; row++) {
+					result[col, row] = selector(new Point(col, row), grid[col, row]);
+				}
+			}
+			return result;
+		}
+
+		/// <summary>
 		/// Applies an accumulator function over the grid elements.
 		/// </summary>
 		/// <typeparam name="TResult">The type of the accumulator value.</typeparam>
