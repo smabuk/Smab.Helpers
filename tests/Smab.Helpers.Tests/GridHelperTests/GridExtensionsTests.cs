@@ -7,13 +7,14 @@ public class GridExtensionsTests {
 
 	[Fact]
 	public void GetEnumerator_ShouldIterateThroughAllElements() {
-		Grid<int> grid = new(3, 2);
-		grid[0, 0] = 1;
-		grid[1, 0] = 2;
-		grid[2, 0] = 3;
-		grid[0, 1] = 4;
-		grid[1, 1] = 5;
-		grid[2, 1] = 6;
+		Grid<int> grid = new(3, 2) {
+			[0, 0] = 1,
+			[1, 0] = 2,
+			[2, 0] = 3,
+			[0, 1] = 4,
+			[1, 1] = 5,
+			[2, 1] = 6
+		};
 
 		List<int> values = [];
 		foreach (int value in grid) {
@@ -27,11 +28,12 @@ public class GridExtensionsTests {
 
 	[Fact]
 	public void Values_ShouldReturnAllValues() {
-		Grid<int> grid = new(2, 2);
-		grid[0, 0] = 10;
-		grid[1, 0] = 20;
-		grid[0, 1] = 30;
-		grid[1, 1] = 40;
+		Grid<int> grid = new(2, 2) {
+			[0, 0] = 10,
+			[1, 0] = 20,
+			[0, 1] = 30,
+			[1, 1] = 40
+		};
 
 		List<int> values = [.. grid.Values()];
 
@@ -126,18 +128,19 @@ public class GridExtensionsTests {
 
 		List<int> edges = [.. grid.Edges()];
 
-		// Clockwise: top (0,10,20), right excluding top corner (21,22), 
+		// Clockwise: top (0,10,20), right excluding top corner (21,22),
 		// bottom reversed excluding right corner (12,2), left reversed excluding corners (1)
 		edges.ShouldBe([0, 10, 20, 21, 22, 12, 2, 1]);
 	}
 
 	[Fact]
 	public void Edges_OnSingleRowGrid_ShouldReturnAllElements() {
-		Grid<int> grid = new(4, 1);
-		grid[0, 0] = 1;
-		grid[1, 0] = 2;
-		grid[2, 0] = 3;
-		grid[3, 0] = 4;
+		Grid<int> grid = new(4, 1) {
+			[0, 0] = 1,
+			[1, 0] = 2,
+			[2, 0] = 3,
+			[3, 0] = 4
+		};
 
 		List<int> edges = [.. grid.Edges()];
 
@@ -146,11 +149,12 @@ public class GridExtensionsTests {
 
 	[Fact]
 	public void Edges_OnSingleColumnGrid_ShouldReturnAllElements() {
-		Grid<int> grid = new(1, 4);
-		grid[0, 0] = 1;
-		grid[0, 1] = 2;
-		grid[0, 2] = 3;
-		grid[0, 3] = 4;
+		Grid<int> grid = new(1, 4) {
+			[0, 0] = 1,
+			[0, 1] = 2,
+			[0, 2] = 3,
+			[0, 3] = 4
+		};
 
 		List<int> edges = [.. grid.Edges()];
 
@@ -159,43 +163,48 @@ public class GridExtensionsTests {
 
 	[Fact]
 	public void TopLeft_ShouldReturnTopLeftCorner() {
-		Grid<int> grid = new(3, 3);
-		grid[0, 0] = 99;
+		Grid<int> grid = new(3, 3) {
+			[0, 0] = 99
+		};
 
 		grid.TopLeft().ShouldBe(99);
 	}
 
 	[Fact]
 	public void TopRight_ShouldReturnTopRightCorner() {
-		Grid<int> grid = new(3, 3);
-		grid[2, 0] = 88;
+		Grid<int> grid = new(3, 3) {
+			[2, 0] = 88
+		};
 
 		grid.TopRight().ShouldBe(88);
 	}
 
 	[Fact]
 	public void BottomLeft_ShouldReturnBottomLeftCorner() {
-		Grid<int> grid = new(3, 3);
-		grid[0, 2] = 77;
+		Grid<int> grid = new(3, 3) {
+			[0, 2] = 77
+		};
 
 		grid.BottomLeft().ShouldBe(77);
 	}
 
 	[Fact]
 	public void BottomRight_ShouldReturnBottomRightCorner() {
-		Grid<int> grid = new(3, 3);
-		grid[2, 2] = 66;
+		Grid<int> grid = new(3, 3) {
+			[2, 2] = 66
+		};
 
 		grid.BottomRight().ShouldBe(66);
 	}
 
 	[Fact]
 	public void Corners_ShouldReturnAllFourCorners() {
-		Grid<int> grid = new(3, 3);
-		grid[0, 0] = 1;
-		grid[2, 0] = 2;
-		grid[2, 2] = 3;
-		grid[0, 2] = 4;
+		Grid<int> grid = new(3, 3) {
+			[0, 0] = 1,
+			[2, 0] = 2,
+			[2, 2] = 3,
+			[0, 2] = 4
+		};
 
 		List<int> corners = [.. grid.Corners()];
 
@@ -354,11 +363,12 @@ public class GridExtensionsTests {
 
 	[Fact]
 	public void Map_WithSimpleSelector_ShouldTransformAllElements() {
-		Grid<int> grid = new(2, 2);
-		grid[0, 0] = 1;
-		grid[1, 0] = 2;
-		grid[0, 1] = 3;
-		grid[1, 1] = 4;
+		Grid<int> grid = new(2, 2) {
+			[0, 0] = 1,
+			[1, 0] = 2,
+			[0, 1] = 3,
+			[1, 1] = 4
+		};
 
 		Grid<int> result = grid.Map(x => x * 10);
 
@@ -370,11 +380,12 @@ public class GridExtensionsTests {
 
 	[Fact]
 	public void Map_WithTypeConversion_ShouldWork() {
-		Grid<int> grid = new(2, 2);
-		grid[0, 0] = 1;
-		grid[1, 0] = 2;
-		grid[0, 1] = 3;
-		grid[1, 1] = 4;
+		Grid<int> grid = new(2, 2) {
+			[0, 0] = 1,
+			[1, 0] = 2,
+			[0, 1] = 3,
+			[1, 1] = 4
+		};
 
 		Grid<string> result = grid.Map(x => $"Value{x}");
 
@@ -408,11 +419,12 @@ public class GridExtensionsTests {
 
 	[Fact]
 	public void Aggregate_ShouldAccumulateValues() {
-		Grid<int> grid = new(2, 2);
-		grid[0, 0] = 1;
-		grid[1, 0] = 2;
-		grid[0, 1] = 3;
-		grid[1, 1] = 4;
+		Grid<int> grid = new(2, 2) {
+			[0, 0] = 1,
+			[1, 0] = 2,
+			[0, 1] = 3,
+			[1, 1] = 4
+		};
 
 		int sum = grid.Aggregate(0, (acc, val) => acc + val);
 
@@ -421,11 +433,12 @@ public class GridExtensionsTests {
 
 	[Fact]
 	public void Aggregate_WithStringConcatenation_ShouldWork() {
-		Grid<char> grid = new(2, 2);
-		grid[0, 0] = 'A';
-		grid[1, 0] = 'B';
-		grid[0, 1] = 'C';
-		grid[1, 1] = 'D';
+		Grid<char> grid = new(2, 2) {
+			[0, 0] = 'A',
+			[1, 0] = 'B',
+			[0, 1] = 'C',
+			[1, 1] = 'D'
+		};
 
 		string result = grid.Aggregate("", (acc, val) => acc + val);
 
@@ -723,8 +736,9 @@ public class GridExtensionsTests {
 
 	[Fact]
 	public void GetNorth_ShouldReturnNorthNeighbor() {
-		Grid<int> grid = new(3, 3);
-		grid[1, 0] = 99;
+		Grid<int> grid = new(3, 3) {
+			[1, 0] = 99
+		};
 
 		int? north = grid.GetNorth(1, 1);
 
@@ -742,8 +756,9 @@ public class GridExtensionsTests {
 
 	[Fact]
 	public void GetSouth_ShouldReturnSouthNeighbor() {
-		Grid<int> grid = new(3, 3);
-		grid[1, 2] = 88;
+		Grid<int> grid = new(3, 3) {
+			[1, 2] = 88
+		};
 
 		int? south = grid.GetSouth(1, 1);
 
@@ -752,8 +767,9 @@ public class GridExtensionsTests {
 
 	[Fact]
 	public void GetEast_ShouldReturnEastNeighbor() {
-		Grid<int> grid = new(3, 3);
-		grid[2, 1] = 77;
+		Grid<int> grid = new(3, 3) {
+			[2, 1] = 77
+		};
 
 		int? east = grid.GetEast(1, 1);
 
@@ -762,8 +778,9 @@ public class GridExtensionsTests {
 
 	[Fact]
 	public void GetWest_ShouldReturnWestNeighbor() {
-		Grid<int> grid = new(3, 3);
-		grid[0, 1] = 66;
+		Grid<int> grid = new(3, 3) {
+			[0, 1] = 66
+		};
 
 		int? west = grid.GetWest(1, 1);
 
@@ -821,11 +838,12 @@ public class GridExtensionsTests {
 
 	[Fact]
 	public void Sum_WithLongGrid_ShouldReturnSum() {
-		Grid<long> grid = new(2, 2);
-		grid[0, 0] = 100L;
-		grid[1, 0] = 200L;
-		grid[0, 1] = 300L;
-		grid[1, 1] = 400L;
+		Grid<long> grid = new(2, 2) {
+			[0, 0] = 100L,
+			[1, 0] = 200L,
+			[0, 1] = 300L,
+			[1, 1] = 400L
+		};
 
 		long sum = grid.Sum();
 
@@ -834,11 +852,12 @@ public class GridExtensionsTests {
 
 	[Fact]
 	public void Sum_WithDoubleGrid_ShouldReturnSum() {
-		Grid<double> grid = new(2, 2);
-		grid[0, 0] = 1.5;
-		grid[1, 0] = 2.5;
-		grid[0, 1] = 3.5;
-		grid[1, 1] = 4.5;
+		Grid<double> grid = new(2, 2) {
+			[0, 0] = 1.5,
+			[1, 0] = 2.5,
+			[0, 1] = 3.5,
+			[1, 1] = 4.5
+		};
 
 		double sum = grid.Sum();
 
@@ -847,11 +866,12 @@ public class GridExtensionsTests {
 
 	[Fact]
 	public void Sum_WithDecimalGrid_ShouldReturnSum() {
-		Grid<decimal> grid = new(2, 2);
-		grid[0, 0] = 10.5m;
-		grid[1, 0] = 20.5m;
-		grid[0, 1] = 30.5m;
-		grid[1, 1] = 40.5m;
+		Grid<decimal> grid = new(2, 2) {
+			[0, 0] = 10.5m,
+			[1, 0] = 20.5m,
+			[0, 1] = 30.5m,
+			[1, 1] = 40.5m
+		};
 
 		decimal sum = grid.Sum();
 
@@ -860,11 +880,12 @@ public class GridExtensionsTests {
 
 	[Fact]
 	public void Sum_WithFloatGrid_ShouldReturnSum() {
-		Grid<float> grid = new(2, 2);
-		grid[0, 0] = 1.5f;
-		grid[1, 0] = 2.5f;
-		grid[0, 1] = 3.5f;
-		grid[1, 1] = 4.5f;
+		Grid<float> grid = new(2, 2) {
+			[0, 0] = 1.5f,
+			[1, 0] = 2.5f,
+			[0, 1] = 3.5f,
+			[1, 1] = 4.5f
+		};
 
 		float sum = grid.Sum();
 
@@ -911,11 +932,12 @@ public class GridExtensionsTests {
 
 	[Fact]
 	public void Min_WithDoubleGrid_ShouldReturnMinimum() {
-		Grid<double> grid = new(2, 2);
-		grid[0, 0] = 5.5;
-		grid[1, 0] = 2.3;
-		grid[0, 1] = 7.1;
-		grid[1, 1] = 1.9;
+		Grid<double> grid = new(2, 2) {
+			[0, 0] = 5.5,
+			[1, 0] = 2.3,
+			[0, 1] = 7.1,
+			[1, 1] = 1.9
+		};
 
 		double min = grid.Min();
 
@@ -943,11 +965,12 @@ public class GridExtensionsTests {
 
 	[Fact]
 	public void Max_WithDoubleGrid_ShouldReturnMaximum() {
-		Grid<double> grid = new(2, 2);
-		grid[0, 0] = 5.5;
-		grid[1, 0] = 2.3;
-		grid[0, 1] = 7.1;
-		grid[1, 1] = 1.9;
+		Grid<double> grid = new(2, 2) {
+			[0, 0] = 5.5,
+			[1, 0] = 2.3,
+			[0, 1] = 7.1,
+			[1, 1] = 1.9
+		};
 
 		double max = grid.Max();
 
@@ -963,11 +986,12 @@ public class GridExtensionsTests {
 
 	[Fact]
 	public void Average_WithIntGrid_ShouldReturnAverage() {
-		Grid<int> grid = new(2, 2);
-		grid[0, 0] = 2;
-		grid[1, 0] = 4;
-		grid[0, 1] = 6;
-		grid[1, 1] = 8;
+		Grid<int> grid = new(2, 2) {
+			[0, 0] = 2,
+			[1, 0] = 4,
+			[0, 1] = 6,
+			[1, 1] = 8
+		};
 
 		int average = grid.Average();
 
@@ -976,11 +1000,12 @@ public class GridExtensionsTests {
 
 	[Fact]
 	public void Average_WithDoubleGrid_ShouldReturnAverage() {
-		Grid<double> grid = new(2, 2);
-		grid[0, 0] = 1.0;
-		grid[1, 0] = 2.0;
-		grid[0, 1] = 3.0;
-		grid[1, 1] = 4.0;
+		Grid<double> grid = new(2, 2) {
+			[0, 0] = 1.0,
+			[1, 0] = 2.0,
+			[0, 1] = 3.0,
+			[1, 1] = 4.0
+		};
 
 		double average = grid.Average();
 
@@ -989,11 +1014,12 @@ public class GridExtensionsTests {
 
 	[Fact]
 	public void Average_WithDecimalGrid_ShouldReturnAverage() {
-		Grid<decimal> grid = new(2, 2);
-		grid[0, 0] = 10.0m;
-		grid[1, 0] = 20.0m;
-		grid[0, 1] = 30.0m;
-		grid[1, 1] = 40.0m;
+		Grid<decimal> grid = new(2, 2) {
+			[0, 0] = 10.0m,
+			[1, 0] = 20.0m,
+			[0, 1] = 30.0m,
+			[1, 1] = 40.0m
+		};
 
 		decimal average = grid.Average();
 
@@ -1067,23 +1093,409 @@ public class GridExtensionsTests {
 		Should.Throw<InvalidOperationException>(() => array.Average());
 	}
 
+	[Fact]
+	public void ScalarMultiply_ShouldMultiplyAllElements() {
+		Grid<int> grid = new(2, 2) {
+			[0, 0] = 2,
+			[1, 0] = 3,
+			[0, 1] = 4,
+			[1, 1] = 5
+		};
+
+		Grid<int> result = grid.ScalarMultiply(3);
+
+		result[0, 0].ShouldBe(6);
+		result[1, 0].ShouldBe(9);
+		result[0, 1].ShouldBe(12);
+		result[1, 1].ShouldBe(15);
+	}
+
+	[Fact]
+	public void ScalarDivide_ShouldDivideAllElements() {
+		Grid<int> grid = new(2, 2) {
+			[0, 0] = 10,
+			[1, 0] = 20,
+			[0, 1] = 30,
+			[1, 1] = 40
+		};
+
+		Grid<int> result = grid.ScalarDivide(10);
+
+		result[0, 0].ShouldBe(1);
+		result[1, 0].ShouldBe(2);
+		result[0, 1].ShouldBe(3);
+		result[1, 1].ShouldBe(4);
+	}
+
+	[Fact]
+	public void ScalarAdd_ShouldAddToAllElements() {
+		Grid<int> grid = new(2, 2) {
+			[0, 0] = 1,
+			[1, 0] = 2,
+			[0, 1] = 3,
+			[1, 1] = 4
+		};
+
+		Grid<int> result = grid.ScalarAdd(10);
+
+		result[0, 0].ShouldBe(11);
+		result[1, 0].ShouldBe(12);
+		result[0, 1].ShouldBe(13);
+		result[1, 1].ShouldBe(14);
+	}
+
+	[Fact]
+	public void ScalarSubtract_ShouldSubtractFromAllElements() {
+		Grid<int> grid = new(2, 2) {
+			[0, 0] = 20,
+			[1, 0] = 30,
+			[0, 1] = 40,
+			[1, 1] = 50
+		};
+
+		Grid<int> result = grid.ScalarSubtract(5);
+
+		result[0, 0].ShouldBe(15);
+		result[1, 0].ShouldBe(25);
+		result[0, 1].ShouldBe(35);
+		result[1, 1].ShouldBe(45);
+	}
+
+	[Fact]
+	public void Add_ShouldAddCorrespondingElements() {
+		Grid<int> grid1 = new(2, 2) {
+			[0, 0] = 1,
+			[1, 0] = 2,
+			[0, 1] = 3,
+			[1, 1] = 4
+		};
+
+		Grid<int> grid2 = new(2, 2) {
+			[0, 0] = 10,
+			[1, 0] = 20,
+			[0, 1] = 30,
+			[1, 1] = 40
+		};
+
+		Grid<int> result = grid1.Add(grid2);
+
+		result[0, 0].ShouldBe(11);
+		result[1, 0].ShouldBe(22);
+		result[0, 1].ShouldBe(33);
+		result[1, 1].ShouldBe(44);
+	}
+
+	[Fact]
+	public void Add_WithDifferentDimensions_ShouldThrow() {
+		Grid<int> grid1 = new(2, 2);
+		Grid<int> grid2 = new(3, 2);
+
+		Should.Throw<ArgumentException>(() => grid1.Add(grid2));
+	}
+
+	[Fact]
+	public void Subtract_ShouldSubtractCorrespondingElements() {
+		Grid<int> grid1 = new(2, 2) {
+			[0, 0] = 10,
+			[1, 0] = 20,
+			[0, 1] = 30,
+			[1, 1] = 40
+		};
+
+		Grid<int> grid2 = new(2, 2) {
+			[0, 0] = 1,
+			[1, 0] = 2,
+			[0, 1] = 3,
+			[1, 1] = 4
+		};
+
+		Grid<int> result = grid1.Subtract(grid2);
+
+		result[0, 0].ShouldBe(9);
+		result[1, 0].ShouldBe(18);
+		result[0, 1].ShouldBe(27);
+		result[1, 1].ShouldBe(36);
+	}
+
+	[Fact]
+	public void Subtract_WithDifferentDimensions_ShouldThrow() {
+		Grid<int> grid1 = new(2, 2);
+		Grid<int> grid2 = new(2, 3);
+
+		Should.Throw<ArgumentException>(() => grid1.Subtract(grid2));
+	}
+
+	[Fact]
+	public void Multiply_ShouldMultiplyCorrespondingElements() {
+		Grid<int> grid1 = new(2, 2) {
+			[0, 0] = 2,
+			[1, 0] = 3,
+			[0, 1] = 4,
+			[1, 1] = 5
+		};
+
+		Grid<int> grid2 = new(2, 2) {
+			[0, 0] = 10,
+			[1, 0] = 10,
+			[0, 1] = 10,
+			[1, 1] = 10
+		};
+
+		Grid<int> result = grid1.Multiply(grid2);
+
+		result[0, 0].ShouldBe(20);
+		result[1, 0].ShouldBe(30);
+		result[0, 1].ShouldBe(40);
+		result[1, 1].ShouldBe(50);
+	}
+
+	[Fact]
+	public void Multiply_WithDifferentDimensions_ShouldThrow() {
+		Grid<int> grid1 = new(2, 2);
+		Grid<int> grid2 = new(3, 3);
+
+		Should.Throw<ArgumentException>(() => grid1.Multiply(grid2));
+	}
+
+	[Fact]
+	public void Divide_ShouldDivideCorrespondingElements() {
+		Grid<int> grid1 = new(2, 2) {
+			[0, 0] = 20,
+			[1, 0] = 30,
+			[0, 1] = 40,
+			[1, 1] = 50
+		};
+
+		Grid<int> grid2 = new(2, 2) {
+			[0, 0] = 2,
+			[1, 0] = 3,
+			[0, 1] = 4,
+			[1, 1] = 5
+		};
+
+		Grid<int> result = grid1.Divide(grid2);
+
+		result[0, 0].ShouldBe(10);
+		result[1, 0].ShouldBe(10);
+		result[0, 1].ShouldBe(10);
+		result[1, 1].ShouldBe(10);
+	}
+
+	[Fact]
+	public void Divide_WithDifferentDimensions_ShouldThrow() {
+		Grid<int> grid1 = new(2, 2);
+		Grid<int> grid2 = new(2, 3);
+
+		Should.Throw<ArgumentException>(() => grid1.Divide(grid2));
+	}
+
+	[Fact]
+	public void OperatorMultiply_WithScalar_ShouldWork() {
+		Grid<int> grid = new(2, 2) {
+			[0, 0] = 2,
+			[1, 0] = 3,
+			[0, 1] = 4,
+			[1, 1] = 5
+		};
+
+		Grid<int> result = grid * 3;
+
+		result[0, 0].ShouldBe(6);
+		result[1, 1].ShouldBe(15);
+	}
+
+	[Fact]
+	public void OperatorMultiply_WithScalarOnLeft_ShouldWork() {
+		Grid<int> grid = new(2, 2) {
+			[0, 0] = 2,
+			[1, 0] = 3,
+			[0, 1] = 4,
+			[1, 1] = 5
+		};
+
+		Grid<int> result = 3 * grid;
+
+		result[0, 0].ShouldBe(6);
+		result[1, 1].ShouldBe(15);
+	}
+
+	[Fact]
+	public void OperatorDivide_WithScalar_ShouldWork() {
+		Grid<int> grid = new(2, 2) {
+			[0, 0] = 10,
+			[1, 0] = 20,
+			[0, 1] = 30,
+			[1, 1] = 40
+		};
+
+		Grid<int> result = grid / 10;
+
+		result[0, 0].ShouldBe(1);
+		result[1, 1].ShouldBe(4);
+	}
+
+	[Fact]
+	public void OperatorAdd_WithScalar_ShouldWork() {
+		Grid<int> grid = new(2, 2) {
+			[0, 0] = 1,
+			[1, 0] = 2,
+			[0, 1] = 3,
+			[1, 1] = 4
+		};
+
+		Grid<int> result = grid + 10;
+
+		result[0, 0].ShouldBe(11);
+		result[1, 1].ShouldBe(14);
+	}
+
+	[Fact]
+	public void OperatorAdd_WithScalarOnLeft_ShouldWork() {
+		Grid<int> grid = new(2, 2) {
+			[0, 0] = 1,
+			[1, 0] = 2,
+			[0, 1] = 3,
+			[1, 1] = 4
+		};
+
+		Grid<int> result = 10 + grid;
+
+		result[0, 0].ShouldBe(11);
+		result[1, 1].ShouldBe(14);
+	}
+
+	[Fact]
+	public void OperatorSubtract_WithScalar_ShouldWork() {
+		Grid<int> grid = new(2, 2) {
+			[0, 0] = 20,
+			[1, 0] = 30,
+			[0, 1] = 40,
+			[1, 1] = 50
+		};
+
+		Grid<int> result = grid - 5;
+
+		result[0, 0].ShouldBe(15);
+		result[1, 1].ShouldBe(45);
+	}
+
+	[Fact]
+	public void OperatorAdd_WithTwoGrids_ShouldWork() {
+		Grid<int> grid1 = new(2, 2) {
+			[0, 0] = 1,
+			[1, 0] = 2,
+			[0, 1] = 3,
+			[1, 1] = 4
+		};
+
+		Grid<int> grid2 = new(2, 2) {
+			[0, 0] = 10,
+			[1, 0] = 20,
+			[0, 1] = 30,
+			[1, 1] = 40
+		};
+
+		Grid<int> result = grid1 + grid2;
+
+		result[0, 0].ShouldBe(11);
+		result[1, 1].ShouldBe(44);
+	}
+
+	[Fact]
+	public void OperatorSubtract_WithTwoGrids_ShouldWork() {
+		Grid<int> grid1 = new(2, 2) {
+			[0, 0] = 10,
+			[1, 0] = 20,
+			[0, 1] = 30,
+			[1, 1] = 40
+		};
+
+		Grid<int> grid2 = new(2, 2) {
+			[0, 0] = 1,
+			[1, 0] = 2,
+			[0, 1] = 3,
+			[1, 1] = 4
+		};
+
+		Grid<int> result = grid1 - grid2;
+
+		result[0, 0].ShouldBe(9);
+		result[1, 1].ShouldBe(36);
+	}
+
+	[Fact]
+	public void Array_ScalarMultiply_ShouldWork() {
+		int[,] array = new int[2, 2];
+		array[0, 0] = 2;
+		array[1, 0] = 3;
+		array[0, 1] = 4;
+		array[1, 1] = 5;
+
+		int[,] result = array.ScalarMultiply(2);
+
+		result[0, 0].ShouldBe(4);
+		result[1, 1].ShouldBe(10);
+	}
+
+	[Fact]
+	public void Array_Add_ShouldWork() {
+		int[,] array1 = new int[2, 2];
+		array1[0, 0] = 1;
+		array1[1, 0] = 2;
+		array1[0, 1] = 3;
+		array1[1, 1] = 4;
+
+		int[,] array2 = new int[2, 2];
+		array2[0, 0] = 10;
+		array2[1, 0] = 20;
+		array2[0, 1] = 30;
+		array2[1, 1] = 40;
+
+		int[,] result = array1.Add(array2);
+
+		result[0, 0].ShouldBe(11);
+		result[1, 1].ShouldBe(44);
+	}
+
+	[Fact]
+	public void Array_Multiply_ShouldWork() {
+		int[,] array1 = new int[2, 2];
+		array1[0, 0] = 2;
+		array1[1, 0] = 3;
+		array1[0, 1] = 4;
+		array1[1, 1] = 5;
+
+		int[,] array2 = new int[2, 2];
+		array2[0, 0] = 10;
+		array2[1, 0] = 10;
+		array2[0, 1] = 10;
+		array2[1, 1] = 10;
+
+		int[,] result = array1.Multiply(array2);
+
+		result[0, 0].ShouldBe(20);
+		result[1, 1].ShouldBe(50);
+	}
+
 	// ========================================
 	// Feature 7: Concatenation Tests
 	// ========================================
 
 	[Fact]
 	public void ConcatRight_ShouldCombineGridsHorizontally() {
-		Grid<int> left = new(2, 2);
-		left[0, 0] = 1;
-		left[1, 0] = 2;
-		left[0, 1] = 3;
-		left[1, 1] = 4;
+		Grid<int> left = new(2, 2) {
+			[0, 0] = 1,
+			[1, 0] = 2,
+			[0, 1] = 3,
+			[1, 1] = 4
+		};
 
-		Grid<int> right = new(2, 2);
-		right[0, 0] = 5;
-		right[1, 0] = 6;
-		right[0, 1] = 7;
-		right[1, 1] = 8;
+		Grid<int> right = new(2, 2) {
+			[0, 0] = 5,
+			[1, 0] = 6,
+			[0, 1] = 7,
+			[1, 1] = 8
+		};
 
 		Grid<int> combined = left.ConcatRight(right);
 
@@ -1107,17 +1519,19 @@ public class GridExtensionsTests {
 
 	[Fact]
 	public void ConcatBottom_ShouldCombineGridsVertically() {
-		Grid<int> top = new(2, 2);
-		top[0, 0] = 1;
-		top[1, 0] = 2;
-		top[0, 1] = 3;
-		top[1, 1] = 4;
+		Grid<int> top = new(2, 2) {
+			[0, 0] = 1,
+			[1, 0] = 2,
+			[0, 1] = 3,
+			[1, 1] = 4
+		};
 
-		Grid<int> bottom = new(2, 2);
-		bottom[0, 0] = 5;
-		bottom[1, 0] = 6;
-		bottom[0, 1] = 7;
-		bottom[1, 1] = 8;
+		Grid<int> bottom = new(2, 2) {
+			[0, 0] = 5,
+			[1, 0] = 6,
+			[0, 1] = 7,
+			[1, 1] = 8
+		};
 
 		Grid<int> combined = top.ConcatBottom(bottom);
 
@@ -1143,18 +1557,20 @@ public class GridExtensionsTests {
 
 	[Fact]
 	public void ConcatRight_WithDifferentSizes_ShouldWork() {
-		Grid<int> left = new(1, 3);
-		left[0, 0] = 1;
-		left[0, 1] = 2;
-		left[0, 2] = 3;
+		Grid<int> left = new(1, 3) {
+			[0, 0] = 1,
+			[0, 1] = 2,
+			[0, 2] = 3
+		};
 
-		Grid<int> right = new(2, 3);
-		right[0, 0] = 4;
-		right[1, 0] = 5;
-		right[0, 1] = 6;
-		right[1, 1] = 7;
-		right[0, 2] = 8;
-		right[1, 2] = 9;
+		Grid<int> right = new(2, 3) {
+			[0, 0] = 4,
+			[1, 0] = 5,
+			[0, 1] = 6,
+			[1, 1] = 7,
+			[0, 2] = 8,
+			[1, 2] = 9
+		};
 
 		Grid<int> combined = left.ConcatRight(right);
 

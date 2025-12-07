@@ -11,9 +11,9 @@ public class GridTests {
 
 	[Fact]
 	public void Indexer_ShouldGetAndSetValues() {
-		Grid<int> grid = new(3, 3);
-
-		grid[1, 2] = 42;
+		Grid<int> grid = new(3, 3) {
+			[1, 2] = 42
+		};
 
 		grid[1, 2].ShouldBe(42);
 	}
@@ -66,8 +66,9 @@ public class GridTests {
 
 	[Fact]
 	public void TryGetValue_WithValidCoordinates_ShouldReturnTrueAndValue() {
-		Grid<int> grid = new(3, 3);
-		grid[1, 2] = 42;
+		Grid<int> grid = new(3, 3) {
+			[1, 2] = 42
+		};
 
 		bool success = grid.TryGetValue(1, 2, out int value);
 
@@ -204,16 +205,17 @@ public class GridTests {
 
 	[Fact]
 	public void Col_ShouldReturnSpecifiedColumn() {
-		Grid<int> grid = new(3, 3);
-		grid[0, 0] = 1;
-		grid[0, 1] = 2;
-		grid[0, 2] = 3;
-		grid[1, 0] = 4;
-		grid[1, 1] = 5;
-		grid[1, 2] = 6;
-		grid[2, 0] = 7;
-		grid[2, 1] = 8;
-		grid[2, 2] = 9;
+		Grid<int> grid = new(3, 3) {
+			[0, 0] = 1,
+			[0, 1] = 2,
+			[0, 2] = 3,
+			[1, 0] = 4,
+			[1, 1] = 5,
+			[1, 2] = 6,
+			[2, 0] = 7,
+			[2, 1] = 8,
+			[2, 2] = 9
+		};
 
 		List<int> column = [.. grid.Col(1)];
 
@@ -222,11 +224,12 @@ public class GridTests {
 
 	[Fact]
 	public void Cols_ShouldReturnAllColumns() {
-		Grid<int> grid = new(2, 2);
-		grid[0, 0] = 1;
-		grid[0, 1] = 2;
-		grid[1, 0] = 3;
-		grid[1, 1] = 4;
+		Grid<int> grid = new(2, 2) {
+			[0, 0] = 1,
+			[0, 1] = 2,
+			[1, 0] = 3,
+			[1, 1] = 4
+		};
 
 		List<List<int>> columns = [.. grid.Cols().Select(c => c.ToList())];
 
@@ -237,16 +240,17 @@ public class GridTests {
 
 	[Fact]
 	public void Row_ShouldReturnSpecifiedRow() {
-		Grid<int> grid = new(3, 3);
-		grid[0, 0] = 1;
-		grid[1, 0] = 2;
-		grid[2, 0] = 3;
-		grid[0, 1] = 4;
-		grid[1, 1] = 5;
-		grid[2, 1] = 6;
-		grid[0, 2] = 7;
-		grid[1, 2] = 8;
-		grid[2, 2] = 9;
+		Grid<int> grid = new(3, 3) {
+			[0, 0] = 1,
+			[1, 0] = 2,
+			[2, 0] = 3,
+			[0, 1] = 4,
+			[1, 1] = 5,
+			[2, 1] = 6,
+			[0, 2] = 7,
+			[1, 2] = 8,
+			[2, 2] = 9
+		};
 
 		List<int> row = [.. grid.Row(1)];
 
@@ -255,11 +259,12 @@ public class GridTests {
 
 	[Fact]
 	public void GetRows_ShouldReturnAllRows() {
-		Grid<int> grid = new(2, 2);
-		grid[0, 0] = 1;
-		grid[1, 0] = 2;
-		grid[0, 1] = 3;
-		grid[1, 1] = 4;
+		Grid<int> grid = new(2, 2) {
+			[0, 0] = 1,
+			[1, 0] = 2,
+			[0, 1] = 3,
+			[1, 1] = 4
+		};
 
 		List<List<int>> rows = [.. grid.GetRows().Select(r => r.ToList())];
 
@@ -270,11 +275,12 @@ public class GridTests {
 
 	[Fact]
 	public void ForEachCell_ShouldReturnAllCellsWithCoordinates() {
-		Grid<int> grid = new(2, 2);
-		grid[0, 0] = 1;
-		grid[1, 0] = 2;
-		grid[0, 1] = 3;
-		grid[1, 1] = 4;
+		Grid<int> grid = new(2, 2) {
+			[0, 0] = 1,
+			[1, 0] = 2,
+			[0, 1] = 3,
+			[1, 1] = 4
+		};
 
 		List<Cell<int>> cells = [.. grid.ForEachCell()];
 
@@ -287,11 +293,12 @@ public class GridTests {
 
 	[Fact]
 	public void Copy_ShouldCreateShallowCopy() {
-		Grid<int> original = new(2, 2);
-		original[0, 0] = 1;
-		original[1, 0] = 2;
-		original[0, 1] = 3;
-		original[1, 1] = 4;
+		Grid<int> original = new(2, 2) {
+			[0, 0] = 1,
+			[1, 0] = 2,
+			[0, 1] = 3,
+			[1, 1] = 4
+		};
 
 		Grid<int> copy = original.Copy();
 
@@ -303,8 +310,9 @@ public class GridTests {
 
 	[Fact]
 	public void Fill_ShouldCreateNewGridWithAllElementsSetToValue() {
-		Grid<int> original = new(3, 3);
-		original[1, 1] = 42;
+		Grid<int> original = new(3, 3) {
+			[1, 1] = 42
+		};
 
 		Grid<int> filled = original.Fill(0);
 
@@ -314,8 +322,9 @@ public class GridTests {
 
 	[Fact]
 	public void FillInPlace_ShouldModifyGridInPlace() {
-		Grid<int> grid = new(3, 3);
-		grid[1, 1] = 42;
+		Grid<int> grid = new(3, 3) {
+			[1, 1] = 42
+		};
 
 		grid.FillInPlace(0);
 
@@ -349,13 +358,14 @@ public class GridTests {
 
 	[Fact]
 	public void Transpose_ShouldSwapRowsAndColumns() {
-		Grid<int> original = new(2, 3);
-		original[0, 0] = 1;
-		original[1, 0] = 2;
-		original[0, 1] = 3;
-		original[1, 1] = 4;
-		original[0, 2] = 5;
-		original[1, 2] = 6;
+		Grid<int> original = new(2, 3) {
+			[0, 0] = 1,
+			[1, 0] = 2,
+			[0, 1] = 3,
+			[1, 1] = 4,
+			[0, 2] = 5,
+			[1, 2] = 6
+		};
 
 		Grid<int> transposed = original.Transpose();
 
@@ -371,11 +381,12 @@ public class GridTests {
 
 	[Fact]
 	public void Rotate_0Degrees_ShouldReturnIdenticalGrid() {
-		Grid<int> original = new(2, 2);
-		original[0, 0] = 1;
-		original[1, 0] = 2;
-		original[0, 1] = 3;
-		original[1, 1] = 4;
+		Grid<int> original = new(2, 2) {
+			[0, 0] = 1,
+			[1, 0] = 2,
+			[0, 1] = 3,
+			[1, 1] = 4
+		};
 
 		Grid<int> rotated = original.Rotate(0);
 
@@ -387,11 +398,12 @@ public class GridTests {
 
 	[Fact]
 	public void Rotate_90Degrees_ShouldRotateClockwise() {
-		Grid<int> original = new(2, 2);
-		original[0, 0] = 1;
-		original[1, 0] = 2;
-		original[0, 1] = 3;
-		original[1, 1] = 4;
+		Grid<int> original = new(2, 2) {
+			[0, 0] = 1,
+			[1, 0] = 2,
+			[0, 1] = 3,
+			[1, 1] = 4
+		};
 
 		Grid<int> rotated = original.Rotate(90);
 
@@ -405,11 +417,12 @@ public class GridTests {
 
 	[Fact]
 	public void Rotate_180Degrees_ShouldRotate180() {
-		Grid<int> original = new(2, 2);
-		original[0, 0] = 1;
-		original[1, 0] = 2;
-		original[0, 1] = 3;
-		original[1, 1] = 4;
+		Grid<int> original = new(2, 2) {
+			[0, 0] = 1,
+			[1, 0] = 2,
+			[0, 1] = 3,
+			[1, 1] = 4
+		};
 
 		Grid<int> rotated = original.Rotate(180);
 
@@ -421,11 +434,12 @@ public class GridTests {
 
 	[Fact]
 	public void Rotate_270Degrees_ShouldRotateCounterClockwise() {
-		Grid<int> original = new(2, 2);
-		original[0, 0] = 1;
-		original[1, 0] = 2;
-		original[0, 1] = 3;
-		original[1, 1] = 4;
+		Grid<int> original = new(2, 2) {
+			[0, 0] = 1,
+			[1, 0] = 2,
+			[0, 1] = 3,
+			[1, 1] = 4
+		};
 
 		Grid<int> rotated = original.Rotate(270);
 
@@ -437,13 +451,14 @@ public class GridTests {
 
 	[Fact]
 	public void FlipHorizontally_ShouldReverseColumns() {
-		Grid<int> original = new(3, 2);
-		original[0, 0] = 1;
-		original[1, 0] = 2;
-		original[2, 0] = 3;
-		original[0, 1] = 4;
-		original[1, 1] = 5;
-		original[2, 1] = 6;
+		Grid<int> original = new(3, 2) {
+			[0, 0] = 1,
+			[1, 0] = 2,
+			[2, 0] = 3,
+			[0, 1] = 4,
+			[1, 1] = 5,
+			[2, 1] = 6
+		};
 
 		Grid<int> flipped = original.FlipHorizontally();
 
@@ -457,13 +472,14 @@ public class GridTests {
 
 	[Fact]
 	public void FlipVertically_ShouldReverseRows() {
-		Grid<int> original = new(2, 3);
-		original[0, 0] = 1;
-		original[1, 0] = 2;
-		original[0, 1] = 3;
-		original[1, 1] = 4;
-		original[0, 2] = 5;
-		original[1, 2] = 6;
+		Grid<int> original = new(2, 3) {
+			[0, 0] = 1,
+			[1, 0] = 2,
+			[0, 1] = 3,
+			[1, 1] = 4,
+			[0, 2] = 5,
+			[1, 2] = 6
+		};
 
 		Grid<int> flipped = original.FlipVertically();
 
@@ -524,11 +540,12 @@ public class GridTests {
 
 	[Fact]
 	public void ToArray_ShouldReturnUnderlyingArray() {
-		Grid<int> grid = new(2, 2);
-		grid[0, 0] = 1;
-		grid[1, 0] = 2;
-		grid[0, 1] = 3;
-		grid[1, 1] = 4;
+		Grid<int> grid = new(2, 2) {
+			[0, 0] = 1,
+			[1, 0] = 2,
+			[0, 1] = 3,
+			[1, 1] = 4
+		};
 
 		int[,] array = grid.ToArray();
 
@@ -597,11 +614,12 @@ public class GridTests {
 
 	[Fact]
 	public void RangeIndexer_WithFullRange_ShouldCopyEntireGrid() {
-		Grid<int> original = new(2, 2);
-		original[0, 0] = 1;
-		original[1, 0] = 2;
-		original[0, 1] = 3;
-		original[1, 1] = 4;
+		Grid<int> original = new(2, 2) {
+			[0, 0] = 1,
+			[1, 0] = 2,
+			[0, 1] = 3,
+			[1, 1] = 4
+		};
 
 		Grid<int> subGrid = original[.., ..];
 
@@ -897,11 +915,12 @@ public class GridTests {
 			}
 		}
 
-		Grid<int> source = new(2, 2);
-		source[0, 0] = 11;
-		source[1, 0] = 21;
-		source[0, 1] = 12;
-		source[1, 1] = 22;
+		Grid<int> source = new(2, 2) {
+			[0, 0] = 11,
+			[1, 0] = 21,
+			[0, 1] = 12,
+			[1, 1] = 22
+		};
 
 		original[1..3, 1..3] = source;
 
@@ -922,8 +941,9 @@ public class GridTests {
 			}
 		}
 
-		Grid<int> fillValue = new(1, 1);
-		fillValue[0, 0] = 99;
+		Grid<int> fillValue = new(1, 1) {
+			[0, 0] = 99
+		};
 
 		grid[1..4, 1..3] = fillValue;
 
