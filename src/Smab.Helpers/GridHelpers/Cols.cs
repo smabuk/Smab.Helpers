@@ -17,6 +17,21 @@ public static partial class ArrayHelpers {
 		/// <returns>An enumerable of sequences, where each sequence represents a column.</returns>
 		public IEnumerable<IEnumerable<T>> Cols()
 			=> grid.ColIndexes().Select(ix => grid.Col(ix));
+
+		/// <summary>
+		/// Retrieves all cells with their coordinates from the specified column.
+		/// </summary>
+		/// <param name="colNo">The zero-based column index.</param>
+		/// <returns>An enumerable containing the cells with coordinates of the specified column.</returns>
+		public IEnumerable<Cell<T>> ColCells(int colNo)
+			=> grid.RowIndexes().Select(row => new Cell<T>(colNo, row, grid[colNo, row]));
+
+		/// <summary>
+		/// Enumerates the columns of the grid as sequences of cells with their coordinates.
+		/// </summary>
+		/// <returns>An enumerable of sequences, where each sequence is a collection of cells representing a column.</returns>
+		public IEnumerable<IEnumerable<Cell<T>>> ColsCells()
+			=> grid.ColIndexes().Select(ix => grid.ColCells(ix));
 	}
 
 	extension<T>(T[,] array) {
@@ -41,5 +56,26 @@ public static partial class ArrayHelpers {
 		/// result matches their order in the array.</returns>
 		public IEnumerable<IEnumerable<T>> Cols()
 			=> array.ColIndexes().Select(ix => array.Col(ix));
+
+		/// <summary>
+		/// Retrieves all cells with their coordinates from the specified column of a two-dimensional array.
+		/// </summary>
+		/// <typeparam name="T">The type of elements in the array.</typeparam>
+		/// <param name="array">The two-dimensional array to extract the column from. Cannot be <see langword="null"/>.</param>
+		/// <param name="colNo">The zero-based index of the column to retrieve. Must be within the bounds of the array's columns.</param>
+		/// <returns>An <see cref="IEnumerable{T}"/> containing the cells with coordinates of the specified column in the order of their rows.</returns>
+		public IEnumerable<Cell<T>> ColCells(int colNo)
+			=> array.RowIndexes().Select(row => new Cell<T>(colNo, row, array[colNo, row]));
+
+		/// <summary>
+		/// Enumerates the columns of a two-dimensional array as sequences of cells with their coordinates.
+		/// </summary>
+		/// <remarks>Each column is represented as an <see cref="IEnumerable{T}"/> of cells containing both coordinates and values.</remarks>
+		/// <typeparam name="T">The type of elements in the array.</typeparam>
+		/// <param name="array">The two-dimensional array to extract columns from.</param>
+		/// <returns>An enumerable of sequences, where each sequence is a collection of cells representing a column of the array.</returns>
+		public IEnumerable<IEnumerable<Cell<T>>> ColsCells()
+			=> array.ColIndexes().Select(ix => array.ColCells(ix));
 	}
 }
+

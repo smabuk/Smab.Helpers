@@ -99,6 +99,80 @@ public static partial class ArrayHelpers {
 			yield return grid.BottomRight();
 			yield return grid.BottomLeft();
 		}
+
+		/// <summary>
+		/// Returns the top edge cells of the grid (first row) with their coordinates.
+		/// </summary>
+		/// <returns>An enumerable collection of cells in the top row of the grid.</returns>
+		public IEnumerable<Cell<T>> TopEdgeCells() => grid.RowCells(0);
+
+		/// <summary>
+		/// Returns the bottom edge cells of the grid (last row) with their coordinates.
+		/// </summary>
+		/// <returns>An enumerable collection of cells in the bottom row of the grid.</returns>
+		public IEnumerable<Cell<T>> BottomEdgeCells() => grid.RowCells(grid.RowsMax);
+
+		/// <summary>
+		/// Returns the left edge cells of the grid (first column) with their coordinates.
+		/// </summary>
+		/// <returns>An enumerable collection of cells in the leftmost column of the grid.</returns>
+		public IEnumerable<Cell<T>> LeftEdgeCells() => grid.ColCells(0);
+
+		/// <summary>
+		/// Returns the right edge cells of the grid (last column) with their coordinates.
+		/// </summary>
+		/// <returns>An enumerable collection of cells in the rightmost column of the grid.</returns>
+		public IEnumerable<Cell<T>> RightEdgeCells() => grid.ColCells(grid.ColsMax);
+
+		/// <summary>
+		/// Returns all edge cells of the grid in clockwise order starting from the top-left corner.
+		/// </summary>
+		/// <remarks>The cells are returned in the following order: top edge (left to right), 
+		/// right edge (top to bottom, excluding corners), bottom edge (right to left, excluding right corner), 
+		/// and left edge (bottom to top, excluding both corners).</remarks>
+		/// <returns>An enumerable collection of all edge cells with their coordinates in clockwise order.</returns>
+		public IEnumerable<Cell<T>> EdgeCells() {
+			if (grid.ColsCount == 0 || grid.RowsCount == 0) {
+				yield break;
+			}
+
+			// Top edge (left to right)
+			foreach (Cell<T> cell in grid.TopEdgeCells()) {
+				yield return cell;
+			}
+
+			// Right edge (top to bottom, skip first which is already included)
+			foreach (Cell<T> cell in grid.RightEdgeCells().Skip(1)) {
+				yield return cell;
+			}
+
+			// If more than one row, add bottom and left edges
+			if (grid.RowsCount > 1) {
+				// Bottom edge (right to left, skip last which is already included)
+				foreach (Cell<T> cell in grid.BottomEdgeCells().Reverse().Skip(1)) {
+					yield return cell;
+				}
+
+				// If more than one column, add left edge
+				if (grid.ColsCount > 1) {
+					// Left edge (bottom to top, skip both corners)
+					foreach (Cell<T> cell in grid.LeftEdgeCells().Reverse().Skip(1).Take(grid.RowsCount - 2)) {
+						yield return cell;
+					}
+				}
+			}
+		}
+
+		/// <summary>
+		/// Returns all four corner cells of the grid with their coordinates.
+		/// </summary>
+		/// <returns>An enumerable containing the four corner cells in clockwise order: TopLeft, TopRight, BottomRight, BottomLeft.</returns>
+		public IEnumerable<Cell<T>> GetCornerCells() {
+			yield return new Cell<T>(0, 0, grid.TopLeft());
+			yield return new Cell<T>(grid.ColsMax, 0, grid.TopRight());
+			yield return new Cell<T>(grid.ColsMax, grid.RowsMax, grid.BottomRight());
+			yield return new Cell<T>(0, grid.RowsMax, grid.BottomLeft());
+		}
 	}
 
 	extension<T>(T[,] array) {
@@ -199,5 +273,80 @@ public static partial class ArrayHelpers {
 			yield return array.BottomRight();
 			yield return array.BottomLeft();
 		}
+
+		/// <summary>
+		/// Returns the top edge cells of the array (first row) with their coordinates.
+		/// </summary>
+		/// <returns>An enumerable collection of cells in the top row of the array.</returns>
+		public IEnumerable<Cell<T>> TopEdgeCells() => array.RowCells(0);
+
+		/// <summary>
+		/// Returns the bottom edge cells of the array (last row) with their coordinates.
+		/// </summary>
+		/// <returns>An enumerable collection of cells in the bottom row of the array.</returns>
+		public IEnumerable<Cell<T>> BottomEdgeCells() => array.RowCells(array.RowsMax());
+
+		/// <summary>
+		/// Returns the left edge cells of the array (first column) with their coordinates.
+		/// </summary>
+		/// <returns>An enumerable collection of cells in the leftmost column of the array.</returns>
+		public IEnumerable<Cell<T>> LeftEdgeCells() => array.ColCells(0);
+
+		/// <summary>
+		/// Returns the right edge cells of the array (last column) with their coordinates.
+		/// </summary>
+		/// <returns>An enumerable collection of cells in the rightmost column of the array.</returns>
+		public IEnumerable<Cell<T>> RightEdgeCells() => array.ColCells(array.ColsMax());
+
+		/// <summary>
+		/// Returns all edge cells of the array in clockwise order starting from the top-left corner.
+		/// </summary>
+		/// <returns>An enumerable collection of all edge cells with their coordinates in clockwise order.</returns>
+		public IEnumerable<Cell<T>> EdgeCells() {
+			int cols = array.GetLength(0);
+			int rows = array.GetLength(1);
+
+			if (cols == 0 || rows == 0) {
+				yield break;
+			}
+
+			// Top edge (left to right)
+			foreach (Cell<T> cell in array.TopEdgeCells()) {
+				yield return cell;
+			}
+
+			// Right edge (top to bottom, skip first)
+			foreach (Cell<T> cell in array.RightEdgeCells().Skip(1)) {
+				yield return cell;
+			}
+
+			// If more than one row, add bottom and left edges
+			if (rows > 1) {
+				// Bottom edge (right to left, skip last)
+				foreach (Cell<T> cell in array.BottomEdgeCells().Reverse().Skip(1)) {
+					yield return cell;
+				}
+
+				// If more than one column, add left edge
+				if (cols > 1) {
+					// Left edge (bottom to top, skip both corners)
+					foreach (Cell<T> cell in array.LeftEdgeCells().Reverse().Skip(1).Take(rows - 2)) {
+						yield return cell;
+					}
+				}
+			}
+		}
+
+		/// <summary>
+		/// Returns all four corner cells of the array with their coordinates.
+		/// </summary>
+		/// <returns>An enumerable containing the four corner cells in clockwise order: TopLeft, TopRight, BottomRight, BottomLeft.</returns>
+		public IEnumerable<Cell<T>> GetCornerCells() {
+			yield return new Cell<T>(0, 0, array.TopLeft());
+			yield return new Cell<T>(array.ColsMax(), 0, array.TopRight());
+			yield return new Cell<T>(array.ColsMax(), array.RowsMax(), array.BottomRight());
+			yield return new Cell<T>(0, array.RowsMax(), array.BottomLeft());
+		}
 	}
 }
+

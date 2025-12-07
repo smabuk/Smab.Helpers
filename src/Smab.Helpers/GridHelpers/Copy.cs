@@ -11,7 +11,7 @@ public static partial class ArrayHelpers {
 		/// <returns>A new grid containing the same elements as the original grid.</returns>
 		public Grid<T> Copy() {
 			Grid<T> result = new(grid.ColsCount, grid.RowsCount);
-			Array.Copy(grid.Cells, result.Cells, grid.Cells.Length);
+			Array.Copy(grid.InternalCells, result.InternalCells, grid.InternalCells.Length);
 			return result;
 		}
 	}

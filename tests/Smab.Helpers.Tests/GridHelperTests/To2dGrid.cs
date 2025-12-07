@@ -17,9 +17,9 @@ public class To2dGrid {
 
 		grid.ColsCount.ShouldBe(expectedCols);
 		grid.RowsCount.ShouldBe(expectedRows);
-		grid.Cells.Length.ShouldBe(expectedLength);
-		grid.Cells.ColsCount().ShouldBe(expectedCols);
-		grid.Cells.RowsCount().ShouldBe(expectedRows);
+		grid.InternalCells.Length.ShouldBe(expectedLength);
+		grid.InternalCells.ColsCount().ShouldBe(expectedCols);
+		grid.InternalCells.RowsCount().ShouldBe(expectedRows);
 	}
 
 	[Fact]
@@ -53,7 +53,7 @@ public class To2dGrid {
 
 		grid.ColsCount.ShouldBe(10);
 		grid.RowsCount.ShouldBe(5);
-		grid.Cells.Length.ShouldBe(50);
+		grid.InternalCells.Length.ShouldBe(50);
 	}
 
 	[Fact]
@@ -75,7 +75,7 @@ public class To2dGrid {
 
 		grid.ColsCount.ShouldBe(10);
 		grid.RowsCount.ShouldBe(4);
-		grid.Cells.Length.ShouldBe(40);
+		grid.InternalCells.Length.ShouldBe(40);
 	}
 
 	[Fact]
@@ -99,7 +99,7 @@ public class To2dGrid {
 
 		grid.ColsCount.ShouldBe(4);
 		grid.RowsCount.ShouldBe(7);
-		grid.Cells.Length.ShouldBe(28);
+		grid.InternalCells.Length.ShouldBe(28);
 	}
 
 	[Fact]
@@ -121,7 +121,7 @@ public class To2dGrid {
 
 		grid.ColsCount.ShouldBe(4);
 		grid.RowsCount.ShouldBe(10);
-		grid.Cells.Length.ShouldBe(40);
+		grid.InternalCells.Length.ShouldBe(40);
 
 		grid[0, 0].ShouldBe(' ');
 		grid[3, 3].ShouldBe(' ');

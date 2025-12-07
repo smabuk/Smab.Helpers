@@ -21,8 +21,8 @@ public static partial class ArrayHelpers {
 		/// <remarks>This method modifies the grid in place.</remarks>
 		/// <param name="value">The value to assign to each element of the grid.</param>
 		public void FillInPlace(T value) {
-			Span<T> span = MemoryMarshal.CreateSpan(ref grid.Cells[0, 0], grid.Cells.Length);
-			for (int i = 0; i < grid.Cells.Length; i++) {
+			Span<T> span = MemoryMarshal.CreateSpan(ref grid.InternalCells[0, 0], grid.InternalCells.Length);
+			for (int i = 0; i < grid.InternalCells.Length; i++) {
 				span[i] = value;
 			}
 		}

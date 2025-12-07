@@ -9,13 +9,17 @@
 [DebuggerDisplay("{DebugDisplay,nq}")]
 public record Grid<T>(int ColsCount, int RowsCount) : IEnumerable<T> {
 
-	public T[,] Cells { get; internal set; } = new T[ColsCount, RowsCount];
+	public T[,] InternalCells { get; internal set; } = new T[ColsCount, RowsCount];
 
 	public IEnumerator<T> GetEnumerator() {
-		foreach (T value in Cells) {
+		foreach (T value in InternalCells) {
 			yield return value;
 		}
 	}
+
+	// Add Height and Width properties for compatibility
+	public int Height => RowsCount;
+	public int Width => ColsCount;
 
 	System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() => GetEnumerator();
 
@@ -27,8 +31,8 @@ public record Grid<T>(int ColsCount, int RowsCount) : IEnumerable<T> {
 	/// <param name="row">The zero-based row index.</param>
 	/// <returns>The element at the specified position.</returns>
 	public T this[int col, int row] {
-		get => Cells[col, row];
-		set => Cells[col, row] = value;
+		get => InternalCells[col, row];
+		set => InternalCells[col, row] = value;
 	}
 
 	// Indexer
@@ -39,8 +43,8 @@ public record Grid<T>(int ColsCount, int RowsCount) : IEnumerable<T> {
 	/// <param name="rowIndex">The row index (supports index from end using ^).</param>
 	/// <returns>The element at the specified position.</returns>
 	public T this[Index colIndex, Index rowIndex] {
-		get => Cells[colIndex.GetOffset(ColsCount), rowIndex.GetOffset(RowsCount)];
-		set => Cells[colIndex.GetOffset(ColsCount), rowIndex.GetOffset(RowsCount)] = value;
+		get => InternalCells[colIndex.GetOffset(ColsCount), rowIndex.GetOffset(RowsCount)];
+		set => InternalCells[colIndex.GetOffset(ColsCount), rowIndex.GetOffset(RowsCount)] = value;
 	}
 
 	// Indexer
@@ -51,8 +55,8 @@ public record Grid<T>(int ColsCount, int RowsCount) : IEnumerable<T> {
 	/// <param name="rowIndex">The row index (supports index from end using ^).</param>
 	/// <returns>The element at the specified position.</returns>
 	public T this[int col, Index rowIndex] {
-		get => Cells[col, rowIndex.GetOffset(RowsCount)];
-		set => Cells[col, rowIndex.GetOffset(RowsCount)] = value;
+		get => InternalCells[col, rowIndex.GetOffset(RowsCount)];
+		set => InternalCells[col, rowIndex.GetOffset(RowsCount)] = value;
 	}
 
 	// Indexer
@@ -63,8 +67,8 @@ public record Grid<T>(int ColsCount, int RowsCount) : IEnumerable<T> {
 	/// <param name="row">The zero-based row index.</param>
 	/// <returns>The element at the specified position.</returns>
 	public T this[Index colIndex, int row] {
-		get => Cells[colIndex.GetOffset(ColsCount), row];
-		set => Cells[colIndex.GetOffset(ColsCount), row] = value;
+		get => InternalCells[colIndex.GetOffset(ColsCount), row];
+		set => InternalCells[colIndex.GetOffset(ColsCount), row] = value;
 	}
 
 	// Indexer
@@ -75,8 +79,8 @@ public record Grid<T>(int ColsCount, int RowsCount) : IEnumerable<T> {
 	/// respectively.</param>
 	/// <returns>The value stored at the given grid location.</returns>
 	public T this[Point point] {
-		get => Cells[point.X, point.Y];
-		set => Cells[point.X, point.Y] = value;
+		get => InternalCells[point.X, point.Y];
+		set => InternalCells[point.X, point.Y] = value;
 	}
 
 	// Indexer
@@ -87,8 +91,8 @@ public record Grid<T>(int ColsCount, int RowsCount) : IEnumerable<T> {
 	/// grid.</param>
 	/// <returns>The value stored at the cell located at the specified coordinates.</returns>
 	public T this[(int X, int Y) point] {
-		get => Cells[point.X, point.Y];
-		set => Cells[point.X, point.Y] = value;
+		get => InternalCells[point.X, point.Y];
+		set => InternalCells[point.X, point.Y] = value;
 	}
 
 	// Indexer
@@ -109,7 +113,7 @@ public record Grid<T>(int ColsCount, int RowsCount) : IEnumerable<T> {
 			Grid<T> result = new(colLength, rowLength);
 			for (int col = 0; col < colLength; col++) {
 				for (int row = 0; row < rowLength; row++) {
-					result[col, row] = Cells[colOffset + col, rowOffset + row];
+					result[col, row] = InternalCells[colOffset + col, rowOffset + row];
 				}
 			}
 
@@ -122,14 +126,14 @@ public record Grid<T>(int ColsCount, int RowsCount) : IEnumerable<T> {
 			if (value.ColsCount == colLength && value.RowsCount == rowLength) {
 				for (int col = 0; col < colLength; col++) {
 					for (int row = 0; row < rowLength; row++) {
-						Cells[colOffset + col, rowOffset + row] = value[col, row];
+						InternalCells[colOffset + col, rowOffset + row] = value[col, row];
 					}
 				}
 			} else if (value.ColsCount == 1 && value.RowsCount == 1) {
 				T fillValue = value[0, 0];
 				for (int col = 0; col < colLength; col++) {
 					for (int row = 0; row < rowLength; row++) {
-						Cells[colOffset + col, rowOffset + row] = fillValue;
+						InternalCells[colOffset + col, rowOffset + row] = fillValue;
 					}
 				}
 			} else {
@@ -154,7 +158,7 @@ public record Grid<T>(int ColsCount, int RowsCount) : IEnumerable<T> {
 			(int rowOffset, int rowLength) = rowRange.GetOffsetAndLength(RowsCount);
 
 			for (int row = 0; row < rowLength; row++) {
-				yield return Cells[col, rowOffset + row];
+				yield return InternalCells[col, rowOffset + row];
 			}
 		}
 		set {
@@ -164,12 +168,12 @@ public record Grid<T>(int ColsCount, int RowsCount) : IEnumerable<T> {
 			T[] values = [.. value];
 			if (values.Length == rowLength) {
 				for (int row = 0; row < rowLength; row++) {
-					Cells[col, rowOffset + row] = values[row];
+					InternalCells[col, rowOffset + row] = values[row];
 				}
 			} else if (values.Length == 1) {
 				T fillValue = values[0];
 				for (int row = 0; row < rowLength; row++) {
-					Cells[col, rowOffset + row] = fillValue;
+					InternalCells[col, rowOffset + row] = fillValue;
 				}
 			} else {
 				throw new ArgumentException($"Collection count must match the target range length ({rowLength}) or be 1 for filling.");
@@ -193,7 +197,7 @@ public record Grid<T>(int ColsCount, int RowsCount) : IEnumerable<T> {
 			int row = rowIndex.GetOffset(RowsCount);
 
 			for (int col = 0; col < colLength; col++) {
-				yield return Cells[colOffset + col, row];
+				yield return InternalCells[colOffset + col, row];
 			}
 		}
 		set {
@@ -203,12 +207,12 @@ public record Grid<T>(int ColsCount, int RowsCount) : IEnumerable<T> {
 			T[] values = [.. value];
 			if (values.Length == colLength) {
 				for (int col = 0; col < colLength; col++) {
-					Cells[colOffset + col, row] = values[col];
+					InternalCells[colOffset + col, row] = values[col];
 				}
 			} else if (values.Length == 1) {
 				T fillValue = values[0];
 				for (int col = 0; col < colLength; col++) {
-					Cells[colOffset + col, row] = fillValue;
+					InternalCells[colOffset + col, row] = fillValue;
 				}
 			} else {
 				throw new ArgumentException($"Collection count must match the target range length ({colLength}) or be 1 for filling.");
@@ -222,7 +226,7 @@ public record Grid<T>(int ColsCount, int RowsCount) : IEnumerable<T> {
 	/// </summary>
 	/// <remarks>Direct modifications to the returned array will affect the grid.</remarks>
 	/// <returns>The underlying two-dimensional array.</returns>
-	public T[,] ToArray() => Cells;
+	public T[,] ToArray() => InternalCells;
 
 	private string DebugDisplay => $$"""{{nameof(Grid<>)}} [{{ColsCount}}, {{RowsCount}}]""";
 }

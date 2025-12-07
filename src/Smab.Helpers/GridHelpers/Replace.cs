@@ -22,8 +22,8 @@ public static partial class ArrayHelpers {
 		/// <param name="value">The value to search for and replace.</param>
 		/// <param name="replaceWith">The value to assign in place of each occurrence.</param>
 		public void ReplaceInPlace(T value, T replaceWith) {
-			Span<T> span = MemoryMarshal.CreateSpan(ref grid.Cells[0, 0], grid.Cells.Length);
-			for (int i = 0; i < grid.Cells.Length; i++) {
+			Span<T> span = MemoryMarshal.CreateSpan(ref grid.InternalCells[0, 0], grid.InternalCells.Length);
+			for (int i = 0; i < grid.InternalCells.Length; i++) {
 				if (span[i]?.Equals(value) ?? false) {
 					span[i] = replaceWith;
 				}

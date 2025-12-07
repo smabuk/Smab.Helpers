@@ -4,7 +4,7 @@ public static partial class ArrayHelpers {
 
 
 	extension<T>(T[,] array) {
-		public Grid<T> To2dGrid() => new(array.ColsCount(), array.RowsCount()) { Cells = array };
+		public Grid<T> To2dGrid() => new(array.ColsCount(), array.RowsCount()) { InternalCells = array };
 	}
 
 	extension<T>(IEnumerable<T> input) {

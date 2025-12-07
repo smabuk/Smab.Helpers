@@ -17,6 +17,21 @@ public static partial class ArrayHelpers {
 		/// <returns>An enumerable collection where each element is an enumerable representing a row.</returns>
 		public IEnumerable<IEnumerable<T>> GetRows()
 			=> grid.RowIndexes().Select(ix => grid.Row(ix));
+
+		/// <summary>
+		/// Retrieves a sequence of cells with their coordinates from the specified row.
+		/// </summary>
+		/// <param name="rowNo">The zero-based row index.</param>
+		/// <returns>An enumerable containing the cells with coordinates of the specified row.</returns>
+		public IEnumerable<Cell<T>> RowCells(int rowNo)
+			=> grid.ColIndexes().Select(col => new Cell<T>(col, rowNo, grid[col, rowNo]));
+
+		/// <summary>
+		/// Enumerates the rows of the grid as sequences of cells with their coordinates.
+		/// </summary>
+		/// <returns>An enumerable collection where each element is an enumerable of cells representing a row.</returns>
+		public IEnumerable<IEnumerable<Cell<T>>> GetRowCells()
+			=> grid.RowIndexes().Select(ix => grid.RowCells(ix));
 	}
 
 	extension<T>(T[,] array) {
@@ -42,5 +57,26 @@ public static partial class ArrayHelpers {
 		/// <returns>An enumerable collection where each element is an enumerable representing a row of the array.</returns>
 		public IEnumerable<IEnumerable<T>> Rows()
 			=> array.RowIndexes().Select(ix => array.Row(ix));
+
+		/// <summary>
+		/// Retrieves a sequence of cells with their coordinates from the specified row in a two-dimensional array.
+		/// </summary>
+		/// <typeparam name="T">The type of elements in the array.</typeparam>
+		/// <param name="array">The two-dimensional array from which to extract the row. Cannot be <see langword="null"/>.</param>
+		/// <param name="rowNo">The zero-based index of the row to retrieve. Must be within the bounds of the array's row indices.</param>
+		/// <returns>An <see cref="IEnumerable{T}"/> containing the cells with coordinates of the specified row in the array.</returns>
+		public IEnumerable<Cell<T>> RowCells(int rowNo)
+			=> array.ColIndexes().Select(col => new Cell<T>(col, rowNo, array[col, rowNo]));
+
+		/// <summary>
+		/// Enumerates the rows of a two-dimensional array as sequences of cells with their coordinates.
+		/// </summary>
+		/// <remarks>Each row is represented as an <see cref="IEnumerable{T}"/> of cells containing both the coordinates and values.</remarks>
+		/// <typeparam name="T">The type of elements in the array.</typeparam>
+		/// <param name="array">The two-dimensional array to enumerate rows from. Cannot be <see langword="null"/>.</param>
+		/// <returns>An enumerable collection where each element is an enumerable of cells representing a row of the array.</returns>
+		public IEnumerable<IEnumerable<Cell<T>>> RowsCells()
+			=> array.RowIndexes().Select(ix => array.RowCells(ix));
 	}
 }
+

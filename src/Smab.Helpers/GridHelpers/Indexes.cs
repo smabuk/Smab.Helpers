@@ -6,13 +6,13 @@ public static partial class ArrayHelpers {
 		/// Returns an enumerable collection of index pairs representing the coordinates of all cells in the grid.
 		/// </summary>
 		/// <returns>An enumerable sequence of tuples, where each tuple contains the X and Y coordinates of a cell in the grid.</returns>
-		public IEnumerable<(int X, int Y)> Indexes() => grid.Cells.Indexes();
+		public IEnumerable<(int X, int Y)> Indexes() => grid.InternalCells.Indexes();
 
 		/// <summary>
 		/// Returns an enumerable collection of column and row index pairs for all cells in the grid.
 		/// </summary>
 		/// <returns>An enumerable sequence of tuples, each containing the column and row indices of a cell in the grid.</returns>
-		public IEnumerable<(int Col, int Row)> IndexesColRow() => grid.Cells.IndexesColRow();
+		public IEnumerable<(int Col, int Row)> IndexesColRow() => grid.InternalCells.IndexesColRow();
 	}
 
 	extension<T>(T[,] array) {

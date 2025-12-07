@@ -9,7 +9,7 @@ public static partial class ArrayHelpers {
 	/// <returns>A new Grid containing a copy of the array elements.</returns>
 	public static Grid<T> ToGrid<T>(T[,] array) {
 		Grid<T> grid = new(array.GetLength(0), array.GetLength(1));
-		Array.Copy(array, grid.Cells, array.Length);
+		Array.Copy(array, grid.InternalCells, array.Length);
 		return grid;
 	}
 
