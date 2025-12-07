@@ -85,11 +85,14 @@ public record Grid<T>(int ColsCount, int RowsCount) {
 
 	// Indexer
 	/// <summary>
-	/// Gets a sub-grid containing the elements within the specified column and row ranges.
+	/// Gets or sets a sub-grid containing the elements within the specified column and row ranges.
 	/// </summary>
 	/// <param name="colRange">The range of columns to include.</param>
 	/// <param name="rowRange">The range of rows to include.</param>
 	/// <returns>A new grid containing the elements within the specified ranges.</returns>
+	/// <remarks>
+	/// When setting, the value can be either a Grid with matching dimensions or will fill all cells with the first cell value.
+	/// </remarks>
 	public Grid<T> this[Range colRange, Range rowRange] {
 		get {
 			(int colOffset, int colLength) = colRange.GetOffsetAndLength(ColsCount);
@@ -104,15 +107,39 @@ public record Grid<T>(int ColsCount, int RowsCount) {
 
 			return result;
 		}
+		set {
+			(int colOffset, int colLength) = colRange.GetOffsetAndLength(ColsCount);
+			(int rowOffset, int rowLength) = rowRange.GetOffsetAndLength(RowsCount);
+
+			if (value.ColsCount == colLength && value.RowsCount == rowLength) {
+				for (int col = 0; col < colLength; col++) {
+					for (int row = 0; row < rowLength; row++) {
+						Cells[colOffset + col, rowOffset + row] = value[col, row];
+					}
+				}
+			} else if (value.ColsCount == 1 && value.RowsCount == 1) {
+				T fillValue = value[0, 0];
+				for (int col = 0; col < colLength; col++) {
+					for (int row = 0; row < rowLength; row++) {
+						Cells[colOffset + col, rowOffset + row] = fillValue;
+					}
+				}
+			} else {
+				throw new ArgumentException($"Grid dimensions must match the target range ({colLength}x{rowLength}) or be 1x1 for filling.");
+			}
+		}
 	}
 
 	// Indexer
 	/// <summary>
-	/// Gets a sequence of elements from a specific column across a range of rows.
+	/// Gets or sets a sequence of elements from a specific column across a range of rows.
 	/// </summary>
 	/// <param name="colIndex">The column index to retrieve.</param>
 	/// <param name="rowRange">The range of rows to include.</param>
 	/// <returns>A sequence of elements from the specified column and row range.</returns>
+	/// <remarks>
+	/// When setting, provide an IEnumerable with matching count or a single-element collection to fill all cells.
+	/// </remarks>
 	public IEnumerable<T> this[Index colIndex, Range rowRange] {
 		get {
 			int col = colIndex.GetOffset(ColsCount);
@@ -122,15 +149,36 @@ public record Grid<T>(int ColsCount, int RowsCount) {
 				yield return Cells[col, rowOffset + row];
 			}
 		}
+		set {
+			int col = colIndex.GetOffset(ColsCount);
+			(int rowOffset, int rowLength) = rowRange.GetOffsetAndLength(RowsCount);
+
+			T[] values = value.ToArray();
+			if (values.Length == rowLength) {
+				for (int row = 0; row < rowLength; row++) {
+					Cells[col, rowOffset + row] = values[row];
+				}
+			} else if (values.Length == 1) {
+				T fillValue = values[0];
+				for (int row = 0; row < rowLength; row++) {
+					Cells[col, rowOffset + row] = fillValue;
+				}
+			} else {
+				throw new ArgumentException($"Collection count must match the target range length ({rowLength}) or be 1 for filling.");
+			}
+		}
 	}
 
 	// Indexer
 	/// <summary>
-	/// Gets a sequence of elements from a range of columns at a specific row.
+	/// Gets or sets a sequence of elements from a range of columns at a specific row.
 	/// </summary>
 	/// <param name="colRange">The range of columns to include.</param>
 	/// <param name="rowIndex">The row index to retrieve.</param>
 	/// <returns>A sequence of elements from the specified column range and row.</returns>
+	/// <remarks>
+	/// When setting, provide an IEnumerable with matching count or a single-element collection to fill all cells.
+	/// </remarks>
 	public IEnumerable<T> this[Range colRange, Index rowIndex] {
 		get {
 			(int colOffset, int colLength) = colRange.GetOffsetAndLength(ColsCount);
@@ -138,6 +186,24 @@ public record Grid<T>(int ColsCount, int RowsCount) {
 
 			for (int col = 0; col < colLength; col++) {
 				yield return Cells[colOffset + col, row];
+			}
+		}
+		set {
+			(int colOffset, int colLength) = colRange.GetOffsetAndLength(ColsCount);
+			int row = rowIndex.GetOffset(RowsCount);
+
+			T[] values = value.ToArray();
+			if (values.Length == colLength) {
+				for (int col = 0; col < colLength; col++) {
+					Cells[colOffset + col, row] = values[col];
+				}
+			} else if (values.Length == 1) {
+				T fillValue = values[0];
+				for (int col = 0; col < colLength; col++) {
+					Cells[colOffset + col, row] = fillValue;
+				}
+			} else {
+				throw new ArgumentException($"Collection count must match the target range length ({colLength}) or be 1 for filling.");
 			}
 		}
 	}

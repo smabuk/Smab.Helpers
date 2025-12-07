@@ -887,4 +887,192 @@ public class GridTests {
 		grid[^1, 2].ShouldBe(42);
 		grid[1, 1].ShouldBe(11);
 	}
+
+	[Fact]
+	public void RangeRangeIndexer_SetWithMatchingGrid_ShouldCopyValues() {
+		Grid<int> original = new(5, 5);
+		for (int i = 0; i < 5; i++) {
+			for (int j = 0; j < 5; j++) {
+				original[i, j] = 0;
+			}
+		}
+
+		Grid<int> source = new(2, 2);
+		source[0, 0] = 11;
+		source[1, 0] = 21;
+		source[0, 1] = 12;
+		source[1, 1] = 22;
+
+		original[1..3, 1..3] = source;
+
+		original[1, 1].ShouldBe(11);
+		original[2, 1].ShouldBe(21);
+		original[1, 2].ShouldBe(12);
+		original[2, 2].ShouldBe(22);
+		original[0, 0].ShouldBe(0);
+		original[3, 3].ShouldBe(0);
+	}
+
+	[Fact]
+	public void RangeRangeIndexer_SetWithSingleValueGrid_ShouldFillRange() {
+		Grid<int> grid = new(5, 5);
+		for (int i = 0; i < 5; i++) {
+			for (int j = 0; j < 5; j++) {
+				grid[i, j] = 0;
+			}
+		}
+
+		Grid<int> fillValue = new(1, 1);
+		fillValue[0, 0] = 99;
+
+		grid[1..4, 1..3] = fillValue;
+
+		grid[1, 1].ShouldBe(99);
+		grid[2, 1].ShouldBe(99);
+		grid[3, 1].ShouldBe(99);
+		grid[1, 2].ShouldBe(99);
+		grid[3, 2].ShouldBe(99);
+		grid[0, 0].ShouldBe(0);
+		grid[4, 4].ShouldBe(0);
+	}
+
+	[Fact]
+	public void RangeRangeIndexer_SetWithMismatchedGrid_ShouldThrow() {
+		Grid<int> grid = new(5, 5);
+		Grid<int> wrongSize = new(3, 3);
+
+		Should.Throw<ArgumentException>(() => grid[1..3, 1..3] = wrongSize);
+	}
+
+	[Fact]
+	public void IndexRangeIndexer_SetWithMatchingCollection_ShouldSetValues() {
+		Grid<int> grid = new(3, 4);
+		for (int i = 0; i < 3; i++) {
+			for (int j = 0; j < 4; j++) {
+				grid[i, j] = 0;
+			}
+		}
+
+		grid[1, 1..3] = new[] { 10, 20 };
+
+		grid[1, 1].ShouldBe(10);
+		grid[1, 2].ShouldBe(20);
+		grid[1, 0].ShouldBe(0);
+		grid[1, 3].ShouldBe(0);
+	}
+
+	[Fact]
+	public void IndexRangeIndexer_SetWithSingleValue_ShouldFillRange() {
+		Grid<int> grid = new(3, 4);
+		for (int i = 0; i < 3; i++) {
+			for (int j = 0; j < 4; j++) {
+				grid[i, j] = 0;
+			}
+		}
+
+		grid[1, 1..4] = new[] { 99 };
+
+		grid[1, 1].ShouldBe(99);
+		grid[1, 2].ShouldBe(99);
+		grid[1, 3].ShouldBe(99);
+		grid[1, 0].ShouldBe(0);
+	}
+
+	[Fact]
+	public void IndexRangeIndexer_SetWithIndexFromEnd_ShouldWork() {
+		Grid<int> grid = new(3, 4);
+		for (int i = 0; i < 3; i++) {
+			for (int j = 0; j < 4; j++) {
+				grid[i, j] = 0;
+			}
+		}
+
+		grid[^1, ^2..] = new[] { 88, 99 };
+
+		grid[2, 2].ShouldBe(88);
+		grid[2, 3].ShouldBe(99);
+		grid[2, 0].ShouldBe(0);
+	}
+
+	[Fact]
+	public void IndexRangeIndexer_SetWithMismatchedCollection_ShouldThrow() {
+		Grid<int> grid = new(3, 4);
+
+		Should.Throw<ArgumentException>(() => grid[1, 1..3] = new[] { 1, 2, 3 });
+	}
+
+	[Fact]
+	public void RangeIndexIndexer_SetWithMatchingCollection_ShouldSetValues() {
+		Grid<int> grid = new(4, 3);
+		for (int i = 0; i < 4; i++) {
+			for (int j = 0; j < 3; j++) {
+				grid[i, j] = 0;
+			}
+		}
+
+		grid[1..3, 1] = new[] { 10, 20 };
+
+		grid[1, 1].ShouldBe(10);
+		grid[2, 1].ShouldBe(20);
+		grid[0, 1].ShouldBe(0);
+		grid[3, 1].ShouldBe(0);
+	}
+
+	[Fact]
+	public void RangeIndexIndexer_SetWithSingleValue_ShouldFillRange() {
+		Grid<int> grid = new(4, 3);
+		for (int i = 0; i < 4; i++) {
+			for (int j = 0; j < 3; j++) {
+				grid[i, j] = 0;
+			}
+		}
+
+		grid[1..4, 1] = new[] { 77 };
+
+		grid[1, 1].ShouldBe(77);
+		grid[2, 1].ShouldBe(77);
+		grid[3, 1].ShouldBe(77);
+		grid[0, 1].ShouldBe(0);
+	}
+
+	[Fact]
+	public void RangeIndexIndexer_SetWithIndexFromEnd_ShouldWork() {
+		Grid<int> grid = new(5, 3);
+		for (int i = 0; i < 5; i++) {
+			for (int j = 0; j < 3; j++) {
+				grid[i, j] = 0;
+			}
+		}
+
+		grid[^3.., ^1] = new[] { 11, 22, 33 };
+
+		grid[2, 2].ShouldBe(11);
+		grid[3, 2].ShouldBe(22);
+		grid[4, 2].ShouldBe(33);
+		grid[1, 2].ShouldBe(0);
+	}
+
+	[Fact]
+	public void RangeIndexIndexer_SetWithMismatchedCollection_ShouldThrow() {
+		Grid<int> grid = new(4, 3);
+
+		Should.Throw<ArgumentException>(() => grid[1..3, 1] = new[] { 1, 2, 3 });
+	}
+
+	[Fact]
+	public void RangeIndexers_SetWithList_ShouldWork() {
+		Grid<int> grid = new(4, 4);
+		for (int i = 0; i < 4; i++) {
+			for (int j = 0; j < 4; j++) {
+				grid[i, j] = 0;
+			}
+		}
+
+		grid[1, 1..3] = new List<int> { 10, 20 };
+		grid[1..3, 2] = new List<int> { 30, 40 };
+
+		grid[1, 1].ShouldBe(10);
+		grid[1, 2].ShouldBe(30);  // Overwritten by second assignment
+		grid[2, 2].ShouldBe(40);
+	}
 }
