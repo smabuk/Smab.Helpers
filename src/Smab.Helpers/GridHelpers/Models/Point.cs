@@ -12,8 +12,16 @@
 [DebuggerDisplay("{DebugDisplay,nq}")]
 public record struct Point(int X, int Y) : IParsable<Point>, IComparable<Point> {
 
+	/// <summary>
+	/// Initializes a new instance of the Point class by copying the coordinates from the specified Point.
+	/// </summary>
+	/// <param name="point">The Point instance whose X and Y coordinates are used to initialize the new Point. Cannot be null.</param>
 	public Point(Point point) : this(point.X, point.Y) { }
 
+	/// <summary>
+	/// Initializes a new instance of the Point structure using the specified coordinates.
+	/// </summary>
+	/// <param name="point">A tuple containing the X and Y coordinates to assign to the point.</param>
 	public Point((int X, int Y) point) : this(point.X, point.Y) { }
 
 	/// <summary>Creates a new <see cref="Point" /> object whose two elements have the same value.</summary>
@@ -37,38 +45,14 @@ public record struct Point(int X, int Y) : IParsable<Point>, IComparable<Point> 
 	/// <value>The point <c>(0,1)</c>.</value>
 	public static readonly Point UnitY = new(0, 1);
 
-
-
+	/// <summary>
+	/// Converts a <see cref="Point"/> instance to a tuple containing its X and Y coordinates.
+	/// </summary>
+	/// <remarks>This operator enables implicit conversion from a <see cref="Point"/> to a tuple of two integers,
+	/// allowing direct assignment or usage in tuple-based APIs.</remarks>
+	/// <param name="point">The <see cref="Point"/> to convert to an <see cref="System.ValueTuple{Int32, Int32}"/> representing the X and Y
+	/// coordinates.</param>
 	public static implicit operator (int x, int y)(Point point) => (point.X, point.Y);
-
-	public static Point operator +(Point p1, Point p2) => new(p1.X + p2.X, p1.Y + p2.Y);
-	public static Point operator +((int X, int Y) p1, Point p2) => new(p1.X + p2.X, p1.Y + p2.Y);
-	public static Point operator +(int lhs, Point p2) => new(lhs + p2.X, lhs + p2.Y);
-	public static Point operator +(Point p1, int rhs) => new(rhs + p1.X, rhs + p1.Y);
-	public static Point operator +(Point p1, (int X, int Y) p2) => new(p1.X + p2.X, p1.Y + p2.Y);
-
-	public static Point operator -(Point p1, Point p2) => new(p1.X - p2.X, p1.Y - p2.Y);
-	public static Point operator -(Point p1, (int X, int Y) p2) => new(p1.X - p2.X, p1.Y - p2.Y);
-	public static Point operator -(Point p1, int rhs) => new(p1.X - rhs, p1.Y - rhs);
-	public static Point operator -((int X, int Y) p1, Point p2) => new(p1.X - p2.X, p1.Y - p2.Y);
-	public static Point operator -(Point p1) => Zero - p1;
-
-	public static Point operator *(Point p1, Point p2) => new(p1.X * p2.X, p1.Y * p2.Y);
-	public static Point operator *(Point p1, (int X, int Y) p2) => new(p1.X * p2.X, p1.Y * p2.Y);
-	public static Point operator *((int X, int Y) p1, Point p2) => new(p1.X * p2.X, p1.Y * p2.Y);
-	public static Point operator *(in Point lhs, int rhs) => new(lhs.X * rhs, lhs.Y * rhs);
-	public static Point operator *(int lhs, in Point rhs) => new(rhs.X * lhs, rhs.Y * lhs);
-
-	public static Point operator %(Point p1, Point p2) => new(p1.X % p2.X, p1.Y % p2.Y);
-	public static Point operator %(Point p1, (int X, int Y) p2) => new(p1.X % p2.X, p1.Y % p2.Y);
-	public static Point operator %(Point p1, int rhs) => new(p1.X % rhs, p1.Y % rhs);
-	public static Point operator %((int X, int Y) p1, Point p2) => new(p1.X % p2.X, p1.Y % p2.Y);
-
-
-	public static bool operator <(Point point1, Point point2) => point1.CompareTo(point2) < 0;
-	public static bool operator >(Point point1, Point point2) => point1.CompareTo(point2) > 0;
-	public static bool operator <=(Point point1, Point point2) => point1.CompareTo(point2) <= 0;
-	public static bool operator >=(Point point1, Point point2) => point1.CompareTo(point2) >= 0;
 
 	/// <summary>
 	/// Ordering is by Y first, then X

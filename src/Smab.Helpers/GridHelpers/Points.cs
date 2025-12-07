@@ -3,7 +3,92 @@
 namespace Smab.Helpers;
 
 public static partial class PointHelpers {
+	extension(Point) {
+
+		public static Point operator +(Point p1, Point p2) => new(p1.X + p2.X, p1.Y + p2.Y);
+		public static Point operator +((int X, int Y) p1, Point p2) => new(p1.X + p2.X, p1.Y + p2.Y);
+		public static Point operator +(int lhs, Point p2) => new(lhs + p2.X, lhs + p2.Y);
+		public static Point operator +(Point p1, int rhs) => new(rhs + p1.X, rhs + p1.Y);
+		public static Point operator +(Point p1, (int X, int Y) p2) => new(p1.X + p2.X, p1.Y + p2.Y);
+
+		public static Point operator -(Point p1, Point p2) => new(p1.X - p2.X, p1.Y - p2.Y);
+		public static Point operator -(Point p1, (int X, int Y) p2) => new(p1.X - p2.X, p1.Y - p2.Y);
+		public static Point operator -(Point p1, int rhs) => new(p1.X - rhs, p1.Y - rhs);
+		public static Point operator -((int X, int Y) p1, Point p2) => new(p1.X - p2.X, p1.Y - p2.Y);
+		public static Point operator -(Point p1) => Point.Zero - p1;
+
+		public static Point operator *(Point p1, Point p2) => new(p1.X * p2.X, p1.Y * p2.Y);
+		public static Point operator *(Point p1, (int X, int Y) p2) => new(p1.X * p2.X, p1.Y * p2.Y);
+		public static Point operator *((int X, int Y) p1, Point p2) => new(p1.X * p2.X, p1.Y * p2.Y);
+		public static Point operator *(in Point lhs, int rhs) => new(lhs.X * rhs, lhs.Y * rhs);
+		public static Point operator *(int lhs, in Point rhs) => new(rhs.X * lhs, rhs.Y * lhs);
+
+		public static Point operator %(Point p1, Point p2) => new(p1.X % p2.X, p1.Y % p2.Y);
+		public static Point operator %(Point p1, (int X, int Y) p2) => new(p1.X % p2.X, p1.Y % p2.Y);
+		public static Point operator %(Point p1, int rhs) => new(p1.X % rhs, p1.Y % rhs);
+		public static Point operator %((int X, int Y) p1, Point p2) => new(p1.X % p2.X, p1.Y % p2.Y);
+
+
+		public static bool operator <(Point point1, Point point2) => point1.CompareTo(point2) < 0;
+		public static bool operator >(Point point1, Point point2) => point1.CompareTo(point2) > 0;
+		public static bool operator <=(Point point1, Point point2) => point1.CompareTo(point2) <= 0;
+		public static bool operator >=(Point point1, Point point2) => point1.CompareTo(point2) >= 0;
+
+
+		public static Point operator /(Point p1, Point p2) {
+			if (p2.X == 0 || p2.Y == 0) {
+				throw new DivideByZeroException($"Cannot divide {p1} by {p2}: divisor contains zero.");
+			}
+			if (p1.X % p2.X != 0 || p1.Y % p2.Y != 0) {
+				throw new ArgumentException($"Division of {p1} by {p2} does not result in integer coordinates.");
+			}
+			return new(p1.X / p2.X, p1.Y / p2.Y);
+		}
+
+		public static Point operator /(Point p1, (int X, int Y) p2) {
+			if (p2.X == 0 || p2.Y == 0) {
+				throw new DivideByZeroException($"Cannot divide {p1} by ({p2.X}, {p2.Y}): divisor contains zero.");
+			}
+			if (p1.X % p2.X != 0 || p1.Y % p2.Y != 0) {
+				throw new ArgumentException($"Division of {p1} by ({p2.X}, {p2.Y}) does not result in integer coordinates.");
+			}
+			return new(p1.X / p2.X, p1.Y / p2.Y);
+		}
+
+		public static Point operator /(Point p1, int rhs) {
+			if (rhs == 0) {
+				throw new DivideByZeroException($"Cannot divide {p1} by zero.");
+			}
+			if (p1.X % rhs != 0 || p1.Y % rhs != 0) {
+				throw new ArgumentException($"Division of {p1} by {rhs} does not result in integer coordinates.");
+			}
+			return new(p1.X / rhs, p1.Y / rhs);
+		}
+
+		public static Point operator /((int X, int Y) p1, Point p2) {
+			if (p2.X == 0 || p2.Y == 0) {
+				throw new DivideByZeroException($"Cannot divide ({p1.X}, {p1.Y}) by {p2}: divisor contains zero.");
+			}
+			if (p1.X % p2.X != 0 || p1.Y % p2.Y != 0) {
+				throw new ArgumentException($"Division of ({p1.X}, {p1.Y}) by {p2} does not result in integer coordinates.");
+			}
+			return new(p1.X / p2.X, p1.Y / p2.Y);
+		}
+	}
+
+
+
 	extension(Point point) {
+
+		/// <summary>
+		/// Gets the column index represented by this point.
+		/// </summary>
+		public int Col => point.X;
+		/// <summary>
+		/// Gets the zero-based row index represented by this point.
+		/// </summary>
+		public int Row => point.Y;
+
 		/// <summary>
 		/// Moves the specified <see cref="Point"/> in the given direction by a specified distance.
 		/// </summary>
