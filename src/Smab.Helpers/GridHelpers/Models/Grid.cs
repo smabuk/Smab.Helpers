@@ -70,6 +70,42 @@ public record Grid<T>(int ColsCount, int RowsCount) {
 		}
 	}
 
+	// Indexer
+	/// <summary>
+	/// Gets a sequence of elements from a specific column across a range of rows.
+	/// </summary>
+	/// <param name="colIndex">The column index to retrieve.</param>
+	/// <param name="rowRange">The range of rows to include.</param>
+	/// <returns>A sequence of elements from the specified column and row range.</returns>
+	public IEnumerable<T> this[Index colIndex, Range rowRange] {
+		get {
+			int col = colIndex.GetOffset(ColsCount);
+			(int rowOffset, int rowLength) = rowRange.GetOffsetAndLength(RowsCount);
+
+			for (int row = 0; row < rowLength; row++) {
+				yield return Cells[col, rowOffset + row];
+			}
+		}
+	}
+
+	// Indexer
+	/// <summary>
+	/// Gets a sequence of elements from a range of columns at a specific row.
+	/// </summary>
+	/// <param name="colRange">The range of columns to include.</param>
+	/// <param name="rowIndex">The row index to retrieve.</param>
+	/// <returns>A sequence of elements from the specified column range and row.</returns>
+	public IEnumerable<T> this[Range colRange, Index rowIndex] {
+		get {
+			(int colOffset, int colLength) = colRange.GetOffsetAndLength(ColsCount);
+			int row = rowIndex.GetOffset(RowsCount);
+
+			for (int col = 0; col < colLength; col++) {
+				yield return Cells[colOffset + col, row];
+			}
+		}
+	}
+
 	// Conversion to underlying array
 	/// <summary>
 	/// Gets a reference to the underlying two-dimensional array.

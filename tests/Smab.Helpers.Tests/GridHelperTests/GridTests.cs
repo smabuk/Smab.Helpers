@@ -669,4 +669,126 @@ public class GridTests {
 		subGrid.RowsCount.ShouldBe(1);
 		subGrid[0, 0].ShouldBe(11);
 	}
+
+	[Fact]
+	public void IndexRangeIndexer_ShouldReturnColumnSlice() {
+		Grid<int> original = new(4, 4);
+		for (int i = 0; i < 4; i++) {
+			for (int j = 0; j < 4; j++) {
+				original[i, j] = i * 10 + j;
+			}
+		}
+
+		List<int> slice = [.. original[1, 1..3]];
+
+		slice.Count.ShouldBe(2);
+		slice[0].ShouldBe(11);
+		slice[1].ShouldBe(12);
+	}
+
+	[Fact]
+	public void IndexRangeIndexer_WithOpenRange_ShouldReturnEntireColumn() {
+		Grid<int> original = new(3, 4);
+		for (int i = 0; i < 3; i++) {
+			for (int j = 0; j < 4; j++) {
+				original[i, j] = i * 10 + j;
+			}
+		}
+
+		List<int> slice = [.. original[2, ..]];
+
+		slice.Count.ShouldBe(4);
+		slice.ShouldBe([20, 21, 22, 23]);
+	}
+
+	[Fact]
+	public void IndexRangeIndexer_WithHatOperator_ShouldReturnColumnSliceFromEnd() {
+		Grid<int> original = new(3, 4);
+		for (int i = 0; i < 3; i++) {
+			for (int j = 0; j < 4; j++) {
+				original[i, j] = i * 10 + j;
+			}
+		}
+
+		List<int> slice = [.. original[1, ^2..]];
+
+		slice.Count.ShouldBe(2);
+		slice.ShouldBe([12, 13]);
+	}
+
+	[Fact]
+	public void IndexRangeIndexer_WithIndexFromEnd_ShouldWorkCorrectly() {
+		Grid<int> original = new(4, 5);
+		for (int i = 0; i < 4; i++) {
+			for (int j = 0; j < 5; j++) {
+				original[i, j] = i * 10 + j;
+			}
+		}
+
+		List<int> slice = [.. original[^1, 1..4]];
+
+		slice.Count.ShouldBe(3);
+		slice.ShouldBe([31, 32, 33]);
+	}
+
+	[Fact]
+	public void RangeIndexIndexer_ShouldReturnRowSlice() {
+		Grid<int> original = new(4, 4);
+		for (int i = 0; i < 4; i++) {
+			for (int j = 0; j < 4; j++) {
+				original[i, j] = i * 10 + j;
+			}
+		}
+
+		List<int> slice = [.. original[1..3, 1]];
+
+		slice.Count.ShouldBe(2);
+		slice[0].ShouldBe(11);
+		slice[1].ShouldBe(21);
+	}
+
+	[Fact]
+	public void RangeIndexIndexer_WithOpenRange_ShouldReturnEntireRow() {
+		Grid<int> original = new(4, 3);
+		for (int i = 0; i < 4; i++) {
+			for (int j = 0; j < 3; j++) {
+				original[i, j] = i * 10 + j;
+			}
+		}
+
+		List<int> slice = [.. original[.., 2]];
+
+		slice.Count.ShouldBe(4);
+		slice.ShouldBe([2, 12, 22, 32]);
+	}
+
+	[Fact]
+	public void RangeIndexIndexer_WithHatOperator_ShouldReturnRowSliceFromEnd() {
+		Grid<int> original = new(5, 3);
+		for (int i = 0; i < 5; i++) {
+			for (int j = 0; j < 3; j++) {
+				original[i, j] = i * 10 + j;
+			}
+		}
+
+		List<int> slice = [.. original[^3.., 1]];
+
+		slice.Count.ShouldBe(3);
+		slice.ShouldBe([21, 31, 41]);
+	}
+
+	[Fact]
+	public void RangeIndexIndexer_WithIndexFromEnd_ShouldWorkCorrectly() {
+		Grid<int> original = new(5, 4);
+		for (int i = 0; i < 5; i++) {
+			for (int j = 0; j < 4; j++) {
+				original[i, j] = i * 10 + j;
+			}
+		}
+
+		List<int> slice = [.. original[1..4, ^2]];
+
+		slice.Count.ShouldBe(3);
+		slice.ShouldBe([12, 22, 32]);
+	}
 }
