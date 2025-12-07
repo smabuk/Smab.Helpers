@@ -47,7 +47,7 @@ public static partial class AlgorithmicHelpers {
 		while (priorityQueue.Count > 0) {
 			Cell<T> cell = priorityQueue.Dequeue();
 
-			foreach ((int x, int y, T value) in grid.GetAdjacentCells(cell.Index)) {
+			foreach ((int x, int y, T value) in grid.GetAdjacentsAsCells(cell.Index)) {
 				Cell<T> neighbour = new(x, y, value);
 				if (!costs.ContainsKey(neighbour.Index)) {
 					T cost = costs[cell.Index] + neighbour.Value;

@@ -254,7 +254,7 @@ public class GridExtensionsTests {
 		array[0, 1] = 3;
 		array[1, 1] = 4;
 
-		Grid<int> grid = ArrayHelpers.ToGrid(array);
+		Grid<int> grid = Grid<int>.CreateFromArray(array);
 
 		grid.ColsCount.ShouldBe(2);
 		grid.RowsCount.ShouldBe(2);
@@ -267,7 +267,7 @@ public class GridExtensionsTests {
 		int[,] array = new int[2, 2];
 		array[0, 0] = 1;
 
-		Grid<int> grid = ArrayHelpers.ToGrid(array);
+		Grid<int> grid = Grid<int>.CreateFromArray(array);
 		grid[0, 0] = 99;
 
 		array[0, 0].ShouldBe(1);
@@ -280,7 +280,7 @@ public class GridExtensionsTests {
 			[4, 5, 6]
 		];
 
-		Grid<int> grid = ArrayHelpers.FromRows(rows);
+		Grid<int> grid = Grid<int>.CreateFromRows(rows);
 
 		grid.ColsCount.ShouldBe(3);
 		grid.RowsCount.ShouldBe(2);
@@ -297,14 +297,14 @@ public class GridExtensionsTests {
 			[4, 5]
 		];
 
-		Should.Throw<ArgumentException>(() => ArrayHelpers.FromRows(rows));
+		Should.Throw<ArgumentException>(() => Grid<int>.CreateFromRows(rows));
 	}
 
 	[Fact]
 	public void FromRows_WithEmptyCollection_ShouldReturnEmptyGrid() {
 		int[][] rows = [];
 
-		Grid<int> grid = ArrayHelpers.FromRows(rows);
+		Grid<int> grid = Grid<int>.CreateFromRows(rows);
 
 		grid.ColsCount.ShouldBe(0);
 		grid.RowsCount.ShouldBe(0);
@@ -318,7 +318,7 @@ public class GridExtensionsTests {
 			[5, 6]
 		];
 
-		Grid<int> grid = ArrayHelpers.FromColumns(columns);
+		Grid<int> grid = Grid<int>.CreateFromColumns(columns);
 
 		grid.ColsCount.ShouldBe(3);
 		grid.RowsCount.ShouldBe(2);
@@ -335,12 +335,12 @@ public class GridExtensionsTests {
 			[4, 5]
 		];
 
-		Should.Throw<ArgumentException>(() => ArrayHelpers.FromColumns(columns));
+		Should.Throw<ArgumentException>(() => Grid<int>.CreateFromColumns(columns));
 	}
 
 	[Fact]
 	public void CreateGrid_ShouldInitializeWithFunction() {
-		Grid<int> grid = ArrayHelpers.CreateGrid(3, 2, (col, row) => col * 10 + row);
+		Grid<int> grid = Grid<int>.CreateGrid(3, 2, (col, row) => col * 10 + row);
 
 		grid.ColsCount.ShouldBe(3);
 		grid.RowsCount.ShouldBe(2);
@@ -351,7 +351,7 @@ public class GridExtensionsTests {
 
 	[Fact]
 	public void CreateGrid_WithCustomFunction_ShouldWork() {
-		Grid<string> grid = ArrayHelpers.CreateGrid(2, 2, (col, row) => $"({col},{row})");
+		Grid<string> grid = Grid<string>.CreateGrid(2, 2, (col, row) => $"({col},{row})");
 
 		grid[0, 0].ShouldBe("(0,0)");
 		grid[1, 1].ShouldBe("(1,1)");

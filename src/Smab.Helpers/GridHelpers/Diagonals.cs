@@ -58,36 +58,36 @@ public static partial class ArrayHelpers {
 		/// Returns an enumerable collection of all diagonals in the grid as sequences of cells with their coordinates.
 		/// </summary>
 		/// <returns>An enumerable of enumerables, each containing the cells along a single diagonal of the grid.</returns>
-		public IEnumerable<IEnumerable<Cell<T>>> DiagonalsCells()
-			=> [.. grid.DiagonalsSouthEastCells(), .. grid.DiagonalsSouthWestCells()];
+		public IEnumerable<IEnumerable<Cell<T>>> DiagonalsAsCells()
+			=> [.. grid.DiagonalsSouthEastAsCells(), .. grid.DiagonalsSouthWestAsCells()];
 
 		/// <summary>
 		/// Returns an enumerable collection of all south-east diagonals in the grid as sequences of cells with their coordinates.
 		/// </summary>
 		/// <remarks>South-east diagonals run from the top-left towards the bottom-right of the grid.</remarks>
 		/// <returns>An enumerable of enumerables, each containing the cells along a single south-east diagonal of the grid.</returns>
-		public IEnumerable<IEnumerable<Cell<T>>> DiagonalsSouthEastCells() => grid.InternalCells.DiagonalsSouthEastCells();
+		public IEnumerable<IEnumerable<Cell<T>>> DiagonalsSouthEastAsCells() => grid.InternalCells.DiagonalsSouthEastAsCells();
 
 		/// <summary>
 		/// Returns an enumerable collection of cells with their coordinates located on the south-east diagonal from the specified cell index.
 		/// </summary>
 		/// <param name="index">The zero-based index of the diagonal.</param>
 		/// <returns>An enumerable collection of cells found along the south-east diagonal starting from the specified index.</returns>
-		public IEnumerable<Cell<T>> DiagonalsSouthEastCells(int index) => grid.InternalCells.DiagonalsSouthEastCells(index);
+		public IEnumerable<Cell<T>> DiagonalsSouthEastCells(int index) => grid.InternalCells.DiagonalsSouthEastAsCells(index);
 
 		/// <summary>
 		/// Returns an enumerable collection of all south-west diagonals in the grid as sequences of cells with their coordinates.
 		/// </summary>
 		/// <remarks>South-west diagonals run from the top-right corner towards the bottom-left.</remarks>
 		/// <returns>An enumerable of enumerables, each containing the cells along a single south-west diagonal of the grid.</returns>
-		public IEnumerable<IEnumerable<Cell<T>>> DiagonalsSouthWestCells() => grid.InternalCells.DiagonalsSouthWestCells();
+		public IEnumerable<IEnumerable<Cell<T>>> DiagonalsSouthWestAsCells() => grid.InternalCells.DiagonalsSouthWestAsCells();
 
 		/// <summary>
 		/// Returns an enumerable collection of cells with their coordinates located on the south-west diagonal from the specified cell index.
 		/// </summary>
 		/// <param name="index">The zero-based index of the diagonal.</param>
 		/// <returns>An enumerable collection of cells found along the south-west diagonal starting from the specified index.</returns>
-		public IEnumerable<Cell<T>> DiagonalsSouthWestCells(int index) => grid.InternalCells.DiagonalsSouthWestCells(index);
+		public IEnumerable<Cell<T>> DiagonalsSouthWestAsCells(int index) => grid.InternalCells.DiagonalsSouthWestAsCells(index);
 	}
 
 	extension<T>(T[,] array) {
@@ -200,8 +200,8 @@ public static partial class ArrayHelpers {
 		/// <typeparam name="T">The type of elements in the array.</typeparam>
 		/// <param name="array">The two-dimensional array from which to extract diagonals. Cannot be null.</param>
 		/// <returns>An enumerable of enumerables, where each inner enumerable represents cells along a diagonal of the array.</returns>
-		public IEnumerable<IEnumerable<Cell<T>>> DiagonalsCells()
-			=> [.. array.DiagonalsSouthEastCells(), .. array.DiagonalsSouthWestCells()];
+		public IEnumerable<IEnumerable<Cell<T>>> DiagonalsAsCells()
+			=> [.. array.DiagonalsSouthEastAsCells(), .. array.DiagonalsSouthWestAsCells()];
 
 		/// <summary>
 		/// Enumerates the diagonals of a two-dimensional array in a south-east direction as sequences of cells with their coordinates.
@@ -209,7 +209,7 @@ public static partial class ArrayHelpers {
 		/// <typeparam name="T">The type of elements in the array.</typeparam>
 		/// <param name="array">The two-dimensional array to process. Cannot be <see langword="null"/>.</param>
 		/// <returns>An enumerable of enumerables, where each inner enumerable represents cells along a south-east diagonal.</returns>
-		public IEnumerable<IEnumerable<Cell<T>>> DiagonalsSouthEastCells() {
+		public IEnumerable<IEnumerable<Cell<T>>> DiagonalsSouthEastAsCells() {
 			IEnumerable<Cell<T>> result = [];
 			int iterationEnd = -(int.Max(array.ColsMax(), array.RowsMax()));
 
@@ -236,8 +236,8 @@ public static partial class ArrayHelpers {
 		/// <param name="array">The two-dimensional array from which to extract the diagonal cells.</param>
 		/// <param name="index">The zero-based index of the diagonal to retrieve.</param>
 		/// <returns>An <see cref="IEnumerable{T}"/> containing the cells of the specified diagonal.</returns>
-		public IEnumerable<Cell<T>> DiagonalsSouthEastCells(int index)
-			=> array.DiagonalsSouthEastCells().Skip(index).FirstOrDefault([]);
+		public IEnumerable<Cell<T>> DiagonalsSouthEastAsCells(int index)
+			=> array.DiagonalsSouthEastAsCells().Skip(index).FirstOrDefault([]);
 
 		/// <summary>
 		/// Enumerates the diagonals of a two-dimensional array in a south-west direction as sequences of cells with their coordinates.
@@ -245,7 +245,7 @@ public static partial class ArrayHelpers {
 		/// <typeparam name="T">The type of elements in the array.</typeparam>
 		/// <param name="array">The two-dimensional array to process. Cannot be <see langword="null"/>.</param>
 		/// <returns>An enumerable of diagonals, where each diagonal is represented as a sequence of cells.</returns>
-		public IEnumerable<IEnumerable<Cell<T>>> DiagonalsSouthWestCells() {
+		public IEnumerable<IEnumerable<Cell<T>>> DiagonalsSouthWestAsCells() {
 			IEnumerable<Cell<T>> result = [];
 			int iterationEnd = int.Max(array.ColsMax(), array.RowsMax()) * 2;
 
@@ -272,8 +272,8 @@ public static partial class ArrayHelpers {
 		/// <param name="array">The two-dimensional array from which to retrieve the diagonal cells.</param>
 		/// <param name="index">The starting index of the diagonal to retrieve.</param>
 		/// <returns>An <see cref="IEnumerable{T}"/> containing the cells of the specified diagonal.</returns>
-		public IEnumerable<Cell<T>> DiagonalsSouthWestCells(int index)
-			=> array.DiagonalsSouthWestCells().Skip(index).FirstOrDefault([]);
+		public IEnumerable<Cell<T>> DiagonalsSouthWestAsCells(int index)
+			=> array.DiagonalsSouthWestAsCells().Skip(index).FirstOrDefault([]);
 	}
 }
 

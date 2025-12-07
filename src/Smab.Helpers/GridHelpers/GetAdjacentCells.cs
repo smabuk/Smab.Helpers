@@ -15,8 +15,8 @@ public static partial class ArrayHelpers {
 		/// excluded.</param>
 		/// <returns>An enumerable collection of adjacent cells. The collection may be empty if no adjacent cells exist at the
 		/// specified location.</returns>
-		public IEnumerable<Cell<T>> GetAdjacentCells(int x, int y, bool includeDiagonals = false, IEnumerable<(int dX, int dY)>? exclude = null)
-			=> grid.InternalCells.GetAdjacentCells<T>(x, y, includeDiagonals, exclude);
+		public IEnumerable<Cell<T>> GetAdjacentsAsCells(int x, int y, bool includeDiagonals = false, IEnumerable<(int dX, int dY)>? exclude = null)
+			=> grid.InternalCells.GetAdjacentsAsCells<T>(x, y, includeDiagonals, exclude);
 
 		/// <summary>
 		/// Returns the adjacent cells surrounding the specified point in the grid.
@@ -29,8 +29,8 @@ public static partial class ArrayHelpers {
 		/// a direction (dX, dY) to omit from the results. If <see langword="null"/>, no directions are excluded.</param>
 		/// <returns>An enumerable collection of adjacent <see cref="Cell{T}"/> instances. The collection may be empty if the specified
 		/// point has no valid neighbours.</returns>
-		public IEnumerable<Cell<T>> GetAdjacentCells((int x, int y) point, bool includeDiagonals = false, IEnumerable<(int dX, int dY)>? exclude = null)
-			=> grid.InternalCells.GetAdjacentCells<T>(point.x, point.y, includeDiagonals, exclude);
+		public IEnumerable<Cell<T>> GetAdjacentsAsCells((int x, int y) point, bool includeDiagonals = false, IEnumerable<(int dX, int dY)>? exclude = null)
+			=> grid.InternalCells.GetAdjacentsAsCells<T>(point.x, point.y, includeDiagonals, exclude);
 
 		/// <summary>
 		/// Returns the adjacent cells surrounding the specified point in the grid.
@@ -42,8 +42,8 @@ public static partial class ArrayHelpers {
 		/// a direction (dX, dY) to omit from the results. If <see langword="null"/>, no directions are excluded.</param>
 		/// <returns>An enumerable collection of adjacent <see cref="Cell{T}"/> instances. The collection may be empty if the specified
 		/// point has no valid neighbours.</returns>
-		public IEnumerable<Cell<T>> GetAdjacentCells(Point point, bool includeDiagonals = false, IEnumerable<(int dX, int dY)>? exclude = null)
-			=> grid.InternalCells.GetAdjacentCells<T>(point.X, point.Y, includeDiagonals, exclude);
+		public IEnumerable<Cell<T>> GetAdjacentsAsCells(Point point, bool includeDiagonals = false, IEnumerable<(int dX, int dY)>? exclude = null)
+			=> grid.InternalCells.GetAdjacentsAsCells<T>(point.X, point.Y, includeDiagonals, exclude);
 
 		/// <summary>
 		/// Returns the corner cells adjacent to the specified cell coordinates.
@@ -54,7 +54,7 @@ public static partial class ArrayHelpers {
 		/// (dX, dY) to omit.</param>
 		/// <returns>An enumerable collection of corner cells adjacent to the specified cell. The collection will be empty if no corner
 		/// cells are found.</returns>
-		public IEnumerable<Cell<T>> GetCornerCells(int x, int y, IEnumerable<(int dX, int dY)>? exclude = null)
+		public IEnumerable<Cell<T>> GetCornersAsCells(int x, int y, IEnumerable<(int dX, int dY)>? exclude = null)
 			=> grid.InternalCells.GetCornerCells<T>(x, y, exclude);
 
 		/// <summary>
@@ -66,7 +66,7 @@ public static partial class ArrayHelpers {
 		/// offset of a corner direction to omit.</param>
 		/// <returns>An enumerable collection of corner-adjacent cells. The collection may be empty if no valid corner neighbours exist
 		/// or all are excluded.</returns>
-		public IEnumerable<Cell<T>> GetCornerCells((int x, int y) point, IEnumerable<(int dX, int dY)>? exclude = null)
+		public IEnumerable<Cell<T>> GetCornersAsCells((int x, int y) point, IEnumerable<(int dX, int dY)>? exclude = null)
 			=> grid.InternalCells.GetCornerCells<T>(point.x, point.y, exclude);
 
 		/// <summary>
@@ -77,7 +77,7 @@ public static partial class ArrayHelpers {
 		/// offset of a corner direction to omit.</param>
 		/// <returns>An enumerable collection of corner-adjacent cells. The collection may be empty if no valid corner neighbours exist
 		/// or all are excluded.</returns>
-		public IEnumerable<Cell<T>> GetCornerCells(Point point, IEnumerable<(int dX, int dY)>? exclude = null)
+		public IEnumerable<Cell<T>> GetCornersAsCells(Point point, IEnumerable<(int dX, int dY)>? exclude = null)
 			=> grid.InternalCells.GetCornerCells<T>(point.X, point.Y, exclude);
 	}
 
@@ -97,7 +97,7 @@ public static partial class ArrayHelpers {
 		/// x and y deltas (dX, dY).</param>
 		/// <returns>An enumerable collection of <see cref="Cell{T}"/> objects representing the adjacent cells.  Each cell includes its
 		/// coordinates and value. The collection is empty if no valid adjacent cells exist.</returns>
-		public IEnumerable<Cell<T>> GetAdjacentCells(int x, int y, bool includeDiagonals = false, IEnumerable<(int dX, int dY)>? exclude = null) {
+		public IEnumerable<Cell<T>> GetAdjacentsAsCells(int x, int y, bool includeDiagonals = false, IEnumerable<(int dX, int dY)>? exclude = null) {
 			IEnumerable<(int dX, int dY)> DIRECTIONS = includeDiagonals switch {
 				true => ALL_DIRECTIONS,
 				false => CARDINAL_DIRECTIONS,
@@ -127,8 +127,8 @@ public static partial class ArrayHelpers {
 		/// <param name="exclude">An optional collection of relative offsets (dX, dY) to exclude from the adjacent cells.  If <see langword="null"/>,
 		/// no offsets are excluded.</param>
 		/// <returns>An enumerable collection of <see cref="Cell{T}"/> objects representing the adjacent cells of the specified point.</returns>
-		public IEnumerable<Cell<T>> GetAdjacentCells((int x, int y) point, bool includeDiagonals = false, IEnumerable<(int dX, int dY)>? exclude = null)
-			=> GetAdjacentCells<T>(array, point.x, point.y, includeDiagonals, exclude);
+		public IEnumerable<Cell<T>> GetAdjacentsAsCells((int x, int y) point, bool includeDiagonals = false, IEnumerable<(int dX, int dY)>? exclude = null)
+			=> GetAdjacentsAsCells<T>(array, point.x, point.y, includeDiagonals, exclude);
 
 		/// <summary>
 		/// Retrieves the adjacent cells of a specified point in a two-dimensional array.
@@ -143,8 +143,8 @@ public static partial class ArrayHelpers {
 		/// <param name="exclude">An optional collection of relative offsets (dX, dY) to exclude from the adjacent cells.  If <see langword="null"/>,
 		/// no offsets are excluded.</param>
 		/// <returns>An enumerable collection of <see cref="Cell{T}"/> objects representing the adjacent cells of the specified point.</returns>
-		public IEnumerable<Cell<T>> GetAdjacentCells(Point point, bool includeDiagonals = false, IEnumerable<(int dX, int dY)>? exclude = null)
-			=> GetAdjacentCells<T>(array, point.X, point.Y, includeDiagonals, exclude);
+		public IEnumerable<Cell<T>> GetAdjacentsAsCells(Point point, bool includeDiagonals = false, IEnumerable<(int dX, int dY)>? exclude = null)
+			=> GetAdjacentsAsCells<T>(array, point.X, point.Y, includeDiagonals, exclude);
 
 		public IEnumerable<Cell<T>> GetCornerCells(int x, int y, IEnumerable<(int dX, int dY)>? exclude = null) {
 			IEnumerable<(int dX, int dY)> DIRECTIONS = CARDINAL_DIRECTIONS;
@@ -171,7 +171,7 @@ public static partial class ArrayHelpers {
 		/// and y deltas.</param>
 		/// <returns>An enumerable collection of <see cref="Cell{T}"/> objects representing the corner cells  around the specified
 		/// point. The collection may be empty if no valid corner cells are found.</returns>
-		public IEnumerable<Cell<T>> GetCornerCells((int x, int y) point, IEnumerable<(int dX, int dY)>? exclude = null)
+		public IEnumerable<Cell<T>> GetCornersAsCells((int x, int y) point, IEnumerable<(int dX, int dY)>? exclude = null)
 			=> GetCornerCells<T>(array, point.x, point.y, exclude);
 
 		/// <summary>
@@ -184,7 +184,7 @@ public static partial class ArrayHelpers {
 		/// and y deltas.</param>
 		/// <returns>An enumerable collection of <see cref="Cell{T}"/> objects representing the corner cells  around the specified
 		/// point. The collection may be empty if no valid corner cells are found.</returns>
-		public IEnumerable<Cell<T>> GetCornerCells(Point point, IEnumerable<(int dX, int dY)>? exclude = null)
+		public IEnumerable<Cell<T>> GetCornersAsCells(Point point, IEnumerable<(int dX, int dY)>? exclude = null)
 			=> GetCornerCells<T>(array, point.X, point.Y, exclude);
 	}
 }

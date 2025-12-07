@@ -23,15 +23,15 @@ public static partial class ArrayHelpers {
 		/// </summary>
 		/// <param name="colNo">The zero-based column index.</param>
 		/// <returns>An enumerable containing the cells with coordinates of the specified column.</returns>
-		public IEnumerable<Cell<T>> ColCells(int colNo)
+		public IEnumerable<Cell<T>> ColAsCells(int colNo)
 			=> grid.RowIndexes().Select(row => new Cell<T>(colNo, row, grid[colNo, row]));
 
 		/// <summary>
 		/// Enumerates the columns of the grid as sequences of cells with their coordinates.
 		/// </summary>
 		/// <returns>An enumerable of sequences, where each sequence is a collection of cells representing a column.</returns>
-		public IEnumerable<IEnumerable<Cell<T>>> ColsCells()
-			=> grid.ColIndexes().Select(ix => grid.ColCells(ix));
+		public IEnumerable<IEnumerable<Cell<T>>> ColsAsCells()
+			=> grid.ColIndexes().Select(ix => grid.ColAsCells(ix));
 	}
 
 	extension<T>(T[,] array) {
@@ -64,7 +64,7 @@ public static partial class ArrayHelpers {
 		/// <param name="array">The two-dimensional array to extract the column from. Cannot be <see langword="null"/>.</param>
 		/// <param name="colNo">The zero-based index of the column to retrieve. Must be within the bounds of the array's columns.</param>
 		/// <returns>An <see cref="IEnumerable{T}"/> containing the cells with coordinates of the specified column in the order of their rows.</returns>
-		public IEnumerable<Cell<T>> ColCells(int colNo)
+		public IEnumerable<Cell<T>> ColAsCells(int colNo)
 			=> array.RowIndexes().Select(row => new Cell<T>(colNo, row, array[colNo, row]));
 
 		/// <summary>
@@ -74,8 +74,8 @@ public static partial class ArrayHelpers {
 		/// <typeparam name="T">The type of elements in the array.</typeparam>
 		/// <param name="array">The two-dimensional array to extract columns from.</param>
 		/// <returns>An enumerable of sequences, where each sequence is a collection of cells representing a column of the array.</returns>
-		public IEnumerable<IEnumerable<Cell<T>>> ColsCells()
-			=> array.ColIndexes().Select(ix => array.ColCells(ix));
+		public IEnumerable<IEnumerable<Cell<T>>> ColsAsCells()
+			=> array.ColIndexes().Select(ix => array.ColAsCells(ix));
 	}
 }
 

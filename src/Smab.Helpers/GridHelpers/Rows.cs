@@ -23,7 +23,7 @@ public static partial class ArrayHelpers {
 		/// </summary>
 		/// <param name="rowNo">The zero-based row index.</param>
 		/// <returns>An enumerable containing the cells with coordinates of the specified row.</returns>
-		public IEnumerable<Cell<T>> RowCells(int rowNo)
+		public IEnumerable<Cell<T>> RowAsCells(int rowNo)
 			=> grid.ColIndexes().Select(col => new Cell<T>(col, rowNo, grid[col, rowNo]));
 
 		/// <summary>
@@ -31,7 +31,7 @@ public static partial class ArrayHelpers {
 		/// </summary>
 		/// <returns>An enumerable collection where each element is an enumerable of cells representing a row.</returns>
 		public IEnumerable<IEnumerable<Cell<T>>> GetRowCells()
-			=> grid.RowIndexes().Select(ix => grid.RowCells(ix));
+			=> grid.RowIndexes().Select(ix => grid.RowAsCells(ix));
 	}
 
 	extension<T>(T[,] array) {
@@ -65,7 +65,7 @@ public static partial class ArrayHelpers {
 		/// <param name="array">The two-dimensional array from which to extract the row. Cannot be <see langword="null"/>.</param>
 		/// <param name="rowNo">The zero-based index of the row to retrieve. Must be within the bounds of the array's row indices.</param>
 		/// <returns>An <see cref="IEnumerable{T}"/> containing the cells with coordinates of the specified row in the array.</returns>
-		public IEnumerable<Cell<T>> RowCells(int rowNo)
+		public IEnumerable<Cell<T>> RowAsCells(int rowNo)
 			=> array.ColIndexes().Select(col => new Cell<T>(col, rowNo, array[col, rowNo]));
 
 		/// <summary>
@@ -75,8 +75,8 @@ public static partial class ArrayHelpers {
 		/// <typeparam name="T">The type of elements in the array.</typeparam>
 		/// <param name="array">The two-dimensional array to enumerate rows from. Cannot be <see langword="null"/>.</param>
 		/// <returns>An enumerable collection where each element is an enumerable of cells representing a row of the array.</returns>
-		public IEnumerable<IEnumerable<Cell<T>>> RowsCells()
-			=> array.RowIndexes().Select(ix => array.RowCells(ix));
+		public IEnumerable<IEnumerable<Cell<T>>> RowsAsCells()
+			=> array.RowIndexes().Select(ix => array.RowAsCells(ix));
 	}
 }
 
