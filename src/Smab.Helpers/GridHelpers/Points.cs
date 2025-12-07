@@ -89,6 +89,26 @@ public static partial class PointHelpers {
 		/// </summary>
 		public int Row => point.Y;
 
+		public Point Left => point + Direction.Left.Delta();
+		public Point Right => point + Direction.Right.Delta();
+		public Point Up => point + Direction.Up.Delta();
+		public Point Down => point + Direction.Down.Delta();
+		public Point UpLeft => point + Direction.NorthWest.Delta();
+		public Point UpRight => point + Direction.NorthEast.Delta();
+		public Point DownLeft => point + Direction.SouthWest.Delta();
+		public Point DownRight => point + Direction.SouthEast.Delta();
+
+		public Point East => point + Direction.East.Delta();
+		public Point West => point + Direction.West.Delta();
+		public Point North => point + Direction.North.Delta();
+		public Point South => point + Direction.South.Delta();
+		public Point NorthEast => point + Direction.NorthEast.Delta();
+		public Point NorthWest => point + Direction.NorthWest.Delta();
+		public Point SouthEast => point + Direction.SouthEast.Delta();
+		public Point SouthWest => point + Direction.SouthWest.Delta();
+
+
+
 		/// <summary>
 		/// Moves the specified <see cref="Point"/> in the given direction by a specified distance.
 		/// </summary>
