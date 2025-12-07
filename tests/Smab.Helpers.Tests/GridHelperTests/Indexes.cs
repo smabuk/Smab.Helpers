@@ -30,7 +30,7 @@ public class Indexes {
 			input[i] = new((char)(65 + i), i + 1);
 		}
 		Grid<(char, int)> grid = input.To2dGrid(5);
-		
+
 		IEnumerator<(int X, int Y)> actualEnumerator = grid.Indexes().GetEnumerator();
 		for (int row = 0; row < grid.RowsCount; row++) {
 			for (int col = 0; col < grid.ColsCount; col++) {
@@ -48,7 +48,7 @@ public class Indexes {
 	public void Grid_IndexesColRow_Should_Travel_Across_Then_Down() {
 		int[] input = [1, 2, 3, 4, 5, 6];
 		Grid<int> grid = input.To2dGrid(3, 2);
-		
+
 		List<(int Col, int Row)> indexes = [.. grid.IndexesColRow()];
 		indexes.Count.ShouldBe(6);
 		indexes[0].ShouldBe((0, 0));

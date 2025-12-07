@@ -7,9 +7,17 @@
 /// <param name="ColsCount">The number of columns in the grid.</param>
 /// <param name="RowsCount">The number of rows in the grid.</param>
 [DebuggerDisplay("{DebugDisplay,nq}")]
-public record Grid<T>(int ColsCount, int RowsCount) {
+public record Grid<T>(int ColsCount, int RowsCount) : IEnumerable<T> {
 
 	public T[,] Cells { get; internal set; } = new T[ColsCount, RowsCount];
+
+	public IEnumerator<T> GetEnumerator() {
+		foreach (T value in Cells) {
+			yield return value;
+		}
+	}
+
+	System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() => GetEnumerator();
 
 	// Indexer
 	/// <summary>
@@ -153,7 +161,7 @@ public record Grid<T>(int ColsCount, int RowsCount) {
 			int col = colIndex.GetOffset(ColsCount);
 			(int rowOffset, int rowLength) = rowRange.GetOffsetAndLength(RowsCount);
 
-			T[] values = value.ToArray();
+			T[] values = [.. value];
 			if (values.Length == rowLength) {
 				for (int row = 0; row < rowLength; row++) {
 					Cells[col, rowOffset + row] = values[row];
@@ -192,7 +200,7 @@ public record Grid<T>(int ColsCount, int RowsCount) {
 			(int colOffset, int colLength) = colRange.GetOffsetAndLength(ColsCount);
 			int row = rowIndex.GetOffset(RowsCount);
 
-			T[] values = value.ToArray();
+			T[] values = [.. value];
 			if (values.Length == colLength) {
 				for (int col = 0; col < colLength; col++) {
 					Cells[colOffset + col, row] = values[col];

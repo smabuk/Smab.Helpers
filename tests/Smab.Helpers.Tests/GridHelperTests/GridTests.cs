@@ -953,7 +953,7 @@ public class GridTests {
 			}
 		}
 
-		grid[1, 1..3] = new[] { 10, 20 };
+		grid[1, 1..3] = [10, 20];
 
 		grid[1, 1].ShouldBe(10);
 		grid[1, 2].ShouldBe(20);
@@ -970,7 +970,7 @@ public class GridTests {
 			}
 		}
 
-		grid[1, 1..4] = new[] { 99 };
+		grid[1, 1..4] = [99];
 
 		grid[1, 1].ShouldBe(99);
 		grid[1, 2].ShouldBe(99);
@@ -987,7 +987,7 @@ public class GridTests {
 			}
 		}
 
-		grid[^1, ^2..] = new[] { 88, 99 };
+		grid[^1, ^2..] = [88, 99];
 
 		grid[2, 2].ShouldBe(88);
 		grid[2, 3].ShouldBe(99);
@@ -998,7 +998,7 @@ public class GridTests {
 	public void IndexRangeIndexer_SetWithMismatchedCollection_ShouldThrow() {
 		Grid<int> grid = new(3, 4);
 
-		Should.Throw<ArgumentException>(() => grid[1, 1..3] = new[] { 1, 2, 3 });
+		Should.Throw<ArgumentException>(() => grid[1, 1..3] = [1, 2, 3]);
 	}
 
 	[Fact]
@@ -1010,7 +1010,7 @@ public class GridTests {
 			}
 		}
 
-		grid[1..3, 1] = new[] { 10, 20 };
+		grid[1..3, 1] = [10, 20];
 
 		grid[1, 1].ShouldBe(10);
 		grid[2, 1].ShouldBe(20);
@@ -1027,7 +1027,7 @@ public class GridTests {
 			}
 		}
 
-		grid[1..4, 1] = new[] { 77 };
+		grid[1..4, 1] = [77];
 
 		grid[1, 1].ShouldBe(77);
 		grid[2, 1].ShouldBe(77);
@@ -1044,7 +1044,7 @@ public class GridTests {
 			}
 		}
 
-		grid[^3.., ^1] = new[] { 11, 22, 33 };
+		grid[^3.., ^1] = [11, 22, 33];
 
 		grid[2, 2].ShouldBe(11);
 		grid[3, 2].ShouldBe(22);
@@ -1056,7 +1056,7 @@ public class GridTests {
 	public void RangeIndexIndexer_SetWithMismatchedCollection_ShouldThrow() {
 		Grid<int> grid = new(4, 3);
 
-		Should.Throw<ArgumentException>(() => grid[1..3, 1] = new[] { 1, 2, 3 });
+		Should.Throw<ArgumentException>(() => grid[1..3, 1] = [1, 2, 3]);
 	}
 
 	[Fact]
@@ -1068,8 +1068,8 @@ public class GridTests {
 			}
 		}
 
-		grid[1, 1..3] = new List<int> { 10, 20 };
-		grid[1..3, 2] = new List<int> { 30, 40 };
+		grid[1, 1..3] = [10, 20];
+		grid[1..3, 2] = [30, 40];
 
 		grid[1, 1].ShouldBe(10);
 		grid[1, 2].ShouldBe(30);  // Overwritten by second assignment

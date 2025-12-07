@@ -334,10 +334,12 @@ public class ChunkBy {
 		conversionCalled.ShouldBeTrue();
 	}
 
+	private static readonly string[] sourceArray = ["one", "two", ""];
+
 	[Fact]
 	public void ChunkByEmpty_IsDeferred_ShouldNotEvaluateUntilEnumerated() {
 		List<string> evaluatedItems = [];
-		IEnumerable<string?> source = new[] { "one", "two", "" }.Select(x => {
+		IEnumerable<string?> source = sourceArray.Select(x => {
 			evaluatedItems.Add(x);
 			return x;
 		});

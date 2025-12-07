@@ -47,7 +47,7 @@ public class Transpose {
 			.To2dGrid();
 
 		Grid<char> actual = grid.Transpose();
-		
+
 		actual.ColsCount.ShouldBe(2);
 		actual.RowsCount.ShouldBe(3);
 		actual[0, 0].ShouldBe('#');
