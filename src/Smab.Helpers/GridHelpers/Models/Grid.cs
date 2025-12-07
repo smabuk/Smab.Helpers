@@ -9,7 +9,7 @@
 [DebuggerDisplay("{DebugDisplay,nq}")]
 public record Grid<T>(int ColsCount, int RowsCount) : IEnumerable<T> {
 
-	public T[,] InternalCells { get; internal set; } = new T[ColsCount, RowsCount];
+	internal T[,] InternalCells { get; set; } = new T[ColsCount, RowsCount];
 
 	public IEnumerator<T> GetEnumerator() {
 		foreach (T value in InternalCells) {
