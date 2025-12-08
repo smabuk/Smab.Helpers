@@ -1,30 +1,30 @@
 ﻿namespace Smab.Helpers.Tests.LinqHelperTests;
 
-public class ChunkBy {
+public class SplitBy {
 	[Fact]
-	public void ChunkBy_EmptySequence_ShouldReturnEmpty() {
+	public void SplitBy_EmptySequence_ShouldReturnEmpty() {
 		IEnumerable<int> source = [];
 
-		List<List<int>> result = [.. source.ChunkBy(x => x == 0)];
+		List<List<int>> result = [.. source.SplitBy(x => x == 0)];
 
 		result.ShouldBeEmpty();
 	}
 
 	[Fact]
-	public void ChunkBy_NoMatches_ShouldReturnSingleChunk() {
+	public void SplitBy_NoMatches_ShouldReturnSingleChunk() {
 		IEnumerable<int> source = [1, 2, 3, 4, 5];
 
-		List<List<int>> result = [.. source.ChunkBy(x => x == 0)];
+		List<List<int>> result = [.. source.SplitBy(x => x == 0)];
 
 		result.Count.ShouldBe(1);
 		result[0].ShouldBe([1, 2, 3, 4, 5]);
 	}
 
 	[Fact]
-	public void ChunkBy_SingleMatch_ShouldSplitIntoTwoChunks() {
+	public void SplitBy_SingleMatch_ShouldSplitIntoTwoChunks() {
 		IEnumerable<int> source = [1, 2, 0, 3, 4];
 
-		List<List<int>> result = [.. source.ChunkBy(x => x == 0)];
+		List<List<int>> result = [.. source.SplitBy(x => x == 0)];
 
 		result.Count.ShouldBe(2);
 		result[0].ShouldBe([1, 2]);
@@ -32,10 +32,10 @@ public class ChunkBy {
 	}
 
 	[Fact]
-	public void ChunkBy_MultipleMatches_ShouldCreateMultipleChunks() {
+	public void SplitBy_MultipleMatches_ShouldCreateMultipleChunks() {
 		IEnumerable<int> source = [1, 2, 0, 3, 4, 0, 5, 6];
 
-		List<List<int>> result = [.. source.ChunkBy(x => x == 0)];
+		List<List<int>> result = [.. source.SplitBy(x => x == 0)];
 
 		result.Count.ShouldBe(3);
 		result[0].ShouldBe([1, 2]);
@@ -44,10 +44,10 @@ public class ChunkBy {
 	}
 
 	[Fact]
-	public void ChunkBy_ConsecutiveMatches_ShouldSkipEmptyChunks() {
+	public void SplitBy_ConsecutiveMatches_ShouldSkipEmptyChunks() {
 		IEnumerable<int> source = [1, 2, 0, 0, 3, 4];
 
-		List<List<int>> result = [.. source.ChunkBy(x => x == 0)];
+		List<List<int>> result = [.. source.SplitBy(x => x == 0)];
 
 		result.Count.ShouldBe(2);
 		result[0].ShouldBe([1, 2]);
@@ -55,48 +55,48 @@ public class ChunkBy {
 	}
 
 	[Fact]
-	public void ChunkBy_StartsWithMatch_ShouldSkipEmptyFirstChunk() {
+	public void SplitBy_StartsWithMatch_ShouldSkipEmptyFirstChunk() {
 		IEnumerable<int> source = [0, 1, 2, 3];
 
-		List<List<int>> result = [.. source.ChunkBy(x => x == 0)];
+		List<List<int>> result = [.. source.SplitBy(x => x == 0)];
 
 		result.Count.ShouldBe(1);
 		result[0].ShouldBe([1, 2, 3]);
 	}
 
 	[Fact]
-	public void ChunkBy_EndsWithMatch_ShouldNotIncludeEmptyLastChunk() {
+	public void SplitBy_EndsWithMatch_ShouldNotIncludeEmptyLastChunk() {
 		IEnumerable<int> source = [1, 2, 3, 0];
 
-		List<List<int>> result = [.. source.ChunkBy(x => x == 0)];
+		List<List<int>> result = [.. source.SplitBy(x => x == 0)];
 
 		result.Count.ShouldBe(1);
 		result[0].ShouldBe([1, 2, 3]);
 	}
 
 	[Fact]
-	public void ChunkBy_AllMatches_ShouldReturnEmpty() {
+	public void SplitBy_AllMatches_ShouldReturnEmpty() {
 		IEnumerable<int> source = [0, 0, 0];
 
-		List<List<int>> result = [.. source.ChunkBy(x => x == 0)];
+		List<List<int>> result = [.. source.SplitBy(x => x == 0)];
 
 		result.ShouldBeEmpty();
 	}
 
 	[Fact]
-	public void ChunkBy_WithConversion_EmptySequence_ShouldReturnEmpty() {
+	public void SplitBy_WithConversion_EmptySequence_ShouldReturnEmpty() {
 		IEnumerable<int> source = [];
 
-		List<List<string>> result = [.. source.ChunkBy(x => x == 0, x => x.ToString())];
+		List<List<string>> result = [.. source.SplitBy(x => x == 0, x => x.ToString())];
 
 		result.ShouldBeEmpty();
 	}
 
 	[Fact]
-	public void ChunkBy_WithConversion_ShouldConvertElements() {
+	public void SplitBy_WithConversion_ShouldConvertElements() {
 		IEnumerable<int> source = [1, 2, 0, 3, 4];
 
-		List<List<string>> result = [.. source.ChunkBy(x => x == 0, x => x.ToString())];
+		List<List<string>> result = [.. source.SplitBy(x => x == 0, x => x.ToString())];
 
 		result.Count.ShouldBe(2);
 		result[0].ShouldBe(["1", "2"]);
@@ -104,20 +104,20 @@ public class ChunkBy {
 	}
 
 	[Fact]
-	public void ChunkBy_WithConversion_NoMatches_ShouldReturnSingleConvertedChunk() {
+	public void SplitBy_WithConversion_NoMatches_ShouldReturnSingleConvertedChunk() {
 		IEnumerable<int> source = [1, 2, 3, 4, 5];
 
-		List<List<string>> result = [.. source.ChunkBy(x => x == 0, x => $"value_{x}")];
+		List<List<string>> result = [.. source.SplitBy(x => x == 0, x => $"value_{x}")];
 
 		result.Count.ShouldBe(1);
 		result[0].ShouldBe(["value_1", "value_2", "value_3", "value_4", "value_5"]);
 	}
 
 	[Fact]
-	public void ChunkBy_WithConversion_MultipleChunks_ShouldConvertAllElements() {
+	public void SplitBy_WithConversion_MultipleChunks_ShouldConvertAllElements() {
 		IEnumerable<int> source = [1, 2, 0, 3, 4, 0, 5, 6];
 
-		List<List<string>> result = [.. source.ChunkBy(x => x == 0, x => x.ToString())];
+		List<List<string>> result = [.. source.SplitBy(x => x == 0, x => x.ToString())];
 
 		result.Count.ShouldBe(3);
 		result[0].ShouldBe(["1", "2"]);
@@ -126,10 +126,10 @@ public class ChunkBy {
 	}
 
 	[Fact]
-	public void ChunkBy_WithConversion_ComplexTransformation_ShouldWork() {
+	public void SplitBy_WithConversion_ComplexTransformation_ShouldWork() {
 		IEnumerable<int> source = [1, 2, 0, 3, 4];
 
-		List<List<int>> result = [.. source.ChunkBy(x => x == 0, x => x * 10)];
+		List<List<int>> result = [.. source.SplitBy(x => x == 0, x => x * 10)];
 
 		result.Count.ShouldBe(2);
 		result[0].ShouldBe([10, 20]);
@@ -137,10 +137,10 @@ public class ChunkBy {
 	}
 
 	[Fact]
-	public void ChunkBy_WithConversion_StringToLong_ShouldParseCorrectly() {
+	public void SplitBy_WithConversion_StringToLong_ShouldParseCorrectly() {
 		IEnumerable<string> source = ["123", "456", "", "789", "1000"];
 
-		List<List<long>> result = [.. source.ChunkBy(x => string.IsNullOrEmpty(x), x => x.As<long>())];
+		List<List<long>> result = [.. source.SplitBy(x => string.IsNullOrEmpty(x), x => x.As<long>())];
 
 		result.Count.ShouldBe(2);
 		result[0].ShouldBe([123L, 456L]);
@@ -148,10 +148,10 @@ public class ChunkBy {
 	}
 
 	[Fact]
-	public void ChunkBy_WithConversion_StringToLong_WithMultipleSeparators_ShouldParseCorrectly() {
+	public void SplitBy_WithConversion_StringToLong_WithMultipleSeparators_ShouldParseCorrectly() {
 		IEnumerable<string> source = ["100", "200", "300", "", "1234567890", "9876543210", "", "42", "99"];
 
-		List<List<long>> result = [.. source.ChunkBy(x => string.IsNullOrEmpty(x), x => x.As<long>())];
+		List<List<long>> result = [.. source.SplitBy(x => string.IsNullOrEmpty(x), x => x.As<long>())];
 
 		result.Count.ShouldBe(3);
 		result[0].ShouldBe([100L, 200L, 300L]);
@@ -160,10 +160,10 @@ public class ChunkBy {
 	}
 
 	[Fact]
-	public void ChunkBy_WithConversion_StringToLong_WithNegativeNumbers_ShouldParseCorrectly() {
+	public void SplitBy_WithConversion_StringToLong_WithNegativeNumbers_ShouldParseCorrectly() {
 		IEnumerable<string> source = ["-100", "200", "", "-300", "400"];
 
-		List<List<long>> result = [.. source.ChunkBy(x => string.IsNullOrEmpty(x), x => x.As<long>())];
+		List<List<long>> result = [.. source.SplitBy(x => string.IsNullOrEmpty(x), x => x.As<long>())];
 
 		result.Count.ShouldBe(2);
 		result[0].ShouldBe([-100L, 200L]);
@@ -171,10 +171,10 @@ public class ChunkBy {
 	}
 
 	[Fact]
-	public void ChunkBy_WithConversion_StringToLong_WithLargeNumbers_ShouldParseCorrectly() {
+	public void SplitBy_WithConversion_StringToLong_WithLargeNumbers_ShouldParseCorrectly() {
 		IEnumerable<string> source = ["9223372036854775807", "1", "", "-9223372036854775808"];
 
-		List<List<long>> result = [.. source.ChunkBy(x => string.IsNullOrEmpty(x), x => x.As<long>())];
+		List<List<long>> result = [.. source.SplitBy(x => string.IsNullOrEmpty(x), x => x.As<long>())];
 
 		result.Count.ShouldBe(2);
 		result[0].ShouldBe([9223372036854775807L, 1L]);
@@ -182,29 +182,29 @@ public class ChunkBy {
 	}
 
 	[Fact]
-	public void ChunkByEmpty_EmptySequence_ShouldReturnEmpty() {
+	public void SplitByEmpty_EmptySequence_ShouldReturnEmpty() {
 		IEnumerable<string?> source = [];
 
-		List<List<string>> result = [.. source.ChunkByEmpty()];
+		List<List<string>> result = [.. source.SplitByEmpty()];
 
 		result.ShouldBeEmpty();
 	}
 
 	[Fact]
-	public void ChunkByEmpty_NoEmptyStrings_ShouldReturnSingleChunk() {
+	public void SplitByEmpty_NoEmptyStrings_ShouldReturnSingleChunk() {
 		IEnumerable<string?> source = ["one", "two", "three"];
 
-		List<List<string>> result = [.. source.ChunkByEmpty()];
+		List<List<string>> result = [.. source.SplitByEmpty()];
 
 		result.Count.ShouldBe(1);
 		result[0].ShouldBe(["one", "two", "three"]);
 	}
 
 	[Fact]
-	public void ChunkByEmpty_SingleEmptyString_ShouldSplitIntoTwoChunks() {
+	public void SplitByEmpty_SingleEmptyString_ShouldSplitIntoTwoChunks() {
 		IEnumerable<string?> source = ["one", "two", "", "three", "four"];
 
-		List<List<string>> result = [.. source.ChunkByEmpty()];
+		List<List<string>> result = [.. source.SplitByEmpty()];
 
 		result.Count.ShouldBe(2);
 		result[0].ShouldBe(["one", "two"]);
@@ -212,10 +212,10 @@ public class ChunkBy {
 	}
 
 	[Fact]
-	public void ChunkByEmpty_NullString_ShouldSplitChunks() {
+	public void SplitByEmpty_NullString_ShouldSplitChunks() {
 		IEnumerable<string?> source = ["one", "two", null, "three", "four"];
 
-		List<List<string>> result = [.. source.ChunkByEmpty()];
+		List<List<string>> result = [.. source.SplitByEmpty()];
 
 		result.Count.ShouldBe(2);
 		result[0].ShouldBe(["one", "two"]);
@@ -223,10 +223,10 @@ public class ChunkBy {
 	}
 
 	[Fact]
-	public void ChunkByEmpty_WhitespaceString_ShouldSplitChunks() {
+	public void SplitByEmpty_WhitespaceString_ShouldSplitChunks() {
 		IEnumerable<string?> source = ["one", "two", "   ", "three", "four"];
 
-		List<List<string>> result = [.. source.ChunkByEmpty()];
+		List<List<string>> result = [.. source.SplitByEmpty()];
 
 		result.Count.ShouldBe(2);
 		result[0].ShouldBe(["one", "two"]);
@@ -234,10 +234,10 @@ public class ChunkBy {
 	}
 
 	[Fact]
-	public void ChunkByEmpty_MultipleEmptyStrings_ShouldCreateMultipleChunks() {
+	public void SplitByEmpty_MultipleEmptyStrings_ShouldCreateMultipleChunks() {
 		IEnumerable<string?> source = ["one", "two", "", "three", "four", "", "five"];
 
-		List<List<string>> result = [.. source.ChunkByEmpty()];
+		List<List<string>> result = [.. source.SplitByEmpty()];
 
 		result.Count.ShouldBe(3);
 		result[0].ShouldBe(["one", "two"]);
@@ -246,10 +246,10 @@ public class ChunkBy {
 	}
 
 	[Fact]
-	public void ChunkByEmpty_ConsecutiveEmptyStrings_ShouldSkipEmptyChunks() {
+	public void SplitByEmpty_ConsecutiveEmptyStrings_ShouldSkipEmptyChunks() {
 		IEnumerable<string?> source = ["one", "two", "", "", "three", "four"];
 
-		List<List<string>> result = [.. source.ChunkByEmpty()];
+		List<List<string>> result = [.. source.SplitByEmpty()];
 
 		result.Count.ShouldBe(2);
 		result[0].ShouldBe(["one", "two"]);
@@ -257,39 +257,39 @@ public class ChunkBy {
 	}
 
 	[Fact]
-	public void ChunkByEmpty_StartsWithEmpty_ShouldSkipEmptyFirstChunk() {
+	public void SplitByEmpty_StartsWithEmpty_ShouldSkipEmptyFirstChunk() {
 		IEnumerable<string?> source = ["", "one", "two", "three"];
 
-		List<List<string>> result = [.. source.ChunkByEmpty()];
+		List<List<string>> result = [.. source.SplitByEmpty()];
 
 		result.Count.ShouldBe(1);
 		result[0].ShouldBe(["one", "two", "three"]);
 	}
 
 	[Fact]
-	public void ChunkByEmpty_EndsWithEmpty_ShouldNotIncludeEmptyLastChunk() {
+	public void SplitByEmpty_EndsWithEmpty_ShouldNotIncludeEmptyLastChunk() {
 		IEnumerable<string?> source = ["one", "two", "three", ""];
 
-		List<List<string>> result = [.. source.ChunkByEmpty()];
+		List<List<string>> result = [.. source.SplitByEmpty()];
 
 		result.Count.ShouldBe(1);
 		result[0].ShouldBe(["one", "two", "three"]);
 	}
 
 	[Fact]
-	public void ChunkByEmpty_AllEmpty_ShouldReturnEmpty() {
+	public void SplitByEmpty_AllEmpty_ShouldReturnEmpty() {
 		IEnumerable<string?> source = ["", null, "   "];
 
-		List<List<string>> result = [.. source.ChunkByEmpty()];
+		List<List<string>> result = [.. source.SplitByEmpty()];
 
 		result.ShouldBeEmpty();
 	}
 
 	[Fact]
-	public void ChunkByEmpty_MixedWhitespace_ShouldTreatAsEmpty() {
+	public void SplitByEmpty_MixedWhitespace_ShouldTreatAsEmpty() {
 		IEnumerable<string?> source = ["one", "\t", "two", "\n", "three", "  \t  "];
 
-		List<List<string>> result = [.. source.ChunkByEmpty()];
+		List<List<string>> result = [.. source.SplitByEmpty()];
 
 		result.Count.ShouldBe(3);
 		result[0].ShouldBe(["one"]);
@@ -298,11 +298,11 @@ public class ChunkBy {
 	}
 
 	[Fact]
-	public void ChunkBy_IsDeferred_ShouldNotEvaluateUntilEnumerated() {
+	public void SplitBy_IsDeferred_ShouldNotEvaluateUntilEnumerated() {
 		bool predicateCalled = false;
 		IEnumerable<int> source = [1, 2, 3];
 
-		IEnumerable<List<int>> result = source.ChunkBy(x => {
+		IEnumerable<List<int>> result = source.SplitBy(x => {
 			predicateCalled = true;
 			return x == 0;
 		});
@@ -315,11 +315,11 @@ public class ChunkBy {
 	}
 
 	[Fact]
-	public void ChunkBy_WithConversion_IsDeferred_ShouldNotEvaluateUntilEnumerated() {
+	public void SplitBy_WithConversion_IsDeferred_ShouldNotEvaluateUntilEnumerated() {
 		bool conversionCalled = false;
 		IEnumerable<int> source = [1, 2, 3];
 
-		IEnumerable<List<string>> result = source.ChunkBy(
+		IEnumerable<List<string>> result = source.SplitBy(
 			x => x == 0,
 			x => {
 				conversionCalled = true;
@@ -337,14 +337,14 @@ public class ChunkBy {
 	private static readonly string[] sourceArray = ["one", "two", ""];
 
 	[Fact]
-	public void ChunkByEmpty_IsDeferred_ShouldNotEvaluateUntilEnumerated() {
+	public void SplitByEmpty_IsDeferred_ShouldNotEvaluateUntilEnumerated() {
 		List<string> evaluatedItems = [];
 		IEnumerable<string?> source = sourceArray.Select(x => {
 			evaluatedItems.Add(x);
 			return x;
 		});
 
-		IEnumerable<List<string>> result = source.ChunkByEmpty();
+		IEnumerable<List<string>> result = source.SplitByEmpty();
 
 		evaluatedItems.ShouldBeEmpty();
 

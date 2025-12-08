@@ -14,7 +14,7 @@ public static partial class LinqHelpers {
 		/// <returns>An enumerable collection of lists, where each list contains consecutive elements between predicate matches. Each
 		/// chunk contains elements for which the predicate returned false, and a new chunk starts after each element for
 		/// which the predicate returns true.</returns>
-		public IEnumerable<List<TSource>> ChunkBy(Func<TSource, bool> predicate) {
+		public IEnumerable<List<TSource>> SplitBy(Func<TSource, bool> predicate) {
 			List<TSource> currentChunk = [];
 
 			foreach (TSource item in items) {
@@ -47,7 +47,7 @@ public static partial class LinqHelpers {
 		/// name="TOut"/>.</param>
 		/// <returns>An enumerable collection of lists, where each list contains the converted elements between predicate matches. Each
 		/// chunk is yielded when a new chunk is started or at the end of the sequence.</returns>
-		public IEnumerable<List<TOut>> ChunkBy<TOut>(Func<TSource, bool> predicate, Func<TSource, TOut> conversion) {
+		public IEnumerable<List<TOut>> SplitBy<TOut>(Func<TSource, bool> predicate, Func<TSource, TOut> conversion) {
 			List<TOut> currentChunk = [];
 
 			foreach (TSource item in items) {
@@ -75,24 +75,7 @@ public static partial class LinqHelpers {
 		/// consecutive empty entries will result in skipped or empty chunks being omitted from the result.</remarks>
 		/// <returns>An enumerable sequence of lists, each containing consecutive non-empty strings separated by empty or
 		/// whitespace-only entries. The sequence will not contain empty lists.</returns>
-		public IEnumerable<List<string>> ChunkByEmpty() {
-			List<string> currentChunk = [];
-
-			foreach (string? item in items) {
-				if (string.IsNullOrWhiteSpace(item)) {
-					if (currentChunk.Count > 0) {
-						yield return currentChunk;
-						currentChunk = [];
-					}
-				} else {
-					currentChunk.Add(item);
-				}
-			}
-
-			if (currentChunk.Count > 0) {
-				yield return currentChunk;
-			}
-		}
+		public IEnumerable<List<string>> SplitByEmpty() => items.SplitBy(string.IsNullOrWhiteSpace).OfType<List<string>>();
 	}
 
 }
