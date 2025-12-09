@@ -78,7 +78,7 @@ public class Also {
 
 	[Fact]
 	public void Also_WithComplexObject_Should_AllowMutation() {
-		var person = new Person { Name = "Alice", Age = 25 };
+		Person person = new() { Name = "Alice", Age = 25 };
 
 		person.Also(p => p.Age = 26);
 
@@ -139,7 +139,7 @@ public class Also {
 
 	[Fact]
 	public void Also_WithStringBuilder_Should_AllowAppend() {
-		var sb = new System.Text.StringBuilder("Hello");
+		System.Text.StringBuilder sb = new("Hello");
 
 		sb.Also(builder => builder.Append(" World"));
 
