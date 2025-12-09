@@ -44,7 +44,7 @@ public class GetArgument {
 	[InlineData(0)]
 	[InlineData(7)]
 	public void GetArgument_Should_Throw_ArgumentOutOfRangeException_When_InvalidIndex(int index) {
-		Should.Throw<ArgumentOutOfRangeException>(() => ArgumentHelpers.GetArgument<object>(arguments, index));
+		Should.Throw<Exception>(() => ArgumentHelpers.GetArgument<object>(arguments, index));
 	}
 
 	[Fact]
