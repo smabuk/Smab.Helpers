@@ -2,7 +2,7 @@
 
 public static partial class ArrayHelpers {
 
-	extension<T>(T[,] array) where T : struct {
+	extension<T>(T[,] array)  {
 		/// <summary>
 		/// Converts a two-dimensional array of value types into an enumerable sequence of strings,  with optional replacements
 		/// applied to the resulting strings.
@@ -20,7 +20,7 @@ public static partial class ArrayHelpers {
 			foreach (int r in array.RowIndexes()) {
 				line.Clear();
 				foreach (int c in array.ColIndexes()) {
-					string cell = array[c, r].ToString() ?? "";
+					string cell = array[c, r]?.ToString() ?? "";
 					line.Append(cell);
 				}
 				if (replacements is not null) {
