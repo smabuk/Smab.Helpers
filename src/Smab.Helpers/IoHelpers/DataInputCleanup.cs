@@ -8,7 +8,7 @@ public static class DataInputCleanup {
 		/// </summary>
 		/// <param name="input">The input string to process. Can be <see langword="null"/>.</param>
 		/// <param name="defaultValue">The value to return if <paramref name="input"/> is <see langword="null"/>. Defaults to an empty string.</param>
-		/// <returns>A string with the trailing blank line removed if <paramref name="input"/> is not <see langword="null"/>; 
+		/// <returns>A string with the trailing blank line removed if <paramref name="input"/> is not <see langword="null"/>;
 		/// otherwise, the value of <paramref name="defaultValue"/>.</returns>
 		public string StripTrailingBlankLineOrDefault(string defaultValue = "")
 			=> input is not null ? input.RemoveBlankLineFromEnd() : defaultValue;
@@ -42,7 +42,7 @@ public static class DataInputCleanup {
 		/// <returns>A new array of strings with the last line removed if it is blank or consists only of whitespace. If the input is
 		/// null, an empty array is returned. If the last line is not blank, the original array is returned.</returns>
 		public string[] RemoveBlankLineFromEnd() {
-			if (input is null) { return []; }
+			if (input is null or []) { return []; }
 
 			return string.IsNullOrWhiteSpace(input[^1]) ? input[..^1] : input;
 		}
