@@ -1,4 +1,4 @@
-name: NuGet Publish
+﻿name: NuGet Publish
 
 on:
   push:
@@ -23,6 +23,9 @@ env:
 
 jobs:
   publish_job:
+    permissions:
+      id-token: write  # enable GitHub OIDC token issuance for this job
+
     # CI running on linux
     runs-on: ubuntu-latest
 
@@ -37,16 +40,16 @@ jobs:
         with:
           dotnet-version: ${{ env.dotnet_core_version }}
 
-      # Run dotnet format style 
+      # Run dotnet format style
       - name: dotnet Format Style
         run: dotnet format style --verify-no-changes --verbosity diagnostic
 
-      # Run dotnet build 
+      # Run dotnet build
       - name: dotnet Build
         run: dotnet build --configuration ${{ env.config }}
         shell: bash
 
-      # Run dotnet publish 
+      # Run dotnet publish
       - name: dotnet Publish
         run: dotnet publish ${{ env.csproj }} --configuration ${{ env.config }}
         shell: bash
@@ -56,12 +59,19 @@ jobs:
         run: dotnet pack ${{ env.csproj }} -o ./artifacts --configuration ${{ env.config }}
         shell: bash
 
+      # Get a short-lived NuGet API key
+      - name: NuGet login (OIDC → temp API key)
+        uses: NuGet/login@v1
+        id: login
+        with:
+          user: smabuk # Recommended: use a secret like ${{ secrets.NUGET_USER }} for your nuget.org username (profile name), NOT your email address
+
       # Find all the created nupkg files and publish it to NuGet,
       #   we use the wonderful swiss-army knife capability `find -exec` to find and then execute an action on it.
       # NUGET_DEPLOY_KEY is the NuGet API key stored in the repo GH action secrets
       # If you also publish symbol packages, find the snupkg files and publish it to NuGet
       - name: Publish ${{ env.package_name }} to NuGet
         run: |
-          find . -name '*.nupkg' -exec dotnet nuget push "{}" -s https://api.nuget.org/v3/index.json -k ${{ secrets.NUGET_DEPLOY_KEY }} --skip-duplicate \;
-          find . -name '*.snupkg' -exec dotnet nuget push "{}" -s https://api.nuget.org/v3/index.json -k ${{ secrets.NUGET_DEPLOY_KEY }} \;
+          find . -name '*.nupkg' -exec dotnet nuget push "{}" -s https://api.nuget.org/v3/index.json -k ${{steps.login.outputs.NUGET_API_KEY}} --skip-duplicate \;
+          find . -name '*.snupkg' -exec dotnet nuget push "{}" -s https://api.nuget.org/v3/index.json -k ${{steps.login.outputs.NUGET_API_KEY}} \;
         shell: bash
