@@ -48,7 +48,7 @@ jobs:
 
       # Run dotnet pack to create the nupkg file for the project and store in artifacts folder
       - name: Run Pack
-        run: dotnet pack ${{ env.csproj }} -o ./artifacts/${{ env.package_name }}.nupkg --configuration ${{ env.config }}
+        run: dotnet pack ${{ env.csproj }} -o ./artifacts --configuration ${{ env.config }}
         shell: bash
 
 
@@ -60,6 +60,8 @@ jobs:
         with:
           user: smabuk # Recommended: use a secret like ${{ secrets.NUGET_USER }} for your nuget.org username (profile name), NOT your email address
 
-      # Push the package
+      # Push the package(s)
       - name: NuGet push
-        run: dotnet nuget push artifacts/${{ env.package_name }}.nupkg --api-key ${{steps.login.outputs.NUGET_API_KEY}} --source https://api.nuget.org/v3/index.json
+        run: |
+          find . -name '*.nupkg' -exec dotnet nuget push "{}" -s https://api.nuget.org/v3/index.json -k ${{steps.login.outputs.NUGET_API_KEY}} --skip-duplicate \;
+        shell: bash
