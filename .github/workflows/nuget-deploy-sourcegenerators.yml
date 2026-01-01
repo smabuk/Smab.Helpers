@@ -22,9 +22,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Build your artifacts/my-sdk.nupkg package here
-
-      # This step clones the source code to the CI build machine
+       # This step clones the source code to the CI build machine
       - name: Checkout code
         uses: actions/checkout@v4
 
@@ -50,7 +48,7 @@ jobs:
 
       # Run dotnet pack to create the nupkg file for the project and store in artifacts folder
       - name: Run Pack
-        run: dotnet pack ${{ env.csproj }} -o ./artifacts --configuration ${{ env.config }}
+        run: dotnet pack ${{ env.csproj }} -o ./artifacts/${{ env.package_name }}.nupkg --configuration ${{ env.config }}
         shell: bash
 
 
@@ -64,4 +62,4 @@ jobs:
 
       # Push the package
       - name: NuGet push
-        run: dotnet nuget push artifacts/Smab.Helpers.IParsableSourceGenerator --api-key ${{steps.login.outputs.NUGET_API_KEY}} --source https://api.nuget.org/v3/index.json
+        run: dotnet nuget push artifacts/${{ env.package_name }}.nupkg --api-key ${{steps.login.outputs.NUGET_API_KEY}} --source https://api.nuget.org/v3/index.json
