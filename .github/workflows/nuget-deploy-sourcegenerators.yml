@@ -1,4 +1,4 @@
-﻿jobs:
+﻿name: NuGet Publish Source Generators
 
 on:
   # workflow_dispatch is used to manually invoke the GH action
@@ -13,6 +13,7 @@ env:
   DOTNET_CLI_TELEMETRY_OPTOUT: 1
   DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
 
+jobs:
   build-and-publish:
     permissions:
       id-token: write  # enable GitHub OIDC token issuance for this job
@@ -63,4 +64,4 @@ env:
 
       # Push the package
       - name: NuGet push
-        run: dotnet nuget push artifacts/my-sdk.nupkg --api-key ${{steps.login.outputs.NUGET_API_KEY}} --source https://api.nuget.org/v3/index.json
+        run: dotnet nuget push artifacts/Smab.Helpers.IParsableSourceGenerator --api-key ${{steps.login.outputs.NUGET_API_KEY}} --source https://api.nuget.org/v3/index.json
