@@ -5,10 +5,11 @@
 		<LangVersion>latest</LangVersion>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
+
 		<IsRoslynComponent>true</IsRoslynComponent>
 		<EnforceExtendedAnalyzerRules>true</EnforceExtendedAnalyzerRules>
 		<IncludeBuildOutput>false</IncludeBuildOutput>
-		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+		<GeneratePackageOnBuild>false</GeneratePackageOnBuild>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -19,10 +20,17 @@
 		<PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="5.0.0" />
 	</ItemGroup>
 
+	<ItemGroup>
+		<!-- Ensure the built DLL is included in the package as an analyzer -->
+		<None Include="$(OutputPath)$(AssemblyName).dll" Pack="true" PackagePath="analyzers/dotnet/cs/$(AssemblyName).dll" />
+	</ItemGroup>
+	<Target Name="EnsurePackIncludesAnalyzer" AfterTargets="Build">
+		<!-- No-op target to ensure output exists before pack; keeps pack deterministic in CI -->
+	</Target>
 
 	<PropertyGroup>
 		<PackageReleaseNotes>Updates</PackageReleaseNotes>
-		<VersionPrefix>1.0.1</VersionPrefix>
+		<VersionPrefix>1.0.2</VersionPrefix>
 		<Preview></Preview>
 		<VersionSuffix Condition="'$(Preview)' != '' And '$(BUILD_BUILDNUMBER)' == ''">$(Preview).$([System.DateTime]::get_Now().get_Year())$([System.DateTime]::get_Now().get_Month().ToString("D2"))$([System.DateTime]::get_Now().get_Day().ToString("D2"))-$([System.DateTime]::get_Now().get_Hour().ToString("D2"))$([System.DateTime]::get_Now().get_Minute().ToString("D2"))</VersionSuffix>
 		<VersionSuffix Condition="'$(Preview)' != '' And '$(BUILD_BUILDNUMBER)' != ''">$(Preview).$(BUILD_BUILDNUMBER)</VersionSuffix>
@@ -43,7 +51,7 @@
 		<RepositoryUrl>https://github.com/smabuk/Smab.Helpers</RepositoryUrl>
 		<PublishRepositoryUrl>true</PublishRepositoryUrl>
 		<RepositoryType>git</RepositoryType>
-		<PackageTags>json, html, helpers</PackageTags>
+		<PackageTags>source-generator;roslyn;analyzer;dotnet;IParsable</PackageTags>
 		<!--<PackageIconUrl>https://user-images.githubusercontent.com/782127/33497760-facf6550-d69c-11e7-94e4-b3856da259a9.png</PackageIconUrl>-->
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
 	</PropertyGroup>
