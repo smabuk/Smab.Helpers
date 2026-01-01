@@ -1,6 +1,4 @@
-﻿using System.Numerics;
-
-namespace Smab.Helpers;
+﻿namespace Smab.Helpers;
 
 public static partial class AlgorithmicHelpers {
 

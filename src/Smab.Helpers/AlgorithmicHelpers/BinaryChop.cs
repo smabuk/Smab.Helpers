@@ -1,5 +1,4 @@
-﻿using System.Numerics;
-namespace Smab.Helpers;
+﻿namespace Smab.Helpers;
 
 public static partial class AlgorithmicHelpers {
 
@@ -47,7 +46,7 @@ public static partial class AlgorithmicHelpers {
 		/// <summary>
 		/// Attempts to find an integer within the specified range that satisfies the given predicate.
 		/// </summary>
-		/// <remarks>The search is performed using a binary chop algorithm, which assumes that the range is continuous 
+		/// <remarks>The search is performed using a binary chop algorithm, which assumes that the range is continuous
 		/// and the predicate exhibits a monotonic behavior (e.g., all <see langword="false"/> values precede all  <see
 		/// langword="true"/> values or vice versa).</remarks>
 		/// <param name="range">The range of integers to search, defined by a start and end value.</param>
